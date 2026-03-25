@@ -31,7 +31,7 @@ int main()
 
 	///	게임 루프
 
-	while (0)
+	while (1)
 	{
 
 	}
