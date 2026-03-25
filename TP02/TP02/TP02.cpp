@@ -1,8 +1,9 @@
-﻿//	Window 11 이상의 콘솔창은 콘솔 창 크기 강제 조절이 안됩니다.
+//	Window 11 이상의 콘솔창은 콘솔 창 크기 강제 조절이 안됩니다.
 //	콘솔 창의 설정에서 기본 시작 크기를 조정해서 게임플레이의 적당한 크기를 미리 설정하고 다시 실행해주세요.
 //	260325 지호나
 
 #include "Graphics/ConsoleGraphic.h"
+#include "Input/Input.h"
 
 // [2026-03-25, 박재현] 권한 테스트
 
@@ -20,9 +21,15 @@ int main()
 
 	///	게임에 필요한 객체들 준비 구간
 	CGraphic* pGraphic = CGraphic::GetInstance();
+	CInput* pInput = CInput::GetInstance();
 
 	if (pGraphic == nullptr)
 	{	//	엔진이 없습니다
+		return 0;
+	}
+
+	if (pInput == nullptr)
+	{	//	입력이 없습니다
 		return 0;
 	}
 
@@ -35,50 +42,38 @@ int main()
 	///	게임 루프
 	while (1)
 	{
+		pInput->Update();	//	입력 갱신
 		//	테스트 로직
-		if (_kbhit())	//	이번 프레임에 입력이 있었는지 감지합니다.
-		{	//	입력이 있었다면
-			char input = _getch();	//	입력을 가져옵니다.
 
-			switch (input)
-			{	//	입력 내용을 확인하고 처리합니다.
-			case 'w':
-				y--;	//	*** 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다. ***
-				break;
-			case 'a':
-				x--;
-				break;
-			case 's':
-				y++;
-				break;
-			case 'd':
-				x++;
-				break;
-			case 'g':
-				pGraphic->AddLog("G키를 눌렀습니다.");
-				break;
-			}
+		if (pInput->IsKeyDown('W'))	y--;	//	*** 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다. ***
+		if (pInput->IsKeyDown('A')) x--;
+		if (pInput->IsKeyDown('S')) y++;
+		if (pInput->IsKeyDown('D')) x++;
+		if (pInput->IsKeyDown('G')) pGraphic->AddLog("G키를 눌렀습니다.");
 
-			//	참고
-			//← 좌측 방향키 : 75
-			//
-			//→ 우측 방향키 : 77
-			//
-			//↑ 위 방향키 : 72
-			//
-			//↓ 아래 방향키 : 80
-			//
-			//Enter키 : 13
-		}
+		//	참고 https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+		//← 좌측 방향키 : VK_LEFT
+		//→ 우측 방향키 : VK_RIGTH
+		//↑ 위 방향키: VK_UP
+		//↓ 아래 방향키 : VK_DOWN
+		//Enter키 : VK_RETURN
 
+		//	그리기 시작
+		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
+
 
 
 		//	테스트 그리기
 		pGraphic->RenderToBuffer(x, y, pix, tex);
 
 
+		//	그리기 종료
+		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
 		pGraphic->EndDraw();
+
+		//	종료 키 입력
+		if (pInput->IsKeyDown(VK_ESCAPE)) break;
 	}
 
 
@@ -87,6 +82,7 @@ int main()
 	///////////////////////////////////////////////
 
 	CGraphic::Release();
+	CInput::Release();
 
 	return 0;
 }

@@ -16,6 +16,9 @@
     <Filter Include="소스 파일\Graphics">
       <UniqueIdentifier>{c1770e2f-254e-4968-b2fc-4c391919c6e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Input">
+      <UniqueIdentifier>{a2e35fbc-62a2-4ef4-bbfa-ad450ca9c487}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TP02.cpp">
@@ -24,6 +27,9 @@
     <ClCompile Include="Graphics\ConsoleGraphic.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Input\Input.cpp">
+      <Filter>소스 파일\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\ConsoleGraphic.h">
@@ -31,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="Standard.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Input.h">
+      <Filter>소스 파일\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
