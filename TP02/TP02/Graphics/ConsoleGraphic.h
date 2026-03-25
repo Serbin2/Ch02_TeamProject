@@ -60,7 +60,6 @@ public:
 	static CGraphic* GetInstance();
 	static void Release();
 
-	void SetScreenSize(int x, int y);
 	string GetPixelTypeToString(Pixel type) { return m_sPixels[type]; };
 
 	void RenderToBuffer(int x, int y, Pixel type, TextColor color);
@@ -70,9 +69,6 @@ public:
 	void SetMaxLog(int max);
 	//	버퍼를 화면에 출력합니다
 	void Draw();
-
-	int GetScreenSizeX() { return m_iScreenSizeX; };
-	int GetScreenSizeY() { return m_iScreenSizeY; };
 
 private:
 
@@ -104,8 +100,6 @@ protected:
 	CONSOLE_CURSOR_INFO	m_CurInfo;		//	cursor info
 
 	vector<vector<Shader>> m_aBuffer;	//	buff
-	int m_iScreenSizeX;
-	int m_iScreenSizeY;
 	int m_iScreenSize;
 
 	deque<string> m_aLog;

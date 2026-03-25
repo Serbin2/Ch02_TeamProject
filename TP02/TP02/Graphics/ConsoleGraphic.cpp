@@ -7,7 +7,6 @@ CGraphic::CGraphic()
 	//	콘솔 출력에 대한 기본 핸들을 가져옵니다
 	m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetPixelText();
-	SetScreenSize(30, 30);
 	m_iScreenSize = 30;
 
 	//	커서 투명화
@@ -71,22 +70,6 @@ void CGraphic::SetCursorPos(int x, int y)
 	SetConsoleCursorPosition(m_hOP, cdPos);
 }
 
-//	출력 화면의 크기를 설정합니다
-//	주의 : 기존의 버퍼를 지웁니다
-void CGraphic::SetScreenSize(int x, int y)
-{
-	m_aBuffer.clear();
-
-	m_iScreenSizeX = x;
-	m_iScreenSizeY = y;
-
-	m_aBuffer.resize(y);
-	for (auto& i : m_aBuffer)
-	{
-		i.resize(x);
-	}
-}
-
 void CGraphic::RenderToBuffer(int x, int y, CGraphic::Pixel type, CGraphic::TextColor color)
 {
 
@@ -114,7 +97,7 @@ void CGraphic::AddLog(string str)
 	int logSize = (int)m_aLog.size();
 	for (int i = 0; i < logSize; i++)
 	{
-		SetCursorPos( 1, m_iScreenSizeY + 4 + i);
+		SetCursorPos( 1, m_iScreenSize + 4 + i);
 		cout << m_aLog[i];
 	}
 }
@@ -141,9 +124,9 @@ void CGraphic::DrawMainScreen()
 	point end;
 	start.Y = 0;
 
-	end.Y = m_iScreenSizeY + 2;
+	end.Y = m_iScreenSize + 2;
 	start.X = 0;
-	end.X = m_iScreenSizeX + 2;
+	end.X = m_iScreenSize + 2;
 
 	for (int x = start.X; x < end.X; x++)
 	{
@@ -171,9 +154,9 @@ void CGraphic::DrawUI()
 	point end;
 	start.Y = 0;
 
-	end.Y = m_iScreenSizeY + 2;
-	start.X = m_iScreenSizeX + 3;
-	end.X = m_iScreenSizeX + 2 + 10 + 2;
+	end.Y = m_iScreenSize + 2;
+	start.X = m_iScreenSize + 3;
+	end.X = m_iScreenSize + 2 + 10 + 2;
 
 	for (int x = start.X; x < end.X; x++)
 	{
@@ -198,7 +181,7 @@ void CGraphic::ClearLog()
 	str.resize(100, ' ');
 
 	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK);
-	for (int i = m_iScreenSizeY + 4; i <= m_iScreenSizeY + m_iMaxLog + 3; i++)
+	for (int i = m_iScreenSize + 4; i <= m_iScreenSize + m_iMaxLog + 3; i++)
 	{
 		SetCursorPos(0, i);
 		cout << str;
@@ -213,10 +196,10 @@ void CGraphic::DrawLog()
 	point start;
 	//	로그 창 테두리 끝 위치
 	point end;
-	start.Y = m_iScreenSizeY + 3;
+	start.Y = m_iScreenSize + 3;
 	end.Y = start.Y + m_iMaxLog + 1;
 	start.X = 0;
-	end.X = m_iScreenSizeX + 2 + 10 + 2;
+	end.X = m_iScreenSize + 2 + 10 + 2;
 
 	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_WHITE);
 	for (int x = start.X; x <= end.X; x++)
