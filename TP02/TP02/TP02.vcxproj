@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Standard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
