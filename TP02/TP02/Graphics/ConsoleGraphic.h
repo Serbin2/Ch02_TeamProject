@@ -3,7 +3,7 @@
 
 #include "../Standard.h"
 
-
+using namespace std;
 
 class CGraphic
 {
@@ -49,4 +49,5 @@ protected:
 	HANDLE m_hOP;						//	console output handle
 	//CONSOLE_CURSOR_INFO	m_CurInfo;		//	cursor info
 
+	char** buffer;	//	buff
 };

@@ -6,6 +6,7 @@ CGraphic::CGraphic()
 {
 	//	콘솔 출력에 대한 기본 핸들을 가져옵니다
 	m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
+	buffer = nullptr;
 }
 
 CGraphic::~CGraphic()
@@ -21,4 +22,9 @@ CGraphic* CGraphic::GetInstance()
 	}
 
 	return m_pInstance;
+}
+
+void CGraphic::SetCursorPos(int x, int y)
+{
+
 }
