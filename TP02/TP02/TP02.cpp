@@ -1,4 +1,4 @@
-﻿//	Window 11 이상의 콘솔창은 콘솔 창 크기 강제 조절이 안됩니다.
+//	Window 11 이상의 콘솔창은 콘솔 창 크기 강제 조절이 안됩니다.
 //	콘솔 창의 설정에서 기본 시작 크기를 조정해서 게임플레이의 적당한 크기를 미리 설정하고 다시 실행해주세요.
 //	260325 지호나
 
@@ -19,18 +19,20 @@ int main()
 	///////////////////////////////////////////////
 
 	///	게임에 필요한 객체들 준비 구간
-	CGraphic* graphinc = CGraphic::GetInstance();
+	CGraphic* pGraphic = CGraphic::GetInstance();
 
-	if (graphinc == nullptr)
+	if (pGraphic == nullptr)
 	{
 		return 0;
 	}
 
 	std::cout << "Engine roaded" << std::endl;
 	
-
+	pGraphic->SetCursorPos(10, 20);
+	string str = "test\0";
+	pGraphic->PrintText(str);
 	///	게임 루프
-
+	pGraphic->Render();
 	while (0)
 	{
 

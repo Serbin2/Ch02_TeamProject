@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 //	콘솔 창 위에 그래픽스를 표현하기 위한 클래스입니다
 
 #include "../Standard.h"
@@ -10,6 +10,20 @@ class CGraphic
 private:
 	CGraphic();
 	~CGraphic();
+
+	typedef enum
+	{
+		blank = 0,
+		square,
+		triangle,
+		circle,
+		horizontalLine,
+		verticalLine,
+
+
+
+		PixelMax,
+	}Pixel;
 
 	typedef enum
 	{
@@ -34,13 +48,20 @@ private:
 		TEXT_BACKGROUND_BLACK		=	0,
 	}TextColor;
 
+	//	픽셀 출력용 스트링
+	string m_sPixels[Pixel::PixelMax];
+
+	void SetPixelText();
 public:
 
 	static CGraphic* GetInstance();
 	static void Release();
 	void SetCursorPos(int x, int y);
+	void SetScreenSize(int x, int y);
+	void PrintText(string str);
+	string GetPixelType(Pixel type);
 
-
+	void Render();
 
 protected:
 	
@@ -49,7 +70,7 @@ protected:
 	HANDLE m_hOP;						//	console output handle
 	//CONSOLE_CURSOR_INFO	m_CurInfo;		//	cursor info
 
-	char** buffer;	//	buff
+	vector<vector<string>> m_aBuffer;	//	buff
 };
 
 
