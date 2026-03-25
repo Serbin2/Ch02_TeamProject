@@ -26,15 +26,53 @@ int main()
 		return 0;
 	}
 
-
+	//	그리기 테스트용
+	CGraphic::Pixel pix = CGraphic::Pixel::circle;
+	CGraphic::TextColor tex = static_cast<CGraphic::TextColor>(CGraphic::TextColor::TEXT_BACKGROUND_MAGENTA | CGraphic::TextColor::TEXT_FOREGROUND_CYAN);
+	int x = 15;
+	int y = 15;
+	
 	///	게임 루프
 	while (1)
 	{
+		//	테스트 로직
+		if (_kbhit())	//	이번 프레임에 입력이 있었는지 감지합니다.
+		{	//	입력이 있었다면
+			char input = _getch();	//	입력을 가져옵니다.
+			
+			switch (input)
+			{	//	입력 내용을 확인하고 처리합니다.
+			case 'w':
+				y--;	//	*** 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다. ***
+				break;
+			case 'a':
+				x--;
+				break;
+			case 's':
+				y++;
+				break;
+			case 'd':
+				x++;
+				break;
+			}
+
+			//	참고
+			//← 좌측 방향키 : 75
+			//
+			//→ 우측 방향키 : 77
+			//
+			//↑ 위 방향키 : 72
+			//
+			//↓ 아래 방향키 : 80
+			//
+			//Enter키 : 13
+		}
+
 		pGraphic->StartDraw();
 
 
-
-
+		//	테스트 그리기
+		pGraphic->RenderToBuffer(x, y, pix, tex);
 
 
 		pGraphic->EndDraw();

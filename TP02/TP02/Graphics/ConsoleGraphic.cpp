@@ -28,6 +28,7 @@ CGraphic::CGraphic()
 	//	멤버 변수들을 초기화합니다
 	m_iMaxLog = 7;
 	m_DefaultBackgroundColor = TextColor::TEXT_BACKGROUND_BLUE;
+	m_bOnDraw = false;
 
 	//	게임 레이아웃을 그려둡니다
 	DrawShape();
@@ -81,12 +82,15 @@ void CGraphic::SetCursorPos(int x, int y)
 
 void CGraphic::RenderToBuffer(int x, int y, CGraphic::Pixel type, CGraphic::TextColor color)
 {
-
+	if (!m_bOnDraw)	return;
+	m_aBuffer[y][x].color = color;
+	m_aBuffer[y][x].vertex = type;
 }
 
 //	배경을 그립니다.
 void CGraphic::DrawBackground(CGraphic::TextColor color)
 {
+	if (!m_bOnDraw)	return;
 	Shader s;
 	s.color = color;
 	for (auto& i : m_aBuffer)
@@ -97,12 +101,16 @@ void CGraphic::DrawBackground(CGraphic::TextColor color)
 
 void CGraphic::StartDraw()
 {
+	if (m_bOnDraw)	return;	//	StartDraw를 연속해서 두번 호출하지 마시오
+	m_bOnDraw = true;
 	DrawBackground(m_DefaultBackgroundColor);
 }
 
 //	버퍼를 화면에 그립니다.
 void CGraphic::EndDraw()
 {
+	if (!m_bOnDraw)	return;	//	그리기중이 아닙니다.
+
 	for (int y = 0; y < 30; y++)
 	{
 		for (int x = 0; x < 30; x++)
@@ -122,6 +130,8 @@ void CGraphic::EndDraw()
 	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE|TEXT_BACKGROUND_BLACK);
 	//	더블버퍼링
 	swap(m_aPrevBuffer, m_aBuffer);
+
+	m_bOnDraw = false;	//	그리기가 끝났습니다.
 }
 
 //	로그를 출력합니다
