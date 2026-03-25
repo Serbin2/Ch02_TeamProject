@@ -4,7 +4,7 @@ CGraphic* CGraphic::m_pInstance = nullptr;
 
 CGraphic::CGraphic()
 {
-	//	ÄÜ¼Ö Ãâ·Â¿¡ ´ëÇÑ ±âº» ÇÚµéÀ» °¡Á®¿É´Ï´Ù
+	//	ì½˜ì†” ì¶œë ¥ì— ëŒ€í•œ ê¸°ë³¸ í•¸ë“¤ì„ ê°€ì ¸ì˜µë‹ˆë‹¤
 	m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	buffer = nullptr;
 }

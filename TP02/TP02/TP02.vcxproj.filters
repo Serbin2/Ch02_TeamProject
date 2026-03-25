@@ -16,6 +16,24 @@
     <Filter Include="소스 파일\Graphic">
       <UniqueIdentifier>{85038b94-d629-41d5-bec8-4db043d30962}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{2af0bd67-f7e1-4160-a44b-a8463388c557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\SoundManager">
+      <UniqueIdentifier>{b903345d-1351-4597-97c6-8473f8a6ef7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\ResourceManager">
+      <UniqueIdentifier>{a4023ecb-0233-4311-b262-15c142655400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource">
+      <UniqueIdentifier>{fb512af9-e9d4-4a72-acc7-4bb9e41951f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Sound">
+      <UniqueIdentifier>{21f061c7-95c4-45f8-b67d-658ead93f1c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Utils">
+      <UniqueIdentifier>{1086e3d1-7ebd-4cff-89e4-9a7086df3da1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TP02.cpp">
@@ -23,6 +41,21 @@
     </ClCompile>
     <ClCompile Include="Graphics\ConsoleGraphic.cpp">
       <Filter>소스 파일\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="testmain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Sound\Sound.cpp">
+      <Filter>소스 파일\Resource\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\ResourceBase.cpp">
+      <Filter>소스 파일\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp">
+      <Filter>소스 파일\Manager\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SoundManager\SoundManager.cpp">
+      <Filter>소스 파일\Manager\SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,5 +68,31 @@
     <ClInclude Include="Actor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Common.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Utils.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Sound\Sound.h">
+      <Filter>소스 파일\Resource\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ResourceBase.h">
+      <Filter>소스 파일\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ResourceManager\ResourceManager.h">
+      <Filter>소스 파일\Manager\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SoundManager\SoundManager.h">
+      <Filter>소스 파일\Manager\SoundManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TP02.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
