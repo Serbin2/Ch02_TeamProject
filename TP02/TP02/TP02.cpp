@@ -1,4 +1,4 @@
-//	Window 11 이상의 콘솔창은 콘솔 창 크기 강제 조절이 안됩니다.
+﻿//	Window 11 이상의 콘솔창은 콘솔 창 크기 강제 조절이 안됩니다.
 //	콘솔 창의 설정에서 기본 시작 크기를 조정해서 게임플레이의 적당한 크기를 미리 설정하고 다시 실행해주세요.
 //	260325 지호나
 
@@ -31,7 +31,7 @@ int main()
 	CGraphic::TextColor tex = static_cast<CGraphic::TextColor>(CGraphic::TextColor::TEXT_BACKGROUND_MAGENTA | CGraphic::TextColor::TEXT_FOREGROUND_CYAN);
 	int x = 15;
 	int y = 15;
-	
+
 	///	게임 루프
 	while (1)
 	{
@@ -39,7 +39,7 @@ int main()
 		if (_kbhit())	//	이번 프레임에 입력이 있었는지 감지합니다.
 		{	//	입력이 있었다면
 			char input = _getch();	//	입력을 가져옵니다.
-			
+
 			switch (input)
 			{	//	입력 내용을 확인하고 처리합니다.
 			case 'w':
@@ -53,6 +53,9 @@ int main()
 				break;
 			case 'd':
 				x++;
+				break;
+			case 'g':
+				pGraphic->AddLog("G키를 눌렀습니다.");
 				break;
 			}
 
@@ -82,7 +85,7 @@ int main()
 	///////////////////////////////////////////////
 	//	게임이 종료되었습니다. 종료처리를 작성해주세요
 	///////////////////////////////////////////////
-	
+
 	CGraphic::Release();
 
 	return 0;

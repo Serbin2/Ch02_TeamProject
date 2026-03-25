@@ -4,19 +4,19 @@ CGraphic* CGraphic::m_pInstance = nullptr;
 
 CGraphic::CGraphic()
 {
-	//	ì½˜ì†” ì¶œë ¥ì— ëŒ€í•œ ê¸°ë³¸ í•¸ë“¤ì„ ê°€ì ¸ì˜µë‹ˆë‹¤
+	//	ÄÜ¼Ö Ãâ·Â¿¡ ´ëÇÑ ±âº» ÇÚµéÀ» °¡Á®¿É´Ï´Ù
 	m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetPixelText();
 	m_iScreenSize = 30;
 	m_iEndOfScreenX = 43;
 	m_iEndOfScreenY = 40;
 
-	//	ì»¤ì„œ íˆ¬ëª…í™”
+	//	Ä¿¼­ Åõ¸íÈ­
 	m_CurInfo.bVisible = 0;
 	m_CurInfo.dwSize = 1;
 	SetConsoleCursorInfo(m_hOP, &m_CurInfo);
 
-	//	ë²„í¼ë¥¼ ì¤€ë¹„í•©ë‹ˆë‹¤
+	//	¹öÆÛ¸¦ ÁØºñÇÕ´Ï´Ù
 	m_aPrevBuffer.resize(30);
 	m_aBuffer.resize(30);
 	for (int i = 0; i < 30; i++)
@@ -25,12 +25,12 @@ CGraphic::CGraphic()
 		m_aBuffer[i].resize(30);
 	}
 
-	//	ë©¤ë²„ ë³€ìˆ˜ë“¤ì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤
+	//	¸â¹ö º¯¼öµéÀ» ÃÊ±âÈ­ÇÕ´Ï´Ù
 	m_iMaxLog = 7;
 	m_DefaultBackgroundColor = TextColor::TEXT_BACKGROUND_BLUE;
 	m_bOnDraw = false;
 
-	//	ê²Œì„ ë ˆì´ì•„ì›ƒì„ ê·¸ë ¤ë‘¡ë‹ˆë‹¤
+	//	°ÔÀÓ ·¹ÀÌ¾Æ¿ôÀ» ±×·ÁµÓ´Ï´Ù
 	DrawShape();
 }
 
@@ -40,7 +40,7 @@ CGraphic::~CGraphic()
 }
 
 void CGraphic::SetPixelText()
-{//	ì—¬ê¸°ì„œ í”½ì…€ì˜ í˜•íƒœë¥¼ ì •ì˜í•˜ì„¸ìš”
+{//	¿©±â¼­ ÇÈ¼¿ÀÇ ÇüÅÂ¸¦ Á¤ÀÇÇÏ¼¼¿ä
 	m_sPixels[blank] = "  ";
 	m_sPixels[square] = "HH";
 	m_sPixels[triangle] = "<>";
@@ -51,7 +51,7 @@ void CGraphic::SetPixelText()
 }
 
 CGraphic* CGraphic::GetInstance()
-{//	ì‹±ê¸€í†¤ êµ¬ì¡°ì…ë‹ˆë‹¤
+{//	½Ì±ÛÅæ ±¸Á¶ÀÔ´Ï´Ù
 	if (m_pInstance == nullptr)
 	{
 		m_pInstance = new CGraphic();
@@ -61,7 +61,7 @@ CGraphic* CGraphic::GetInstance()
 }
 
 void CGraphic::Release()
-{//	ì‚¬ìš©ì´ ì¢…ë£Œë˜ë©´ ì‚­ì œí•´ì£¼ì„¸ìš”
+{//	»ç¿ëÀÌ Á¾·áµÇ¸é »èÁ¦ÇØÁÖ¼¼¿ä
 	if (m_pInstance == nullptr)
 	{
 		return;
@@ -71,9 +71,9 @@ void CGraphic::Release()
 	m_pInstance = nullptr;
 }
 
-//	ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ë³€ê²½í•©ë‹ˆë‹¤
+//	Ä¿¼­ÀÇ À§Ä¡¸¦ º¯°æÇÕ´Ï´Ù
 void CGraphic::SetCursorPos(int x, int y)
-{	
+{
 	COORD cdPos;
 	cdPos.X = x * 2;
 	cdPos.Y = y;
@@ -87,7 +87,7 @@ void CGraphic::RenderToBuffer(int x, int y, CGraphic::Pixel type, CGraphic::Text
 	m_aBuffer[y][x].vertex = type;
 }
 
-//	ë°°ê²½ì„ ê·¸ë¦½ë‹ˆë‹¤.
+//	¹è°æÀ» ±×¸³´Ï´Ù.
 void CGraphic::DrawBackground(CGraphic::TextColor color)
 {
 	if (!m_bOnDraw)	return;
@@ -101,62 +101,62 @@ void CGraphic::DrawBackground(CGraphic::TextColor color)
 
 void CGraphic::StartDraw()
 {
-	if (m_bOnDraw)	return;	//	StartDrawë¥¼ ì—°ì†í•´ì„œ ë‘ë²ˆ í˜¸ì¶œí•˜ì§€ ë§ˆì‹œì˜¤
+	if (m_bOnDraw)	return;	//	StartDraw¸¦ ¿¬¼ÓÇØ¼­ µÎ¹ø È£ÃâÇÏÁö ¸¶½Ã¿À
 	m_bOnDraw = true;
 	DrawBackground(m_DefaultBackgroundColor);
 }
 
-//	ë²„í¼ë¥¼ í™”ë©´ì— ê·¸ë¦½ë‹ˆë‹¤.
+//	¹öÆÛ¸¦ È­¸é¿¡ ±×¸³´Ï´Ù.
 void CGraphic::EndDraw()
 {
-	if (!m_bOnDraw)	return;	//	ê·¸ë¦¬ê¸°ì¤‘ì´ ì•„ë‹™ë‹ˆë‹¤.
+	if (!m_bOnDraw)	return;	//	±×¸®±âÁßÀÌ ¾Æ´Õ´Ï´Ù.
 
 	for (int y = 0; y < 30; y++)
 	{
 		for (int x = 0; x < 30; x++)
 		{
-			//	ì´ì „ í™”ë©´ê³¼ ê°™ì€ ë‚´ìš©ì´ë©´ ë„˜ì–´ê°‘ë‹ˆë‹¤
+			//	ÀÌÀü È­¸é°ú °°Àº ³»¿ëÀÌ¸é ³Ñ¾î°©´Ï´Ù
 			if (m_aPrevBuffer[y][x].vertex == m_aBuffer[y][x].vertex &&
 				m_aPrevBuffer[y][x].color == m_aBuffer[y][x].color)	continue;
 
-			//	í”½ì…€ì„ ê·¸ë¦½ë‹ˆë‹¤
+			//	ÇÈ¼¿À» ±×¸³´Ï´Ù
 			SetCursorPos(x + 1, y + 1);
 			SetConsoleTextAttribute(m_hOP, m_aBuffer[y][x].color);
 			cout << m_sPixels[m_aBuffer[y][x].vertex];
 		}
 	}
 
-	//	ê·¸ë¦¬ê¸°ê°€ ëë‚˜ë©´ ìƒ‰ìƒì„ ì´ˆê¸°í™” í•©ë‹ˆë‹¤
-	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE|TEXT_BACKGROUND_BLACK);
-	//	ë”ë¸”ë²„í¼ë§
+	//	±×¸®±â°¡ ³¡³ª¸é »ö»óÀ» ÃÊ±âÈ­ ÇÕ´Ï´Ù
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
+	//	´õºí¹öÆÛ¸µ
 	swap(m_aPrevBuffer, m_aBuffer);
 
-	m_bOnDraw = false;	//	ê·¸ë¦¬ê¸°ê°€ ëë‚¬ìŠµë‹ˆë‹¤.
+	m_bOnDraw = false;	//	±×¸®±â°¡ ³¡³µ½À´Ï´Ù.
 }
 
-//	ë¡œê·¸ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤
+//	·Î±×¸¦ Ãâ·ÂÇÕ´Ï´Ù
 void CGraphic::AddLog(string str)
-{	
-	//	ë¡œê·¸ì°½ì„ ì§€ì›ë‹ˆë‹¤.
+{
+	//	·Î±×Ã¢À» Áö¿ó´Ï´Ù.
 	ClearLog();
 
-	//	ìƒˆ ë¡œê·¸ë¥¼ íì— ë„£ìŠµë‹ˆë‹¤
+	//	»õ ·Î±×¸¦ Å¥¿¡ ³Ö½À´Ï´Ù
 	m_aLog.push_back(str);
-	while(m_aLog.size() > m_iMaxLog)
-	{	//	íê°€ ë„˜ì¹˜ë©´ ì˜¤ë˜ëœ ë¡œê·¸ë¥¼ ì œê±°í•©ë‹ˆë‹¤.
+	while (m_aLog.size() > m_iMaxLog)
+	{	//	Å¥°¡ ³ÑÄ¡¸é ¿À·¡µÈ ·Î±×¸¦ Á¦°ÅÇÕ´Ï´Ù.
 		m_aLog.pop_front();
 	}
 
-	//	ë¡œê·¸ë¥¼ ë‹¤ì‹œ ì¶œë ¥í•©ë‹ˆë‹¤.
+	//	·Î±×¸¦ ´Ù½Ã Ãâ·ÂÇÕ´Ï´Ù.
 	int logSize = (int)m_aLog.size();
 	for (int i = 0; i < logSize; i++)
 	{
-		SetCursorPos( 1, m_iScreenSize + 2 + i);
+		SetCursorPos(1, m_iScreenSize + 2 + i);
 		cout << m_aLog[i];
 	}
 }
 
-//	ê²Œì„ í‹€ì„ ê·¸ë¦½ë‹ˆë‹¤.
+//	°ÔÀÓ Æ²À» ±×¸³´Ï´Ù.
 void CGraphic::DrawShape()
 {
 	string line;
@@ -182,7 +182,7 @@ void CGraphic::DrawShape()
 	}
 }
 
-//	ë¡œê·¸ ì˜ì—­ì„ ì§€ì›ë‹ˆë‹¤(í…Œë‘ë¦¬ ì œì™¸)
+//	·Î±× ¿µ¿ªÀ» Áö¿ó´Ï´Ù(Å×µÎ¸® Á¦¿Ü)
 void CGraphic::ClearLog()
 {
 	string str;
