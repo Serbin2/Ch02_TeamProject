@@ -8,19 +8,28 @@ CGraphic::CGraphic()
 	m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetPixelText();
 	m_iScreenSize = 30;
+	m_iEndOfScreenX = 43;
+	m_iEndOfScreenY = 40;
 
 	//	커서 투명화
 	m_CurInfo.bVisible = 0;
 	m_CurInfo.dwSize = 1;
 	SetConsoleCursorInfo(m_hOP, &m_CurInfo);
-	
-	//	버퍼를 준비합니다.
+
+	//	버퍼를 준비합니다
+	m_aPrevBuffer.resize(30);
+	m_aBuffer.resize(30);
 	for (int i = 0; i < 30; i++)
 	{
-		buffer[i].resize(61, ' ');
+		m_aPrevBuffer[i].resize(30);
+		m_aBuffer[i].resize(30);
 	}
 
-	m_iMaxLog = 5;
+	//	멤버 변수들을 초기화합니다
+	m_iMaxLog = 7;
+	m_DefaultBackgroundColor = TextColor::TEXT_BACKGROUND_BLUE;
+
+	//	게임 레이아웃을 그려둡니다
 	DrawShape();
 }
 
@@ -75,139 +84,105 @@ void CGraphic::RenderToBuffer(int x, int y, CGraphic::Pixel type, CGraphic::Text
 
 }
 
-//	버퍼를 화면에 그립니다.
-void CGraphic::Draw()
+//	배경을 그립니다.
+void CGraphic::DrawBackground(CGraphic::TextColor color)
 {
-	for (int i = 0; i < 30; i++)
+	Shader s;
+	s.color = color;
+	for (auto& i : m_aBuffer)
 	{
-		SetCursorPos(1, i + 1);
-		cout << buffer[i];
+		fill(i.begin(), i.end(), s);
 	}
 }
 
-void CGraphic::AddLog(string str)
+void CGraphic::StartDraw()
 {
+	DrawBackground(m_DefaultBackgroundColor);
+}
+
+//	버퍼를 화면에 그립니다.
+void CGraphic::EndDraw()
+{
+	for (int y = 0; y < 30; y++)
+	{
+		for (int x = 0; x < 30; x++)
+		{
+			//	이전 화면과 같은 내용이면 넘어갑니다
+			if (m_aPrevBuffer[y][x].vertex == m_aBuffer[y][x].vertex &&
+				m_aPrevBuffer[y][x].color == m_aBuffer[y][x].color)	continue;
+
+			//	픽셀을 그립니다
+			SetCursorPos(x + 1, y + 1);
+			SetConsoleTextAttribute(m_hOP, m_aBuffer[y][x].color);
+			cout << m_sPixels[m_aBuffer[y][x].vertex];
+		}
+	}
+
+	//	그리기가 끝나면 색상을 초기화 합니다
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE|TEXT_BACKGROUND_BLACK);
+	//	더블버퍼링
+	swap(m_aPrevBuffer, m_aBuffer);
+}
+
+//	로그를 출력합니다
+void CGraphic::AddLog(string str)
+{	
+	//	로그창을 지웁니다.
 	ClearLog();
+
+	//	새 로그를 큐에 넣습니다
 	m_aLog.push_back(str);
 	while(m_aLog.size() > m_iMaxLog)
-	{
+	{	//	큐가 넘치면 오래된 로그를 제거합니다.
 		m_aLog.pop_front();
 	}
 
+	//	로그를 다시 출력합니다.
 	int logSize = (int)m_aLog.size();
 	for (int i = 0; i < logSize; i++)
 	{
-		SetCursorPos( 1, m_iScreenSize + 4 + i);
+		SetCursorPos( 1, m_iScreenSize + 2 + i);
 		cout << m_aLog[i];
 	}
 }
 
-void CGraphic::SetMaxLog(int max)
-{
-	m_iMaxLog = max;
-	DrawLog();
-}
-
+//	게임 틀을 그립니다.
 void CGraphic::DrawShape()
 {
-	DrawMainScreen();
-	DrawUI();
-	DrawLog();
-}
-
-void CGraphic::DrawMainScreen()
-{
+	string line;
+	line.resize(m_iEndOfScreenX * 2 + 2, ' ');
 	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_WHITE);
-	// 창 테두리 시작 위치
-	point start;
-	// 창 테두리 끝 위치
-	point end;
-	start.Y = 0;
+	SetCursorPos(0, 0);
+	cout << line;
+	SetCursorPos(0, m_iScreenSize + 1);
+	cout << line;
+	SetCursorPos(0, m_iEndOfScreenY);
+	cout << line;
 
-	end.Y = m_iScreenSize + 2;
-	start.X = 0;
-	end.X = m_iScreenSize + 2;
-
-	for (int x = start.X; x < end.X; x++)
+	for (int i = 1; i < m_iEndOfScreenY; i++)
 	{
-		SetCursorPos(x, start.Y);
+		SetCursorPos(0, i);
 		cout << m_sPixels[Pixel::blank];
-		SetCursorPos(x, end.Y);
+		SetCursorPos(m_iEndOfScreenX, i);
+		cout << m_sPixels[Pixel::blank];
+
+		if (i > m_iScreenSize + 1)	continue;
+		SetCursorPos(m_iScreenSize + 1, i);
 		cout << m_sPixels[Pixel::blank];
 	}
-	for (int y = start.Y; y <= end.Y; y++)
-	{
-		SetCursorPos(start.X, y);
-		cout << m_sPixels[Pixel::blank];
-		SetCursorPos(end.X, y);
-		cout << m_sPixels[Pixel::blank];
-	}
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK | TextColor::TEXT_FOREGROUND_WHITE);
 }
 
-void CGraphic::DrawUI()
-{
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_WHITE);
-	//	ui 창 테두리 시작 위치
-	point start;
-	//	ui 창 테두리 끝 위치
-	point end;
-	start.Y = 0;
-
-	end.Y = m_iScreenSize + 2;
-	start.X = m_iScreenSize + 3;
-	end.X = m_iScreenSize + 2 + 10 + 2;
-
-	for (int x = start.X; x < end.X; x++)
-	{
-		SetCursorPos(x, start.Y);
-		cout << m_sPixels[Pixel::blank];
-		SetCursorPos(x, end.Y);
-		cout << m_sPixels[Pixel::blank];
-	}
-	for (int y = start.Y; y <= end.Y; y++)
-	{
-		SetCursorPos(start.X, y);
-		cout << m_sPixels[Pixel::blank];
-		SetCursorPos(end.X, y);
-		cout << m_sPixels[Pixel::blank];
-	}
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK | TextColor::TEXT_FOREGROUND_WHITE);
-}
-
+//	로그 영역을 지웁니다(테두리 제외)
 void CGraphic::ClearLog()
 {
 	string str;
-	str.resize(100, ' ');
+	str.resize((m_iEndOfScreenX - 1) * 2, ' ');
 
 	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK);
-	for (int i = m_iScreenSize + 4; i <= m_iScreenSize + m_iMaxLog + 3; i++)
+	for (int i = m_iScreenSize + 3; i <= m_iScreenSize + m_iMaxLog + 2; i++)
 	{
-		SetCursorPos(0, i);
+		SetCursorPos(1, i);
 		cout << str;
-	}
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK | TextColor::TEXT_FOREGROUND_WHITE);
-}
-
-void CGraphic::DrawLog()
-{
-	ClearLog();
-	//	로그 창 테두리 시작 위치
-	point start;
-	//	로그 창 테두리 끝 위치
-	point end;
-	start.Y = m_iScreenSize + 3;
-	end.Y = start.Y + m_iMaxLog + 1;
-	start.X = 0;
-	end.X = m_iScreenSize + 2 + 10 + 2;
-
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_WHITE);
-	for (int x = start.X; x <= end.X; x++)
-	{
-		SetCursorPos(x, start.Y);
-		cout << m_sPixels[Pixel::blank];
-		SetCursorPos(x, end.Y);
-		cout << m_sPixels[Pixel::blank];
 	}
 	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK | TextColor::TEXT_FOREGROUND_WHITE);
 }

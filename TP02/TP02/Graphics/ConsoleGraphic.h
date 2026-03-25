@@ -55,6 +55,7 @@ public:
 		TEXT_BACKGROUND_GRAY = TEXT_BACKGROUND_RED | TEXT_BACKGROUND_BLUE | TEXT_BACKGROUND_GREEN,
 		TEXT_BACKGROUND_WHITE = TEXT_BACKGROUND_GRAY | BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_BLACK = 0,
+
 	}TextColor;
 
 	static CGraphic* GetInstance();
@@ -63,12 +64,17 @@ public:
 	string GetPixelTypeToString(Pixel type) { return m_sPixels[type]; };
 
 	void RenderToBuffer(int x, int y, Pixel type, TextColor color);
+	void DrawBackground(TextColor color);
+
+	//	버퍼를 화면에 출력합니다
+	//	각 프레임의 시작에 StartDraw()를 호출합니다.
+	//	각 프레임의 끝에 EndDraw()를 호출합니다.
+	void StartDraw();
+	void EndDraw();
 
 	//	로그를 추가합니다
 	void AddLog(string str);
-	void SetMaxLog(int max);
-	//	버퍼를 화면에 출력합니다
-	void Draw();
+	
 
 private:
 
@@ -83,27 +89,28 @@ private:
 
 	//	각 화면 영역의 테두리를 그립니다
 	void DrawShape();
-	void DrawMainScreen();
-	void DrawUI();
 	void ClearLog();
-	void DrawLog();
 
 protected:
 
 	//	픽셀 출력용 스트링
 	string m_sPixels[Pixel::PixelMax];
-	string buffer[30];
 	
 	static CGraphic* m_pInstance;
 
 	HANDLE m_hOP;						//	console output handle
 	CONSOLE_CURSOR_INFO	m_CurInfo;		//	cursor info
 
-	vector<vector<Shader>> m_aBuffer;	//	buff
+	vector<vector<Shader>> m_aPrevBuffer;	//	buff
+	vector<vector<Shader>> m_aBuffer;	//	double Buffering
 	int m_iScreenSize;
+	int m_iEndOfScreenX;
+	int m_iEndOfScreenY;
 
 	deque<string> m_aLog;
 	int m_iMaxLog;		//	출력할 수 있는 최대 로그 메세지 수 입니다.
+
+	TextColor m_DefaultBackgroundColor;	//	기본 배경 색입니다.
 };
 
 

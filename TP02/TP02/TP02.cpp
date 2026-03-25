@@ -26,11 +26,18 @@ int main()
 		return 0;
 	}
 
+
 	///	게임 루프
 	while (1)
 	{
-		
-		pGraphic->Draw();
+		pGraphic->StartDraw();
+
+
+
+
+
+
+		pGraphic->EndDraw();
 	}
 
 
