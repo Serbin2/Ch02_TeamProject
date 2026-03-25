@@ -3,6 +3,8 @@
 
 #include "Graphics/ConsoleGraphic.h"
 
+// [2026-03-25, 박재현] 권한 테스트
+
 int main()
 {
     std::cout << "Hello World!\n";
