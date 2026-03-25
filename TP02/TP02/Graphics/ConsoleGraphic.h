@@ -2,6 +2,7 @@
 //	콘솔 창 위에 그래픽스를 표현하기 위한 클래스입니다
 
 #include "../Standard.h"
+#include <deque>
 
 using namespace std;
 
@@ -11,6 +12,14 @@ private:
 	CGraphic();
 	~CGraphic();
 
+	struct point
+	{
+		int X;
+		int Y;
+	};
+
+public:
+
 	typedef enum
 	{
 		blank = 0,
@@ -19,7 +28,7 @@ private:
 		circle,
 		horizontalLine,
 		verticalLine,
-
+		cross,
 
 
 		PixelMax,
@@ -27,50 +36,80 @@ private:
 
 	typedef enum
 	{
-		TEXT_FOREGROUND_BLUE		=	FOREGROUND_BLUE,
-		TEXT_FOREGROUND_GREEN		=	FOREGROUND_GREEN,
-		TEXT_FOREGROUND_RED			=	FOREGROUND_RED,
-		TEXT_FOREGROUND_YELLOW		=	FOREGROUND_RED|FOREGROUND_GREEN,
-		TEXT_FOREGROUND_MAGENTA		=	FOREGROUND_BLUE|FOREGROUND_RED,
-		TEXT_FOREGROUND_CYAN		=	FOREGROUND_BLUE|FOREGROUND_GREEN,
-		TEXT_FOREGROUND_GRAY		=	TEXT_FOREGROUND_RED|TEXT_FOREGROUND_BLUE|TEXT_FOREGROUND_GREEN,
-		TEXT_FOREGROUND_WHITE		=	TEXT_FOREGROUND_GRAY|FOREGROUND_INTENSITY,
-		TEXT_FOREGROUND_BLACK		=	0,
-											
-		TEXT_BACKGROUND_BLUE		=	BACKGROUND_BLUE,
-		TEXT_BACKGROUND_GREEN		=	BACKGROUND_GREEN,
-		TEXT_BACKGROUND_RED			=	BACKGROUND_RED,
-		TEXT_BACKGROUND_YELLOW		=	BACKGROUND_RED|BACKGROUND_GREEN,
-		TEXT_BACKGROUND_MAGENTA		=	BACKGROUND_BLUE|BACKGROUND_RED,
-		TEXT_BACKGROUND_CYAN		=	BACKGROUND_BLUE|BACKGROUND_GREEN,
-		TEXT_BACKGROUND_GRAY		=	TEXT_BACKGROUND_RED|TEXT_BACKGROUND_BLUE|TEXT_BACKGROUND_GREEN,
-		TEXT_BACKGROUND_WHITE		=	TEXT_BACKGROUND_GRAY|BACKGROUND_INTENSITY,
-		TEXT_BACKGROUND_BLACK		=	0,
+		TEXT_FOREGROUND_BLUE = FOREGROUND_BLUE,
+		TEXT_FOREGROUND_GREEN = FOREGROUND_GREEN,
+		TEXT_FOREGROUND_RED = FOREGROUND_RED,
+		TEXT_FOREGROUND_YELLOW = FOREGROUND_RED | FOREGROUND_GREEN,
+		TEXT_FOREGROUND_MAGENTA = FOREGROUND_BLUE | FOREGROUND_RED,
+		TEXT_FOREGROUND_CYAN = FOREGROUND_BLUE | FOREGROUND_GREEN,
+		TEXT_FOREGROUND_GRAY = TEXT_FOREGROUND_RED | TEXT_FOREGROUND_BLUE | TEXT_FOREGROUND_GREEN,
+		TEXT_FOREGROUND_WHITE = TEXT_FOREGROUND_GRAY | FOREGROUND_INTENSITY,
+		TEXT_FOREGROUND_BLACK = 0,
+
+		TEXT_BACKGROUND_BLUE = BACKGROUND_BLUE,
+		TEXT_BACKGROUND_GREEN = BACKGROUND_GREEN,
+		TEXT_BACKGROUND_RED = BACKGROUND_RED,
+		TEXT_BACKGROUND_YELLOW = BACKGROUND_RED | BACKGROUND_GREEN,
+		TEXT_BACKGROUND_MAGENTA = BACKGROUND_BLUE | BACKGROUND_RED,
+		TEXT_BACKGROUND_CYAN = BACKGROUND_BLUE | BACKGROUND_GREEN,
+		TEXT_BACKGROUND_GRAY = TEXT_BACKGROUND_RED | TEXT_BACKGROUND_BLUE | TEXT_BACKGROUND_GREEN,
+		TEXT_BACKGROUND_WHITE = TEXT_BACKGROUND_GRAY | BACKGROUND_INTENSITY,
+		TEXT_BACKGROUND_BLACK = 0,
 	}TextColor;
-
-	//	픽셀 출력용 스트링
-	string m_sPixels[Pixel::PixelMax];
-
-	void SetPixelText();
-public:
 
 	static CGraphic* GetInstance();
 	static void Release();
-	void SetCursorPos(int x, int y);
-	void SetScreenSize(int x, int y);
-	void PrintText(string str);
-	string GetPixelType(Pixel type);
 
-	void Render();
+	void SetScreenSize(int x, int y);
+	string GetPixelTypeToString(Pixel type) { return m_sPixels[type]; };
+
+	void RenderToBuffer(int x, int y, Pixel type, TextColor color);
+
+	//	로그를 추가합니다
+	void AddLog(string str);
+	void SetMaxLog(int max);
+	//	버퍼를 화면에 출력합니다
+	void Draw();
+
+	int GetScreenSizeX() { return m_iScreenSizeX; };
+	int GetScreenSizeY() { return m_iScreenSizeY; };
+
+private:
+
+	struct Shader
+	{
+		Pixel vertex = blank;
+		TextColor color = TEXT_BACKGROUND_BLACK;
+	};
+
+	void SetPixelText();
+	void SetCursorPos(int x, int y);
+
+	//	각 화면 영역의 테두리를 그립니다
+	void DrawShape();
+	void DrawMainScreen();
+	void DrawUI();
+	void ClearLog();
+	void DrawLog();
 
 protected:
+
+	//	픽셀 출력용 스트링
+	string m_sPixels[Pixel::PixelMax];
+	string buffer[30];
 	
 	static CGraphic* m_pInstance;
 
 	HANDLE m_hOP;						//	console output handle
-	//CONSOLE_CURSOR_INFO	m_CurInfo;		//	cursor info
+	CONSOLE_CURSOR_INFO	m_CurInfo;		//	cursor info
 
-	vector<vector<string>> m_aBuffer;	//	buff
+	vector<vector<Shader>> m_aBuffer;	//	buff
+	int m_iScreenSizeX;
+	int m_iScreenSizeY;
+	int m_iScreenSize;
+
+	deque<string> m_aLog;
+	int m_iMaxLog;		//	출력할 수 있는 최대 로그 메세지 수 입니다.
 };
 
 

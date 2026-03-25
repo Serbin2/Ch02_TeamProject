@@ -22,20 +22,15 @@ int main()
 	CGraphic* pGraphic = CGraphic::GetInstance();
 
 	if (pGraphic == nullptr)
-	{
+	{	//	엔진이 없습니다
 		return 0;
 	}
 
-	std::cout << "Engine roaded" << std::endl;
-	
-	pGraphic->SetCursorPos(10, 20);
-	string str = "test\0";
-	pGraphic->PrintText(str);
 	///	게임 루프
-	pGraphic->Render();
-	while (0)
+	while (1)
 	{
-
+		
+		pGraphic->Draw();
 	}
 
 
