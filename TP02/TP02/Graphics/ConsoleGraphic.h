@@ -1,5 +1,5 @@
-#pragma once
-//	�ܼ� â ���� �׷��Ƚ��� ǥ���ϱ� ���� Ŭ�����Դϴ�
+﻿#pragma once
+//	�ܼ� â ���� �׷��Ƚ��� ǥ���ϱ� ���� Ŭ�����Դϴ�
 
 #include "../Standard.h"
 
@@ -51,3 +51,6 @@ protected:
 
 	char** buffer;	//	buff
 };
+
+
+// 한글 주석 테스트 한글 주석 테스트 / 특수문자 테스트 !@#$ #$%^&%^& / 영어 주석 테스트 asdfasdfasdfasdf
