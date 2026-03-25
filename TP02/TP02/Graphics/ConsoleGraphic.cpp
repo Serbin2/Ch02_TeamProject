@@ -24,6 +24,17 @@ CGraphic* CGraphic::GetInstance()
 	return m_pInstance;
 }
 
+void CGraphic::Release()
+{
+	if (m_pInstance == nullptr)
+	{
+		return;
+	}
+
+	delete m_pInstance;
+	m_pInstance = nullptr;
+}
+
 void CGraphic::SetCursorPos(int x, int y)
 {
 

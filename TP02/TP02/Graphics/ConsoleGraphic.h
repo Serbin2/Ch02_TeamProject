@@ -37,7 +37,7 @@ private:
 public:
 
 	static CGraphic* GetInstance();
-
+	static void Release();
 	void SetCursorPos(int x, int y);
 
 
