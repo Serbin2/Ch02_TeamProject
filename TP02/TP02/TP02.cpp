@@ -18,14 +18,84 @@ int main()
 
 	// 메인화면
 
-	COORD pos = { 10, 5 }; // x=10, y=5
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 
-	const char* cText1 = "";
-	
+	const char* cTitle = R"(██╗   ██╗███╗   ██╗████████╗██╗████████╗██╗     ███████╗██████╗ 
+██║   ██║████╗  ██║╚══██╔══╝██║╚══██╔══╝██║     ██╔════╝██╔══██╗
+██║   ██║██╔██╗ ██║   ██║   ██║   ██║   ██║     █████╗  ██║  ██║
+██║   ██║██║╚██╗██║   ██║   ██║   ██║   ██║     ██╔══╝  ██║  ██║
+╚██████╔╝██║ ╚████║   ██║   ██║   ██║   ███████╗███████╗██████╔╝
+ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝   ╚═╝   ╚══════╝╚══════╝╚═════╝ 
+
+██████╗ ██████╗  ██████╗ 
+██╔══██╗██╔══██╗██╔════╝ 
+██████╔╝██████╔╝██║  ███╗
+██╔══██╗██╔═══╝ ██║   ██║
+██║  ██║██║     ╚██████╔╝
+╚═╝  ╚═╝╚═╝      ╚═════╝ )";
 
 
-	std::cout << mainScreen;
+	const char* cMenu1 = R"(
+┌──────────────────┐
+│    ▶ NEW GAME    │
+│      CREDIT      │
+│      EXIT        │
+└──────────────────┘
+)";
+
+	const char* cMenu2 = R"(
+┌──────────────────┐
+│      NEW GAME    │
+│    ▶ CREDIT      │
+│      EXIT        │
+└──────────────────┘
+)";
+
+	const char* cMenu3 = R"(
+┌──────────────────┐
+│      NEW GAME    │
+│      CREDIT      │
+│    ▶ EXIT        │
+└──────────────────┘
+)";
+
+	int iCount = 0;
+
+	while (true) {
+		system("cls");
+
+		if (iCount == 0) {
+			std::cout << cTitle;
+			std::cout << cMenu1;
+		}
+		else if (iCount == 1) {
+			std::cout << cTitle;
+			std::cout << cMenu2;
+		}
+		else {
+			std::cout << cTitle;
+			std::cout << cMenu3;
+		}
+
+		int in = _getch();
+
+		if (in == 27) break;
+
+		if (in == 224 || in == 0) {
+			in = _getch();
+
+			if (in == 72) {
+				iCount--;
+				if (iCount < 0) iCount = 2;
+			}
+			else if (in == 80) {
+				iCount++;
+				if (iCount > 2) iCount = 0;
+			}
+		}
+	}
+
+
+
 
 	///////////////////////////////////////////////
 	//	여기서부터 게임 로직을 작성합니다
