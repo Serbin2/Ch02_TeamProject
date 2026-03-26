@@ -5,7 +5,10 @@
 #include "Graphics/ConsoleGraphic.h"
 #include "Input/Input.h"
 #include "Time/Timer.h"
+
 #include "Graphics//Interface.h"
+#include "Character/Player.h"
+
 
 // [2026-03-25, 박재현] 권한 테스트 2
 
@@ -39,11 +42,7 @@ int main()
 		return 0;
 	}
 
-	//	그리기 테스트용
-	int pix = Pixel::square;
-	int tex = TEXT_BACKGROUND_MAGENTA|TEXT_FOREGROUND_CYAN;
-	int x = 15;
-	int y = 15;
+	CPlayer* pPlayer = new CPlayer(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 
 
 	UI.AddUI(0, "FPS Count : ");
@@ -87,15 +86,15 @@ int main()
 		//↓ 아래 방향키 : VK_DOWN
 		//Enter키 : VK_RETURN
 
+		double DeltaTime = Timer.Update();
+		pInput->Update();	//	입력 갱신
+
+
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
 
-
-
-		//	테스트 그리기
-		pGraphic->RenderToBuffer(x, y, pix, tex);
-
+		pPlayer->Tick(DeltaTime);
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
