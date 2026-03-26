@@ -37,13 +37,11 @@
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{1086e3d1-7ebd-4cff-89e4-9a7086df3da1}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
     <Filter Include="소스 파일\Boss">
       <UniqueIdentifier>{2f624a61-4a13-4045-a6e5-0ed0f2783985}</UniqueIdentifier>
-=======
+    </Filter>
     <Filter Include="소스 파일\Time">
       <UniqueIdentifier>{ca0d2c2a-8316-468e-bdfb-0ddc8ec30192}</UniqueIdentifier>
->>>>>>> main
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -68,16 +66,14 @@
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp">
       <Filter>소스 파일\Manager\SoundManager</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="testMain.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Boss\Boss.cpp">
       <Filter>소스 파일\Boss</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="Time\Timer.cpp">
       <Filter>소스 파일\Time</Filter>
->>>>>>> main
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +85,6 @@
     </ClInclude>
     <ClInclude Include="Input\Input.h">
       <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor.h">
-      <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
@@ -114,13 +107,11 @@
     <ClInclude Include="Manager\SoundManager\SoundManager.h">
       <Filter>소스 파일\Manager\SoundManager</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Boss\Boss.h">
       <Filter>소스 파일\Boss</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="Time\Timer.h">
       <Filter>소스 파일\Time</Filter>
->>>>>>> main
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

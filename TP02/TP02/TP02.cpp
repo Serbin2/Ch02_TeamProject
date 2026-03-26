@@ -14,17 +14,12 @@
 int main()
 {
 	SetConsoleOutputCP(CP_UTF8);
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 	std::cout << "윈도우 10 이상의 콘솔창은 코드에서의 콘솔 창 크기 강제 조절이 동작하지 않을 수 있습니다.\n";
 	std::cout << "게임을 시작하기 전에 콘솔 창 크기를 적절하게 조절 한 후 진행하시기 바랍니다.\n";
 	std::cout << "아무 키를 눌러 계속합니다.\n";
 
 	char in = _getch();
-
-	
 
 	///////////////////////////////////////////////
 	//	여기서부터 게임 로직을 작성합니다
@@ -51,9 +46,6 @@ int main()
 	int x = 15;
 	int y = 15;
 
-<<<<<<< HEAD
-
-
 	// 사운드 테스트
 	{
 		HWND hHwnd = GetConsoleWindow();
@@ -66,14 +58,13 @@ int main()
 		GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav");
 		{
 			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
-			std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
-			pSound->Play(true);
+			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
+			//pSound->Play(true);
 		}
 	}
 
-=======
 	Timer.Start();
->>>>>>> main
+
 	///	게임 루프
 	while (1)
 	{
