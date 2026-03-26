@@ -34,7 +34,7 @@ int main()
 	}
 
 	//	그리기 테스트용
-	CGraphic::Pixel pix = CGraphic::Pixel::circle;
+	CGraphic::Pixel pix = CGraphic::Pixel::square;
 	CGraphic::TextColor tex = static_cast<CGraphic::TextColor>(CGraphic::TextColor::TEXT_BACKGROUND_MAGENTA | CGraphic::TextColor::TEXT_FOREGROUND_CYAN);
 	int x = 15;
 	int y = 15;

@@ -1,5 +1,5 @@
 #pragma once
-//	�ܼ� â ���� �׷��Ƚ��� ǥ���ϱ� ���� Ŭ�����Դϴ�
+//	콘솔 창 위에 그래픽스를 표현하기 위한 클래스입니다
 
 #include "../Standard.h"
 #include <deque>
@@ -32,46 +32,58 @@ public:
 
 
 		PixelMax,
-	}Pixel;		//	�̸� �����ؾ��ϴ� �ȼ� �����Դϴ�.
+	}Pixel;		//	미리 정의해야하는 픽셀 모양들입니다.
 
 	typedef enum
 	{
 		TEXT_FOREGROUND_BLUE = FOREGROUND_BLUE,
+		TEXT_FOREGROUND_BLUE_INT = FOREGROUND_BLUE|FOREGROUND_INTENSITY,
 		TEXT_FOREGROUND_GREEN = FOREGROUND_GREEN,
+		TEXT_FOREGROUND_GREEN_INT = FOREGROUND_GREEN|FOREGROUND_INTENSITY,
 		TEXT_FOREGROUND_RED = FOREGROUND_RED,
+		TEXT_FOREGROUND_RED_INT = FOREGROUND_RED|FOREGROUND_INTENSITY,
 		TEXT_FOREGROUND_YELLOW = FOREGROUND_RED | FOREGROUND_GREEN,
+		TEXT_FOREGROUND_YELLOW_INT = TEXT_FOREGROUND_YELLOW|FOREGROUND_INTENSITY,
 		TEXT_FOREGROUND_MAGENTA = FOREGROUND_BLUE | FOREGROUND_RED,
+		TEXT_FOREGROUND_MAGENTA_INT = TEXT_FOREGROUND_MAGENTA|FOREGROUND_INTENSITY,
 		TEXT_FOREGROUND_CYAN = FOREGROUND_BLUE | FOREGROUND_GREEN,
+		TEXT_FOREGROUND_CYAN_INT = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY,
 		TEXT_FOREGROUND_GRAY = TEXT_FOREGROUND_RED | TEXT_FOREGROUND_BLUE | TEXT_FOREGROUND_GREEN,
 		TEXT_FOREGROUND_WHITE = TEXT_FOREGROUND_GRAY | FOREGROUND_INTENSITY,
 		TEXT_FOREGROUND_BLACK = 0,
 
 		TEXT_BACKGROUND_BLUE = BACKGROUND_BLUE,
+		TEXT_BACKGROUND_BLUE_INT = BACKGROUND_BLUE| BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_GREEN = BACKGROUND_GREEN,
+		TEXT_BACKGROUND_GREEN_INT = BACKGROUND_GREEN|BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_RED = BACKGROUND_RED,
+		TEXT_BACKGROUND_RED_INT = BACKGROUND_RED| BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_YELLOW = BACKGROUND_RED | BACKGROUND_GREEN,
+		TEXT_BACKGROUND_YELLOW_INT = BACKGROUND_RED | BACKGROUND_GREEN| BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_MAGENTA = BACKGROUND_BLUE | BACKGROUND_RED,
+		TEXT_BACKGROUND_MAGENTA_INT = BACKGROUND_BLUE | BACKGROUND_RED| BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_CYAN = BACKGROUND_BLUE | BACKGROUND_GREEN,
+		TEXT_BACKGROUND_CYAN_INT = BACKGROUND_BLUE | BACKGROUND_GREEN| BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_GRAY = TEXT_BACKGROUND_RED | TEXT_BACKGROUND_BLUE | TEXT_BACKGROUND_GREEN,
 		TEXT_BACKGROUND_WHITE = TEXT_BACKGROUND_GRAY | BACKGROUND_INTENSITY,
 		TEXT_BACKGROUND_BLACK = 0,
 
-	}TextColor;	//	�ؽ�Ʈ �÷��Դϴ�. ���ڻ�|���� -> ��Ʈ�����ڷ� �ռ��ϼ���
+	}TextColor;	//	텍스트 컬러입니다. 글자색|배경색 -> 비트연산자로 합성하세요
 
-	static CGraphic* GetInstance();		//	�̱��� �ν��Ͻ� ��������
-	static void Release();				//	����� ������ ����
+	static CGraphic* GetInstance();		//	싱글톤 인스턴스 가져오기
+	static void Release();				//	사용이 끝나면 정리
 
 
-	//	���ۿ� �ȼ� �ϳ��� �׸��ϴ�.
+	//	버퍼에 픽셀 하나를 그립니다.
 	void RenderToBuffer(int x, int y, Pixel type, TextColor color);
 
-	//	���۸� ȭ�鿡 ����մϴ�
-	//	�� �������� ���ۿ� StartDraw()�� ȣ���մϴ�.
-	//	�� �������� ���� EndDraw()�� ȣ���մϴ�.
+	//	버퍼를 화면에 출력합니다
+	//	각 프레임의 시작에 StartDraw()를 호출합니다.
+	//	각 프레임의 끝에 EndDraw()를 호출합니다.
 	void StartDraw();
 	void EndDraw();
 
-	//	�α׸� �߰��մϴ�
+	//	로그를 추가합니다
 	void AddLog(string str);
 
 
@@ -83,40 +95,40 @@ private:
 		TextColor color = TEXT_BACKGROUND_BLACK;
 	};
 
-	//	�ʱ�ȭ�� ���� �Լ����Դϴ�.
+	//	초기화를 위한 함수들입니다.
 	void SetPixelText();
 
-	//	Ŀ���� ȭ�鿡 �°� ������¡�� ��ġ�� �����մϴ�.
+	//	커서를 화면에 맞게 리사이징한 위치를 설정합니다.
 	void SetCursorPos(int x, int y);
 
-	//	���ۿ� ������ ä��ϴ�
+	//	버퍼에 배경색을 채웁니다
 	void DrawBackground(TextColor color);
 
-	//	�� ȭ�� ������ �׵θ��� �׸��ϴ�
+	//	각 화면 영역의 테두리를 그립니다
 	void DrawShape();
 
-	//	�α� ������ ����ϴ�
+	//	로그 영역을 지웁니다
 	void ClearLog();
 
 protected:
 
-	static CGraphic* m_pInstance;		//	�̱��� �ν��Ͻ�
+	static CGraphic* m_pInstance;		//	싱글톤 인스턴스
 
-	HANDLE m_hOP;						//	�ܼ� �ƿ�ǲ �ڵ�
-	CONSOLE_CURSOR_INFO	m_CurInfo;		//	Ŀ�� ����
+	HANDLE m_hOP;						//	콘솔 아웃풋 핸들
+	CONSOLE_CURSOR_INFO	m_CurInfo;		//	커서 정보
 
-	string m_sPixels[Pixel::PixelMax];	//	�ȼ� ��¿� ��Ʈ��
+	string m_sPixels[Pixel::PixelMax];	//	픽셀 출력용 스트링
 
-	vector<vector<Shader>> m_aPrevBuffer;	//	���� ���۸��� ���� ��������
-	vector<vector<Shader>> m_aBuffer;		//	���� ����
-	int m_iScreenSize;						//	���� ȭ���� ũ��(���簢��)
-	int m_iEndOfScreenX;					//	����â�� �� ��ġ
-	int m_iEndOfScreenY;					//	����â�� �� ��ġ
+	vector<vector<Shader>> m_aPrevBuffer;	//	더블 버퍼링을 위한 이전버퍼
+	vector<vector<Shader>> m_aBuffer;		//	메인 버퍼
+	int m_iScreenSize;						//	메인 화면의 크기(정사각형)
+	int m_iEndOfScreenX;					//	게임창의 끝 위치
+	int m_iEndOfScreenY;					//	게임창의 끝 위치
 
-	deque<string> m_aLog;			//	�α� ť
-	int m_iMaxLog;					//	����� �� �ִ� �ִ� �α� �޼��� �� �Դϴ�.
+	deque<string> m_aLog;			//	로그 큐
+	int m_iMaxLog;					//	출력할 수 있는 최대 로그 메세지 수 입니다.
 
-	TextColor m_DefaultBackgroundColor;	//	�⺻ ��� ���Դϴ�.
+	TextColor m_DefaultBackgroundColor;	//	기본 배경 색입니다.
 
-	bool m_bOnDraw;				//	�׸��� �߿��� �۵��ؾ� �ϴ� �Լ����
+	bool m_bOnDraw;				//	그리기 중에만 작동해야 하는 함수들용
 };
