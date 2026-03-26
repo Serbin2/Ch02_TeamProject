@@ -77,6 +77,8 @@
     </ClCompile>
     <ClCompile Include="Character\Player.cpp">
       <Filter>소스 파일</Filter>
+    <ClCompile Include="Graphics\Interface.cpp">
+      <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +126,8 @@
     </ClInclude>
     <ClInclude Include="Character\Player.h">
       <Filter>헤더 파일</Filter>
+    <ClInclude Include="Graphics\Interface.h">
+      <Filter>소스 파일\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
