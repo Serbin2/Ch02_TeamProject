@@ -6,11 +6,30 @@
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
 #include "../Character/Character.h"
-
+#include <functional>
 
 constexpr int TEMP_MAP_SIZE = 30;
 
 class CPlayer;
+
+
+enum class EAttackDir
+{
+	UP,
+	UPRIGHT,
+	RIGHT,
+	RIGHTDOWN,
+	DOWN,
+	LEFTDOWN,
+	LEFT,
+	LEFTUP
+};
+
+struct FAttackPos
+{
+	COORD Pos;
+	EAttackDir Dir;
+};
 
 // 보스 FSM을 위한 상태값 
 enum class EBossState
@@ -66,19 +85,19 @@ protected:
 	virtual void Teleport();
 
 	// 플레이어 8방향 
-	virtual void FireProjectileToCircle();
+	virtual void FireProjectileToOutline();
 
 	// 사각형 형태의 보스의 Range  오프세만큼의 아웃라인 구하기
-	std::vector<COORD> GetBossOutlineAttackRange(int Range);
+	std::vector<FAttackPos> GetBossOutlineAttackRange(int Range);
 
 	// 플레이어 위치기준 한방향 최대 5번 단계저 공격 
 	// ㅁ 모양이 커지는 식으로 공격
 	// AttackInRagne의 범위를 여러번 호출해서 파도타기 같은 느낌으로 구현 
 	// virtual void GetBossOutlineAttackRange();
 
-	void SpawnProjectile();
 
-	void SpawnStaticCollider();
+	void WaveAttack();
+
 
 protected:
 	virtual void ChangeState(EBossState NewState, float Delay = 1.f);
@@ -117,5 +136,16 @@ protected:
 	double m_fStateActionDelay = 0;
 
 	FGridSize m_BossSize = {2, 2};		// 보스가 월드에서 차지하는 크기 
+
+
+	// 웨이브 스킬 쿨타임 
+	bool bActive;
+	int m_iWaveAttackTriggerCooldown = 1.5f;
+	int m_iAccWaveAttackTriggerCooldown = 0.2f;
+	int m_iCurrntWaveCount = 1;
+	int m_iMaxWaveCount = 5;
+	bool m_bIsActiveWaveAttack = false;
+
+	std::vector<shared_ptr<class CProjectile>> m_vProjectiles;
 };
 

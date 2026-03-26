@@ -1,138 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="소스 파일\Graphics">
-      <UniqueIdentifier>{c1770e2f-254e-4968-b2fc-4c391919c6e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Input">
-      <UniqueIdentifier>{a2e35fbc-62a2-4ef4-bbfa-ad450ca9c487}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager">
-      <UniqueIdentifier>{2af0bd67-f7e1-4160-a44b-a8463388c557}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\SoundManager">
-      <UniqueIdentifier>{b903345d-1351-4597-97c6-8473f8a6ef7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Manager\ResourceManager">
-      <UniqueIdentifier>{a4023ecb-0233-4311-b262-15c142655400}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Resource">
-      <UniqueIdentifier>{fb512af9-e9d4-4a72-acc7-4bb9e41951f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Resource\Sound">
-      <UniqueIdentifier>{21f061c7-95c4-45f8-b67d-658ead93f1c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Utils">
-      <UniqueIdentifier>{1086e3d1-7ebd-4cff-89e4-9a7086df3da1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Boss">
-      <UniqueIdentifier>{2f624a61-4a13-4045-a6e5-0ed0f2783985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Time">
-      <UniqueIdentifier>{ca0d2c2a-8316-468e-bdfb-0ddc8ec30192}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Boss\Boss.cpp" />
+    <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
+    <ClCompile Include="Graphics\Interface.cpp" />
+    <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
+    <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
+    <ClCompile Include="Resource\ResourceBase.cpp" />
+    <ClCompile Include="Resource\Sound\Sound.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="testMain.cpp" />
+    <ClCompile Include="Time\Timer.cpp" />
+    <ClCompile Include="Character\Player.cpp" />
+    <ClCompile Include="Projectile\Projectile.cpp" />
+    <ClCompile Include="TP02.cpp" />
+    <ClCompile Include="Projectile\BossProjectile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TP02.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\ConsoleGraphic.cpp">
-      <Filter>소스 파일\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Input\Input.cpp">
-      <Filter>소스 파일\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Sound\Sound.cpp">
-      <Filter>소스 파일\Resource\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\ResourceBase.cpp">
-      <Filter>소스 파일\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp">
-      <Filter>소스 파일\Manager\ResourceManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\SoundManager\SoundManager.cpp">
-      <Filter>소스 파일\Manager\SoundManager</Filter>
-    </ClCompile>
-    <ClCompile Include="testMain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss\Boss.cpp">
-      <Filter>소스 파일\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Time\Timer.cpp">
-      <Filter>소스 파일\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\Player.cpp">
-      <Filter>소스 파일</Filter>
-    <ClCompile Include="Graphics\Interface.cpp">
-      <Filter>소스 파일\Graphics</Filter>
-    </ClCompile>
+    <ClInclude Include="Boss\Boss.h" />
+    <ClInclude Include="Character\Actor.h" />
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="Graphics\ConsoleGraphic.h" />
+    <ClInclude Include="Graphics\Interface.h" />
+    <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
+    <ClInclude Include="Manager\SoundManager\SoundManager.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Resource\ResourceBase.h" />
+    <ClInclude Include="Resource\Sound\Sound.h" />
+    <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Standard.h" />
+    <ClInclude Include="Time\Timer.h" />
+    <ClInclude Include="Utils\Common.h" />
+    <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Projectile\Projectile.h" />
+    <ClInclude Include="Projectile\BossProjectile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Graphics\ConsoleGraphic.h">
-      <Filter>소스 파일\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Standard.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\Input.h">
-      <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\Common.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\Utils.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Sound\Sound.h">
-      <Filter>소스 파일\Resource\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\ResourceBase.h">
-      <Filter>소스 파일\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\ResourceManager\ResourceManager.h">
-      <Filter>소스 파일\Manager\ResourceManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\SoundManager\SoundManager.h">
-      <Filter>소스 파일\Manager\SoundManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss\Boss.h">
-      <Filter>소스 파일\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Time\Timer.h">
-      <Filter>소스 파일\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\Actor.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\Character.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\Player.h">
-      <Filter>헤더 파일</Filter>
-    <ClInclude Include="Graphics\Interface.h">
-      <Filter>소스 파일\Graphics</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="TP02.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
+    <ResourceCompile Include="TP02.rc" />
   </ItemGroup>
 </Project>

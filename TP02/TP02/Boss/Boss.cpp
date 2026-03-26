@@ -1,15 +1,17 @@
 #include "Boss.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
-#include "../Graphics/ConsoleGraphic.h"
+
+#include "../Projectile/BossProjectile.h"
 
 CBoss::CBoss(int Shape, int Color, FGridSize BossSize)
 	: CCharacter(Shape, Color)
 {
-	m_cPosition = { 20, 20 };
+	m_cPosition = { 15, 15 };
 
 	m_BossSize = BossSize;
 }
+
 CBoss::~CBoss()
 {
 };
@@ -17,6 +19,14 @@ CBoss::~CBoss()
 void CBoss::Tick(double DeltaTime)
 {
 	m_fAccStateActionDelay += DeltaTime;
+	m_iAccWaveAttackTriggerCooldown += DeltaTime;
+
+	// 웨이브 어택을 위해서 사용
+	if (m_iAccWaveAttackTriggerCooldown >= m_iWaveAttackTriggerCooldown)
+	{
+		m_iAccWaveAttackTriggerCooldown = 0;
+		WaveAttack();
+	}
 
 	// 행동 변화 쿨타임 
 	if (m_fAccStateActionDelay >= m_fStateActionDelay)
@@ -35,6 +45,12 @@ void CBoss::Tick(double DeltaTime)
 			MoveAction();
 			break;
 		}
+	}
+
+	for (auto Projectile : m_vProjectiles)
+	{
+		Projectile->Tick(DeltaTime);
+		//Projectile->Render();
 	}
 
 	Render();
@@ -73,6 +89,8 @@ void CBoss::OnHit(float Damage)
 
 void CBoss::SelectAttackPattern()
 {
+	WaveAttack();
+	//FireProjectileToOutline();
 }
 
 COORD CBoss::FindCanTelportPosition(/*CPlayer* Player*/)
@@ -87,50 +105,134 @@ void CBoss::Teleport()
 	SetPosition(FindCanTelportPosition());
 }
 
-void CBoss::FireProjectileToCircle()
+void CBoss::FireProjectileToOutline()
 {
-	
+	// 공격 종료후 5초 후 이동 
+	static int sTestRange = 1;
+	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(sTestRange++);
+	std::string DebugMsg;
+	for (const auto& Pos : AttackPos)
+	{
+		// 범위 체크
+		if (Pos.Pos.X < 0 || TEMP_MAP_SIZE <= Pos.Pos.X
+			|| Pos.Pos.Y < 0 || TEMP_MAP_SIZE <= Pos.Pos.Y)
+		{
+			continue;
+		}
+
+		COORD Dir;
+		switch (Pos.Dir)
+		{
+		case EAttackDir::UP:
+			Dir = { 0, -1 };
+			break;
+		case EAttackDir::UPRIGHT:
+			Dir = { 1, -1 };
+			break;
+		case EAttackDir::RIGHT:
+			Dir = { 1, 0 };
+			break;
+		case EAttackDir::RIGHTDOWN:
+			Dir = { 1, 1 };
+			break;
+		case EAttackDir::DOWN:
+			Dir = { 0, 1 };
+			break;
+		case EAttackDir::LEFTDOWN:
+			Dir = { -1, 1 };
+			break;
+		case EAttackDir::LEFT:
+			Dir = { -1, 0 };
+			break;
+		case EAttackDir::LEFTUP:
+			Dir = { -1, -1 };
+			break;
+		}
+
+		//auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, Dir, 2.f);
+		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
+		pProjectile->SetOwner(this);
+		pProjectile->SetPosition(Pos.Pos);
+		pProjectile->SetMoveDirection(Dir);
+		pProjectile->SetSpeed(3.f);
+		m_vProjectiles.push_back(pProjectile);
+
+		DebugMsg += "(" + std::to_string(Pos.Pos.X) + ", " + std::to_string(Pos.Pos.Y) + "), ";
+	}
+
+	CGraphic* pGraphic = CGraphic::GetInstance();
+	//pGraphic->AddLog(DebugMsg);
 }
 
-std::vector<COORD> CBoss::GetBossOutlineAttackRange(int Range)
+std::vector<FAttackPos> CBoss::GetBossOutlineAttackRange(int Range)
 {
-	const COORD cCurrentPos = GetPosition();
-	const int iWidth = m_BossSize.m_iX;
-	const int iHeight = m_BossSize.m_iY;
+	const COORD pos = GetPosition();
+	const int width = m_BossSize.m_iX;
+	const int height = m_BossSize.m_iY;
 
-	std::vector<COORD> Outline;
+	std::vector<FAttackPos> result;
 
-	int iMinX = cCurrentPos.X - Range;
-	int iMinY = cCurrentPos.Y - Range;
-	int iMaxX = cCurrentPos.X + iWidth + Range - 1;
-	int iMaxY = cCurrentPos.Y + iHeight + Range - 1;
+	const int left = pos.X - Range;
+	const int right = pos.X + width + Range - 1;
+	const int top = pos.Y - Range;
+	const int bottom = pos.Y + height + Range - 1;
 
-	// 오른쪽 
-	for (int iX = iMinX; iX <= iMaxX; ++iX)
+	// Top Edge
+	for (int x = left; x <= right; ++x)
 	{
-		Outline.push_back({ (SHORT)iX, (SHORT)iMinY });
+		result.push_back({ {(SHORT)x, (SHORT)top}, EAttackDir::UP });
 	}
 
-	// 오른쪽 아래
-	for (int iY = iMinY + 1; iY <= iMaxY - 1; ++iY)
+	// Bottom Edge
+	for (int x = left; x <= right; ++x)
 	{
-		Outline.push_back({ (SHORT)iMaxX, (SHORT)iY });
+		result.push_back({ {(SHORT)x, (SHORT)bottom}, EAttackDir::DOWN });
 	}
 
-	// 왼쪽
-	for (int iX = iMaxX; iX >= iMinX; --iX)
+	// Left Edge
+	for (int y = top + 1; y < bottom; ++y)
 	{
-		Outline.push_back({ (SHORT)iX, (SHORT)iMaxY });
+		result.push_back({ {(SHORT)left, (SHORT)y}, EAttackDir::LEFT });
 	}
 
-	// 왼쪽 위
-	for (int iY = iMaxY - 1; iY >= iMinY + 1; --iY)
+	// Right Edge
+	for (int y = top + 1; y < bottom; ++y)
 	{
-		Outline.push_back({ (SHORT)iMinX, (SHORT)iY });
+		result.push_back({ {(SHORT)right, (SHORT)y}, EAttackDir::RIGHT });
 	}
 
-	return Outline;
+	return result;
 }
+
+void CBoss::WaveAttack()
+{
+	if (m_iCurrntWaveCount > m_iMaxWaveCount)
+	{
+		m_iCurrntWaveCount = 0;
+		m_bIsActiveWaveAttack = false;
+		return;
+	}
+
+	m_bIsActiveWaveAttack = true;
+
+	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(m_iCurrntWaveCount++);
+	for (const auto& AP : AttackPos)
+	{
+		if (AP.Pos.X < 0 || TEMP_MAP_SIZE <= AP.Pos.X
+			|| AP.Pos.Y < 0 || TEMP_MAP_SIZE <= AP.Pos.Y)
+		{
+			continue;
+		}
+
+		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
+		pProjectile->SetOwner(this);
+		pProjectile->SetPosition(AP.Pos);
+		pProjectile->SetMoveDirection({ 0,0 });
+		pProjectile->SetSpeed(0.f);
+		m_vProjectiles.push_back(pProjectile);
+	}
+}
+
 
 void CBoss::ChangeState(EBossState NewState, float Delay)
 {
@@ -155,24 +257,7 @@ void CBoss::GroggyAction()
 
 void CBoss::AttackAction()
 {
-	// 공격 종료후 5초 후 이동 
-	std::vector<COORD> AttackPos = GetBossOutlineAttackRange(1);
-	std::string DebugMsg;
-	for (const auto& Pos : AttackPos)
-	{
-		// 범위 체크
-		if (Pos.X < 0 || TEMP_MAP_SIZE <= Pos.X
-			|| Pos.Y < 0 || TEMP_MAP_SIZE <= Pos.Y)
-		{
-			continue;
-		}
-
-		DebugMsg += "(" + std::to_string(Pos.X) + ", " + std::to_string(Pos.Y) + "), ";
-	}
-
-	CGraphic* pGraphic = CGraphic::GetInstance();
-	pGraphic->AddLog(DebugMsg);
-
+	SelectAttackPattern();
 	ChangeState(EBossState::Move, 3);
 }
 
