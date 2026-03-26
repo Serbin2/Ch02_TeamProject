@@ -8,6 +8,7 @@
 
 #include "Graphics//Interface.h"
 #include "Character/Player.h"
+#include "World/GameWorld.h"
 
 
 // [2026-03-25, 박재현] 권한 테스트 2
@@ -31,6 +32,8 @@ int main()
 	CInput* pInput = CInput::GetInstance();
 	CTimer Timer;
 	CInterface UI;
+	CGameWorld World;
+	World.Initialize();
 
 	if (pGraphic == nullptr)
 	{	//	엔진이 없습니다
@@ -43,7 +46,7 @@ int main()
 	}
 
 	CPlayer* pPlayer = new CPlayer(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-
+	World.AddActor(pPlayer);
 
 	UI.AddUI(0, "FPS Count : ");
 	UI.AddUI(1, "FPS : ");
@@ -88,7 +91,9 @@ int main()
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
 
-		pPlayer->Tick(DeltaTime);
+		World.Update(DeltaTime);
+
+		//pPlayer->Tick(DeltaTime);
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
