@@ -75,6 +75,9 @@
     <ClCompile Include="Time\Timer.cpp">
       <Filter>소스 파일\Time</Filter>
     </ClCompile>
+    <ClCompile Include="Character\Player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\ConsoleGraphic.h">
@@ -112,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="Time\Timer.h">
       <Filter>소스 파일\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Actor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Character.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Player.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

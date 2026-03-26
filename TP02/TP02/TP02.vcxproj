@@ -106,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
+    <ClInclude Include="Character\Actor.h" />
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\Player.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />

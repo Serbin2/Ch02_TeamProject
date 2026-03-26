@@ -7,6 +7,11 @@
 #include "../Standard.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
+#include "../Character/Character.h"
+
+
+
+constexpr int TEMP_MAP_SIZE = 30;
 
 class CPlayer;
 
@@ -32,24 +37,16 @@ struct FGridSize
 	uint8_t m_iY; // Y칸
 };
 
-class CBoss //: public CCharacter
+class CBoss : public CCharacter
 {
 public:
-	CBoss();
-
-	/*CBoss(CGraphic::Pixel Shape, CGraphic::TextColor Color, FGridSize BossSize)
-		: CActor(Shape, Color)
-	{
-		m_BossSize = BossSize;
-	};*/
+	CBoss(int Shape, int Color, FGridSize BossSize);
 
 	virtual ~CBoss();
 
 public:
 	// 액터 기본 기능 
-	virtual void Tick(float DeltaTime);
-	//virtual void Move() override;					// 텔레포트 
-	//virtual void Render() override;
+	virtual void Tick(double DeltaTime);
 
 
 public:
@@ -58,17 +55,18 @@ public:
 		SelectAttackPattern();
 	}
 
-	virtual void OnHit(float Damage) = 0;
+	virtual void OnHit(float Damage) override;
+
 
 protected:
 	// 랜덤 공격 패턴 선택 함수 / 어택해서 호출 
 	virtual void SelectAttackPattern();
 
 	// 플레이어 좌표기준 가장 멀리있는 부분 
-	virtual void FindCanTelportPosition(CPlayer* Player);
+	virtual COORD FindCanTelportPosition(/*CPlayer* Player*/);
 
 	// 텔레포트 함수
-	virtual void Teleport(COORD Position);
+	virtual void Teleport();
 
 	// 플레이어 8방향 
 	virtual void FireProjectileToCircle();
@@ -121,9 +119,9 @@ protected:
 	float m_fAccCooldown = 0.f;
 	float m_fMoveCooldown = 2.f;
 
-	float m_fAccStateActionDelay;
-	float m_fStateActionDelay;
+	double m_fAccStateActionDelay = 0;
+	double m_fStateActionDelay = 0;
 
-	//FGridSize m_BossSize = {2, 2};		// 보스가 월드에서 차지하는 크기 
+	FGridSize m_BossSize = {2, 2};		// 보스가 월드에서 차지하는 크기 
 };
 

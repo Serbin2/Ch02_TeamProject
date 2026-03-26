@@ -6,6 +6,7 @@
 #include "Input/Input.h"
 #include "Time/Timer.h"
 #include "Character/Player.h"
+#include "Boss/Boss.h"
 
 // [2026-03-25, 박재현] 권한 테스트 2
 #include "Manager/ResourceManager/ResourceManager.h"
@@ -42,6 +43,7 @@ int main()
 	}
 
 	CPlayer* pPlayer = new CPlayer(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	std::shared_ptr<CBoss> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
 
 	// 사운드 테스트
 	{
@@ -73,8 +75,9 @@ int main()
 		pGraphic->StartDraw();
 
 		//	테스트 그리기
-		pGraphic->RenderToBuffer(x, y, pix, tex);
+		// pGraphic->RenderToBuffer(x, y, pix, tex);
 		pPlayer->Tick(deltaTime);
+		pBoss->Tick(deltaTime);
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
