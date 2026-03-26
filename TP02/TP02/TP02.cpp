@@ -67,7 +67,7 @@ int main()
 	///	게임 루프
 	while (1)
 	{
-		double deltaTime = Timer.Update();
+		double DeltaTime = Timer.Update();
 		pInput->Update();	//	입력 갱신
 
 		//	그리기 시작
