@@ -5,6 +5,7 @@
 #include "Graphics/ConsoleGraphic.h"
 #include "Input/Input.h"
 #include "Time/Timer.h"
+#include "Graphics//Interface.h"
 
 // [2026-03-25, 박재현] 권한 테스트 2
 
@@ -26,6 +27,7 @@ int main()
 	CGraphic* pGraphic = CGraphic::GetInstance();
 	CInput* pInput = CInput::GetInstance();
 	CTimer Timer;
+	CInterface UI;
 
 	if (pGraphic == nullptr)
 	{	//	엔진이 없습니다
@@ -43,11 +45,17 @@ int main()
 	int x = 15;
 	int y = 15;
 
+
+	UI.AddUI(0, "FPS Count : ");
+	UI.AddUI(1, "FPS : ");
+	
 	Timer.Start();
 	///	게임 루프
 	while (1)
 	{
 		double deltaTime = Timer.Update();
+		UI.SetValue(0, Timer.GetFpsCount());
+		UI.SetValue(1, Timer.GetFPS());
 		pInput->Update();	//	입력 갱신
 		//	테스트 로직
 
@@ -56,6 +64,21 @@ int main()
 		if (pInput->IsKeyDown('S')) y++;
 		if (pInput->IsKeyDown('D')) x++;
 		if (pInput->IsKeyDown('G')) pGraphic->AddLog("G키를 눌렀습니다.");
+		if (pInput->IsKeyDown('F')) pGraphic->AddLog("F키를 눌렀을까요? 와랄랄라 와랄랄루.");
+		if (pInput->IsKeyDown('T'))
+		{
+			pGraphic->AddLog("Toggle UI");
+			if (UI.AddUI(0, "FPS Count : "))
+			{
+				UI.AddUI(1, "FPS :");
+			}
+			else
+			{
+				UI.RemoveUI(0);
+				UI.RemoveUI(1);
+			}
+		}
+		if (pInput->IsKeyDown('Y')) Timer.SetTargetFps(60);
 
 		//	참고 https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 		//← 좌측 방향키 : VK_LEFT

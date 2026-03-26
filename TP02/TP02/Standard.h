@@ -7,7 +7,7 @@
 #include <vector>
 
 #define WORLD_SIZE		30
-#define UI_POS_X		WORLD_SIZE + 3
+#define UI_POS_X		(WORLD_SIZE + 2) * 2
 #define LOG_POS_Y		WORLD_SIZE + 3
 
 #define TEXT_FOREGROUND_BLUE		 FOREGROUND_BLUE
