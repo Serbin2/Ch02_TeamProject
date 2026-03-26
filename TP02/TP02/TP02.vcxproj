@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6b5f00ee-5481-453b-9218-2d3be771811e}</ProjectGuid>
+    <ProjectGuid>{a742e3d8-3fea-4929-a408-d0cd1f6acfaa}</ProjectGuid>
     <RootNamespace>TP02</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -148,6 +148,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="TP02.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -157,6 +159,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\ResourceBase.h" />
     <ClInclude Include="Resource\Sound\Sound.h" />
+    <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Standard.h" />
     <ClInclude Include="Utils\Common.h" />
     <ClInclude Include="Utils\Utils.h" />
