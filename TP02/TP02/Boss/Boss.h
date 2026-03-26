@@ -1,14 +1,11 @@
 // [작성자] : 박재현
 // [Desc] : 보스 기본 클래스 
-// 
-// [TODO-PJH] : 선재님 파일 오면 해당 파일구조에 맞춰서 변경 
 
 #pragma once
 #include "../Standard.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
 #include "../Character/Character.h"
-
 
 
 constexpr int TEMP_MAP_SIZE = 30;
@@ -46,11 +43,11 @@ public:
 
 public:
 	// 액터 기본 기능 
-	virtual void Tick(double DeltaTime);
-
-
+	virtual void Tick(double DeltaTime) override;
+	virtual void Move() {};
+	virtual void Render() override;
 public:
-	virtual void Attack(COORD Direction)
+	virtual void Attack(COORD Direction) override
 	{
 		SelectAttackPattern();
 	}
@@ -71,14 +68,17 @@ protected:
 	// 플레이어 8방향 
 	virtual void FireProjectileToCircle();
 
-	// ㅁ 모양으로 공격
-	// 범위 내 모든 공격 - 거리 기반 데미지 감쇠 
-	virtual void AttackInRange();
+	// 사각형 형태의 보스의 Range  오프세만큼의 아웃라인 구하기
+	std::vector<COORD> GetBossOutlineAttackRange(int Range);
 
 	// 플레이어 위치기준 한방향 최대 5번 단계저 공격 
 	// ㅁ 모양이 커지는 식으로 공격
 	// AttackInRagne의 범위를 여러번 호출해서 파도타기 같은 느낌으로 구현 
-	// virtual void AttackInRange();
+	// virtual void GetBossOutlineAttackRange();
+
+	void SpawnProjectile();
+
+	void SpawnStaticCollider();
 
 protected:
 	virtual void ChangeState(EBossState NewState, float Delay = 1.f);
@@ -112,12 +112,6 @@ protected:
 
 	float m_fAccGroggy = 0.f;
 	float m_fGroggyTime = 3.f;
-
-	float m_fAccAttackCooldown = 0.f;
-	float m_fAttackCooldown = 2.f;
-
-	float m_fAccCooldown = 0.f;
-	float m_fMoveCooldown = 2.f;
 
 	double m_fAccStateActionDelay = 0;
 	double m_fStateActionDelay = 0;
