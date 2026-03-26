@@ -8,6 +8,8 @@ CProjectile::CProjectile(int Shape, int Color) : CActor(Shape, Color)
 
 void CProjectile::Tick(double DeltaTime)
 {
+	if (!m_bIsValid)	return;
+
 	if (m_dMoveTimer > 0.0)
 	{
 		m_dMoveTimer -= DeltaTime;

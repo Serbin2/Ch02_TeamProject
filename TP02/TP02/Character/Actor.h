@@ -35,7 +35,9 @@ public:
 
 	const float GetSpeed() const { return m_fSpeed; }
 	void SetSpeed(float NewSpeed) { m_fSpeed = NewSpeed; }
-	
+
+	bool IsValid() { return m_bIsValid; };
+
 	bool HasTag(ETag tag)
 	{
 		return m_eTag & tag;

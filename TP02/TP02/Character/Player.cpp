@@ -18,6 +18,8 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 
 void CPlayer::Tick(double DeltaTime)
 {
+	if (!m_bIsValid)	return;
+
 	if (m_dMoveTimer > 0.0)
 	{
 		m_dMoveTimer -= DeltaTime;
