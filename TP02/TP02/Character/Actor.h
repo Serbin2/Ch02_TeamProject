@@ -30,7 +30,9 @@ public:
 protected:
 	int m_pShape;	        // 액터의 픽셀 모양
 	int m_tColor;           // 액터의 텍스트 색상
+
 	COORD m_cPosition;		// 액터의 현재 위치
-	double m_fTickInterval;	// 액터의 Tick 실행 주기
+	float m_fSpeed;			// 액터의 이동 속도(m/s)
+	double m_dMoveTimer;	// 액터의 이동 타이머
 
 };

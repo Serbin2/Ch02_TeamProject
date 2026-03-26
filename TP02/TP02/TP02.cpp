@@ -44,14 +44,14 @@ int main()
 	///	게임 루프
 	while (1)
 	{
-		double deltaTime = Timer.Update();
+		double DeltaTime = Timer.Update();
 		pInput->Update();	//	입력 갱신
 
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
 
-		pPlayer->Tick(deltaTime);
+		pPlayer->Tick(DeltaTime);
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
