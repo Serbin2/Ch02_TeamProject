@@ -5,7 +5,7 @@
 #include "Graphics/ConsoleGraphic.h"
 #include "Input/Input.h"
 
-// [2026-03-25, 박재현] 권한 테스트
+// [2026-03-25, 박재현] 권한 테스트 2
 
 int main()
 {

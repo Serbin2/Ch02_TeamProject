@@ -41,5 +41,8 @@
     <ClInclude Include="Input\Input.h">
       <Filter>소스 파일\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
