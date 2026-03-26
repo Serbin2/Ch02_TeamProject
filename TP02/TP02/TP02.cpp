@@ -75,6 +75,7 @@ int main()
 	///	게임 루프
 	while (1)
 	{
+		double DeltaTime = Timer.Update();
 		UI.SetValue(0, Timer.GetFpsCount());
 		UI.SetValue(1, Timer.GetFPS());
 		pInput->Update();	//	입력 갱신
@@ -100,17 +101,6 @@ int main()
 			}
 		}
 		if (pInput->IsKeyDown('Y')) Timer.SetTargetFps(60);
-
-		//	참고 https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-		//← 좌측 방향키 : VK_LEFT
-		//→ 우측 방향키 : VK_RIGTH
-		//↑ 위 방향키: VK_UP
-		//↓ 아래 방향키 : VK_DOWN
-		//Enter키 : VK_RETURN
-
-		double DeltaTime = Timer.Update();
-		pInput->Update();	//	입력 갱신
-
 
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요

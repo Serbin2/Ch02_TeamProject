@@ -98,6 +98,7 @@
     </ClCompile>
     <ClCompile Include="Time\Timer.cpp" />
     <ClCompile Include="Character\Player.cpp" />
+	<ClCompile Include="Projectile\Projectile.cpp" />
     <ClCompile Include="TP02.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
