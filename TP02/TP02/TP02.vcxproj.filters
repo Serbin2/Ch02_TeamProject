@@ -66,6 +66,9 @@
     <ClCompile Include="Time\Timer.cpp">
       <Filter>소스 파일\Time</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Interface.cpp">
+      <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\ConsoleGraphic.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="Time\Timer.h">
       <Filter>소스 파일\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Interface.h">
+      <Filter>소스 파일\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

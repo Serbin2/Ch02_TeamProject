@@ -7,7 +7,7 @@ CGraphic::CGraphic()
 	//	콘솔 출력에 대한 기본 핸들을 가져옵니다
 	m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetPixelText();
-	m_iScreenSize = 30;
+	m_iScreenSize = WORLD_SIZE;
 	m_iEndOfScreenX = 43;
 	m_iEndOfScreenY = 40;
 
@@ -17,12 +17,12 @@ CGraphic::CGraphic()
 	SetConsoleCursorInfo(m_hOP, &m_CurInfo);
 
 	//	버퍼를 준비합니다
-	m_aPrevBuffer.resize(30);
-	m_aBuffer.resize(30);
-	for (int i = 0; i < 30; i++)
+	m_aPrevBuffer.resize(WORLD_SIZE);
+	m_aBuffer.resize(WORLD_SIZE);
+	for (int i = 0; i < WORLD_SIZE; i++)
 	{
-		m_aPrevBuffer[i].resize(30);
-		m_aBuffer[i].resize(30);
+		m_aPrevBuffer[i].resize(WORLD_SIZE);
+		m_aBuffer[i].resize(WORLD_SIZE);
 	}
 
 	//	멤버 변수들을 초기화합니다
@@ -111,9 +111,9 @@ void CGraphic::EndDraw()
 {
 	if (!m_bOnDraw)	return;	//	그리기중이 아닙니다.
 
-	for (int y = 0; y < 30; y++)
+	for (int y = 0; y < WORLD_SIZE; y++)
 	{
-		for (int x = 0; x < 30; x++)
+		for (int x = 0; x < WORLD_SIZE; x++)
 		{
 			//	이전 화면과 같은 내용이면 넘어갑니다
 			if (m_aPrevBuffer[y][x].vertex == m_aBuffer[y][x].vertex &&
