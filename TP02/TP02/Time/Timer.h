@@ -14,7 +14,11 @@ public:
 	void Pause();
 	void Resume();
 	double Update();
+
+	void SetTargetFps(int target);
 	
+	int GetFPS() { return m_iFps; };
+	int GetFpsCount() { return m_iFpsCount; };
 
 private:
 	
