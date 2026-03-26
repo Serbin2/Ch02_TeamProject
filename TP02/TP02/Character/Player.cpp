@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Input/Input.h"
+#include "../Projectile/Projectile.h"
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -52,7 +53,11 @@ void CPlayer::Move()
 
 void CPlayer::Attack(COORD Direction)
 {
-	// TODO: 공격 로직 구현, 공격 쿨타임 체크, 공격 범위 내 적 탐색 및 피해 적용
+	CProjectile* pProjectile = new CProjectile(Pixel::circle, TEXT_FOREGROUND_YELLOW);
+	pProjectile->SetOwner(this);
+	pProjectile->SetPosition(m_cPosition);
+	pProjectile->SetSpeed(5.0f);
+	pProjectile->SetMoveDirection(Direction);
 }
 
 void CPlayer::OnHit(float Damage)
@@ -63,7 +68,6 @@ void CPlayer::OnHit(float Damage)
 void CPlayer::Input()
 {
 	CInput* pInput = CInput::GetInstance();
-	pInput->Update();
 	
 	// 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다.
 	// Key Code: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
