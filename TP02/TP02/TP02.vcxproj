@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6b5f00ee-5481-453b-9218-2d3be771811e}</ProjectGuid>
+    <ProjectGuid>{a742e3d8-3fea-4929-a408-d0cd1f6acfaa}</ProjectGuid>
     <RootNamespace>TP02</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -124,11 +124,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="TP02.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
+    <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Standard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

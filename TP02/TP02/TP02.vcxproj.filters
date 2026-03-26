@@ -13,8 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Graphic">
-      <UniqueIdentifier>{85038b94-d629-41d5-bec8-4db043d30962}</UniqueIdentifier>
+    <Filter Include="소스 파일\Graphics">
+      <UniqueIdentifier>{c1770e2f-254e-4968-b2fc-4c391919c6e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Input">
+      <UniqueIdentifier>{a2e35fbc-62a2-4ef4-bbfa-ad450ca9c487}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,15 +25,21 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\ConsoleGraphic.cpp">
-      <Filter>소스 파일\Graphic</Filter>
+      <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Input.cpp">
+      <Filter>소스 파일\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\ConsoleGraphic.h">
-      <Filter>소스 파일\Graphic</Filter>
+      <Filter>소스 파일\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Standard.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Input.h">
+      <Filter>소스 파일\Input</Filter>
     </ClInclude>
     <ClInclude Include="Actor.h">
       <Filter>소스 파일</Filter>
