@@ -4,6 +4,7 @@
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
 	m_cPosition = { 15, 15 };
+	m_fSpeed = 3.0f;
 	m_fHealth = 100.0f;
 	m_fAttackPower = 15.0f;
 	m_fDefense = 5.0f;
@@ -15,13 +16,38 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 
 void CPlayer::Tick(double DeltaTime)
 {
+	if (m_dMoveTimer > 0.0)
+	{
+		m_dMoveTimer -= DeltaTime;
+	}
+
 	Input();
+
+	if ((m_cMoveDirection.X != 0 || m_cMoveDirection.Y != 0) && m_dMoveTimer <= 0.0)
+	{
+		Move();
+		m_dMoveTimer = 1.0 / m_fSpeed;
+	}
+	else
+	{
+		m_cMoveDirection = { 0, 0 };
+	}
+
 	Render();
 }
 
 void CPlayer::Move()
 {
-	// TODO: 플레이어 위치 변경, 맵 경계 체크
+	int nextX = m_cPosition.X + m_cMoveDirection.X;
+	int nextY = m_cPosition.Y + m_cMoveDirection.Y;
+
+	if (nextX >= 0 && nextX < 30 && nextY >= 0 && nextY < 30)
+	{
+		m_cPosition.X = nextX;
+		m_cPosition.Y = nextY;
+	}
+
+	m_cMoveDirection = { 0, 0 }; // 이동 후 방향 초기화
 }
 
 void CPlayer::Attack(COORD Direction)
@@ -43,10 +69,10 @@ void CPlayer::Input()
 	// Key Code: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 
 	// Move input
-	if (pInput->IsKeyDown('W'))	m_cMoveDirection = { 0, -1 };
-	if (pInput->IsKeyDown('S')) m_cMoveDirection = { 0,  1 };
-	if (pInput->IsKeyDown('A')) m_cMoveDirection = { -1, 0 };
-	if (pInput->IsKeyDown('D')) m_cMoveDirection = { 1,  0 };
+	if (pInput->IsKeyPressed('W')) m_cMoveDirection = { 0, -1 };
+	if (pInput->IsKeyPressed('S')) m_cMoveDirection = { 0,  1 };
+	if (pInput->IsKeyPressed('A')) m_cMoveDirection = { -1, 0 };
+	if (pInput->IsKeyPressed('D')) m_cMoveDirection = { 1,  0 };
 
 	// Attack input
 	if (pInput->IsKeyDown(VK_UP))    Attack({ 0, -1 }); // [↑]
