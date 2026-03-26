@@ -45,7 +45,7 @@ int main()
 		return 0;
 	}
 
-	CPlayer* pPlayer = new CPlayer(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	World.AddActor(pPlayer);
 
 	UI.AddUI(0, "FPS Count : ");
@@ -58,6 +58,7 @@ int main()
 		double DeltaTime = Timer.Update();
 		UI.SetValue(0, Timer.GetFpsCount());
 		UI.SetValue(1, Timer.GetFPS());
+		pInput->Update();
 		//	테스트 로직
 
 		if (pInput->IsKeyDown('G')) pGraphic->AddLog("G키를 눌렀습니다.");

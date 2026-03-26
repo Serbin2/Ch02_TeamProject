@@ -6,6 +6,7 @@ class CProjectile : public CActor
 {
 public:
 	CProjectile(int Shape, int Color);
+	~CProjectile() { };
 
 	void Tick(double DeltaTime) override;
 	void Move() override;

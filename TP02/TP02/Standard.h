@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <string>
 #include <vector>
+#include <memory>
 
 #define WORLD_SIZE		30								//	정사각형 맵의 크기
 
@@ -47,3 +48,15 @@
 #define TEXT_BACKGROUND_GRAY		 TEXT_BACKGROUND_RED | TEXT_BACKGROUND_BLUE | TEXT_BACKGROUND_GREEN
 #define TEXT_BACKGROUND_WHITE		 TEXT_BACKGROUND_GRAY | BACKGROUND_INTENSITY
 #define TEXT_BACKGROUND_BLACK		 0
+
+
+enum ETag
+{
+	actor		=	1	<<	0,
+	character	=	1	<<	1,
+	player		=	1	<<	2,
+	monster		=	1	<<	3,
+	boss		=	1	<<	4,
+	projectile	=	1	<<	5,
+	effect		=	1	<<	6,
+};

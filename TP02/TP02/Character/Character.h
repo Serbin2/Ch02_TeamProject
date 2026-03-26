@@ -4,11 +4,9 @@
 
 class CCharacter : public CActor
 {
-protected:
-	virtual ~CCharacter() {};
-
 public:
-	CCharacter(int Shape, int Color) : CActor(Shape, Color) { }
+	CCharacter(int Shape, int Color) : CActor(Shape, Color) { m_eTag = ETag::actor | ETag::character; }
+	virtual ~CCharacter() {};
 
 	virtual void Attack(COORD Direction) = 0;
 	virtual void OnHit(float Damage) = 0;

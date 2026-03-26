@@ -91,7 +91,7 @@
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Time\Timer.cpp" />
     <ClCompile Include="Character\Player.cpp" />
-	<ClCompile Include="Projectile\Projectile.cpp" />
+    <ClCompile Include="Projectile\Projectile.cpp" />
     <ClCompile Include="TP02.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -108,6 +108,7 @@
     <ClInclude Include="Graphics\Interface.h" />
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />
+    <ClInclude Include="Projectile\Projectile.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\ResourceBase.h" />
     <ClInclude Include="Resource\Sound\Sound.h" />

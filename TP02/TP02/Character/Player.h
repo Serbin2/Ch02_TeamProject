@@ -4,10 +4,9 @@
 
 class CPlayer : public CCharacter
 {
-protected:
-	virtual ~CPlayer() {};
 public:
 	CPlayer(int Shape, int Color);
+	virtual ~CPlayer() {};
 
 	virtual void Tick(double DeltaTime) override;
 	virtual void Move() override;

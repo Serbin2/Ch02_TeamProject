@@ -46,6 +46,9 @@
     <Filter Include="소스 파일\World">
       <UniqueIdentifier>{84c43145-f740-4fca-b0b9-3ee22f9901ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ProJectile">
+      <UniqueIdentifier>{f8968bc7-0776-461a-9235-6047aeb229d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TP02.cpp">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="World\GameWorld.cpp">
       <Filter>소스 파일\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile\Projectile.cpp">
+      <Filter>소스 파일\ProJectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="World\GameWorld.h">
       <Filter>소스 파일\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile\Projectile.h">
+      <Filter>소스 파일\ProJectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

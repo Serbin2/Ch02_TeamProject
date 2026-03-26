@@ -5,13 +5,11 @@
 
 class CActor
 {
-protected:
-	virtual	~CActor() = default;
 public:
 	CActor() = default;
 
-	CActor(int Shape, int Color) : m_pShape(Shape), m_tColor(Color) { }
-
+	CActor(int Shape, int Color) : m_pShape(Shape), m_tColor(Color), m_eTag(ETag::actor) { }
+	virtual	~CActor() = default;
 	
 
 	virtual void Tick(double DeltaTime) = 0;
@@ -19,6 +17,7 @@ public:
 
 	virtual void Render()
 	{
+		if (!m_bIsValid)	return;
 		CGraphic* pGraphic = CGraphic::GetInstance();
 		if (pGraphic)
 		{
@@ -36,6 +35,21 @@ public:
 
 	const float GetSpeed() const { return m_fSpeed; }
 	void SetSpeed(float NewSpeed) { m_fSpeed = NewSpeed; }
+	
+	bool HasTag(ETag tag)
+	{
+		return m_eTag & tag;
+	}
+
+	void AddTag(ETag tag)
+	{
+		m_eTag = m_eTag | tag;
+	}
+
+	void RemoveTag(ETag tag)
+	{
+		m_eTag = m_eTag & ~tag;
+	}
 
 protected:
 	int m_pShape;	        // 액터의 픽셀 모양
@@ -46,5 +60,6 @@ protected:
 	float m_fSpeed;			// 액터의 이동 속도(m/s)
 	double m_dMoveTimer;	// 액터의 이동 타이머
 
+	int m_eTag;
 	bool m_bIsValid = true;
 };

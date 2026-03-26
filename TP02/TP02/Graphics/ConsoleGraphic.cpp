@@ -27,7 +27,7 @@ CGraphic::CGraphic()
 
 	//	멤버 변수들을 초기화합니다
 	m_iMaxLog = LOG_HEIGHT;
-	m_DefaultBackgroundColor = TEXT_BACKGROUND_GREEN;
+	m_DefaultBackgroundColor = TEXT_BACKGROUND_BLACK;
 	m_bOnDraw = false;
 
 	//	게임 레이아웃을 그려둡니다

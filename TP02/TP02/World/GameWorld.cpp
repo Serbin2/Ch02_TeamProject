@@ -33,7 +33,6 @@ void CGameWorld::Update(double deltaTime)
 	{
 		if (!it->first->m_bIsValid)
 		{	//	무효한 객체입니다.
-			delete it->first;	//	삭제
 			it = m_aActors.erase(it);
 		}
 		else
@@ -70,7 +69,7 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 	m_dMonsterSpawnTime = m_dMonsterSpawnInitialTime;
 }
 
-bool CGameWorld::AddActor(CActor* actor)
+bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 {
 	//	액터 풀에 새로운 액터를 추가합니다.
 	m_aActors[actor]++;
@@ -84,7 +83,7 @@ bool CGameWorld::AddActor(CActor* actor)
 	return true;
 }
 
-CActor* CGameWorld::FindActorFromPosition(COORD pos)
+shared_ptr<CActor> CGameWorld::FindActorFromPosition(COORD pos)
 {
 	for (auto& i : m_aActors)
 	{
@@ -95,6 +94,40 @@ CActor* CGameWorld::FindActorFromPosition(COORD pos)
 			return i.first;
 		}
 	}
-
+	
 	return nullptr;
+}
+
+vector<shared_ptr<CActor>> CGameWorld::FindActorsByTag(ETag tag)
+{
+	vector<shared_ptr<CActor>> retVec;
+
+	for (auto& i : m_aActors)
+	{
+		if (!i.first->m_bIsValid)	continue;
+
+		if (i.first->HasTag(tag))
+		{
+			retVec.push_back(i.first);
+		}
+	}
+
+	return retVec;
+}
+
+vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD statrPos, COORD endPos)
+{
+	vector<shared_ptr<CActor>> retVec;
+
+	for (auto& i : m_aActors)
+	{
+		if (!i.first->m_bIsValid)	continue;
+
+		//if (i.first->HasTag(tag))
+		//{
+		//	retVec.push_back(i.first);
+		//}
+	}
+
+	return retVec;
 }

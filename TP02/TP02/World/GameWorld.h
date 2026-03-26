@@ -23,10 +23,17 @@ public:
 
 	//	액터 추가
 	//	이미 추가된 액터를 추가하려고 하면 실패합니다.
-	bool AddActor(CActor* actor);
+	bool AddActor(shared_ptr<CActor> actor);
 
 	//	위치에서 액터를 찾습니다.
-	CActor* FindActorFromPosition(COORD pos);
+	shared_ptr<CActor> FindActorFromPosition(COORD pos);
+
+	//	태그로 액터들을 찾습니다.
+	vector<shared_ptr<CActor>> FindActorsByTag(ETag tag);
+
+	//	범위에서 액터를 찾습니다.
+	//	시작위치는 포함하지만 끝위치는 포함하지 않습니다.
+	vector<shared_ptr<CActor>> FindActorsByRect(COORD statrPos, COORD endPos);
 
 private:
 
@@ -42,6 +49,6 @@ private:
 	int m_iNumberOfMonsterSpawn;
 
 	//vector<CActor*> m_aActors;
-	unordered_map<CActor*, int> m_aActors;
+	unordered_map<shared_ptr<CActor>, int> m_aActors;
 };
 
