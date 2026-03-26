@@ -37,6 +37,9 @@
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{1086e3d1-7ebd-4cff-89e4-9a7086df3da1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Time">
+      <UniqueIdentifier>{ca0d2c2a-8316-468e-bdfb-0ddc8ec30192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TP02.cpp">

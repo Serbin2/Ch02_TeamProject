@@ -4,11 +4,14 @@
 
 #include "Graphics/ConsoleGraphic.h"
 #include "Input/Input.h"
+#include "Time/Timer.h"
 
 // [2026-03-25, 박재현] 권한 테스트 2
 
 int main()
 {
+	SetConsoleOutputCP(CP_UTF8);
+
 	std::cout << "윈도우 10 이상의 콘솔창은 코드에서의 콘솔 창 크기 강제 조절이 동작하지 않을 수 있습니다.\n";
 	std::cout << "게임을 시작하기 전에 콘솔 창 크기를 적절하게 조절 한 후 진행하시기 바랍니다.\n";
 	std::cout << "아무 키를 눌러 계속합니다.\n";
@@ -22,6 +25,7 @@ int main()
 	///	게임에 필요한 객체들 준비 구간
 	CGraphic* pGraphic = CGraphic::GetInstance();
 	CInput* pInput = CInput::GetInstance();
+	CTimer Timer;
 
 	if (pGraphic == nullptr)
 	{	//	엔진이 없습니다
@@ -39,9 +43,11 @@ int main()
 	int x = 15;
 	int y = 15;
 
+	Timer.Start();
 	///	게임 루프
 	while (1)
 	{
+		double deltaTime = Timer.Update();
 		pInput->Update();	//	입력 갱신
 		//	테스트 로직
 
