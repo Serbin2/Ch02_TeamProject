@@ -42,8 +42,7 @@ int main()
 		return 0;
 	}
 
-	CPlayer* pPlayer = new CPlayer(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-
+	CPlayer* pPlayer = new CPlayer(Pixel::square, TEXT_FOREGROUND_CYAN_INT);
 
 	UI.AddUI(0, "FPS Count : ");
 	UI.AddUI(1, "FPS : ");
@@ -52,16 +51,12 @@ int main()
 	///	게임 루프
 	while (1)
 	{
-		double deltaTime = Timer.Update();
+		double DeltaTime = Timer.Update();
 		UI.SetValue(0, Timer.GetFpsCount());
 		UI.SetValue(1, Timer.GetFPS());
 		pInput->Update();	//	입력 갱신
 		//	테스트 로직
 
-		if (pInput->IsKeyDown('W'))	y--;	//	*** 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다. ***
-		if (pInput->IsKeyDown('A')) x--;
-		if (pInput->IsKeyDown('S')) y++;
-		if (pInput->IsKeyDown('D')) x++;
 		if (pInput->IsKeyDown('G')) pGraphic->AddLog("G키를 눌렀습니다.");
 		if (pInput->IsKeyDown('F')) pGraphic->AddLog("F키를 눌렀을까요? 와랄랄라 와랄랄루.");
 		if (pInput->IsKeyDown('T'))
@@ -78,17 +73,6 @@ int main()
 			}
 		}
 		if (pInput->IsKeyDown('Y')) Timer.SetTargetFps(60);
-
-		//	참고 https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-		//← 좌측 방향키 : VK_LEFT
-		//→ 우측 방향키 : VK_RIGTH
-		//↑ 위 방향키: VK_UP
-		//↓ 아래 방향키 : VK_DOWN
-		//Enter키 : VK_RETURN
-
-		double DeltaTime = Timer.Update();
-		pInput->Update();	//	입력 갱신
-
 
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
