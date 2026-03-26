@@ -37,6 +37,9 @@
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{1086e3d1-7ebd-4cff-89e4-9a7086df3da1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Boss">
+      <UniqueIdentifier>{2f624a61-4a13-4045-a6e5-0ed0f2783985}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TP02.cpp">
@@ -59,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp">
       <Filter>소스 파일\Manager\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="testMain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss\Boss.cpp">
+      <Filter>소스 파일\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Manager\SoundManager\SoundManager.h">
       <Filter>소스 파일\Manager\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss\Boss.h">
+      <Filter>소스 파일\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
