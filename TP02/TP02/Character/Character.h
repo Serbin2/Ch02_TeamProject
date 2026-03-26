@@ -4,6 +4,9 @@
 
 class CCharacter : public CActor
 {
+protected:
+	virtual ~CCharacter() {};
+
 public:
 	CCharacter(int Shape, int Color) : CActor(Shape, Color) { }
 

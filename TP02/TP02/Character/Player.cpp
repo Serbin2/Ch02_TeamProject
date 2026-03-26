@@ -63,7 +63,6 @@ void CPlayer::OnHit(float Damage)
 void CPlayer::Input()
 {
 	CInput* pInput = CInput::GetInstance();
-	pInput->Update();
 	
 	// 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다.
 	// Key Code: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes

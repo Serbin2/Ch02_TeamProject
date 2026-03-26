@@ -39,6 +39,7 @@ public:
 
 
 	//	버퍼에 픽셀 하나를 그립니다.
+	//	그리기 위치 X, Y, 그릴 문자 모양, 그리기 색
 	void RenderToBuffer(int x, int y, int type, int color);
 
 	//	버퍼를 화면에 출력합니다

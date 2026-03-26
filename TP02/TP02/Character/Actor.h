@@ -5,12 +5,14 @@
 
 class CActor
 {
+protected:
+	virtual	~CActor() = default;
 public:
 	CActor() = default;
 
 	CActor(int Shape, int Color) : m_pShape(Shape), m_tColor(Color) { }
 
-	virtual	~CActor() = default;
+	
 
 	virtual void Tick(double DeltaTime) = 0;
 	virtual void Move() = 0;
@@ -24,6 +26,8 @@ public:
 		}
 	}
 
+	friend class CGameWorld;
+
 	const COORD GetPosition() const { return m_cPosition; }
 	void SetPosition(const COORD& NewPosition) { m_cPosition = NewPosition; }
 
@@ -35,4 +39,5 @@ protected:
 	float m_fSpeed;			// 액터의 이동 속도(m/s)
 	double m_dMoveTimer;	// 액터의 이동 타이머
 
+	bool m_bIsValid = true;
 };

@@ -26,7 +26,7 @@ CGraphic::CGraphic()
 	}
 
 	//	멤버 변수들을 초기화합니다
-	m_iMaxLog = 7;
+	m_iMaxLog = LOG_HEIGHT;
 	m_DefaultBackgroundColor = TEXT_BACKGROUND_GREEN;
 	m_bOnDraw = false;
 
@@ -75,7 +75,7 @@ void CGraphic::Release()
 void CGraphic::SetCursorPos(int x, int y)
 {
 	COORD cdPos;
-	cdPos.X = x * 2;
+	cdPos.X = x * WIDTH_MULTIPLY;	//	두칸씩 찍어서 정사각형에 근접한 모양을 잡고있음
 	cdPos.Y = y;
 	SetConsoleCursorPosition(m_hOP, cdPos);
 }
@@ -160,7 +160,7 @@ void CGraphic::AddLog(string str)
 void CGraphic::DrawShape()
 {
 	string line;
-	line.resize(m_iEndOfScreenX * 2 + 2, ' ');
+	line.resize(m_iEndOfScreenX * WIDTH_MULTIPLY + BEZEL_WIDTH, ' ');
 	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_WHITE);
 	SetCursorPos(0, 0);
 	cout << line;
@@ -186,7 +186,7 @@ void CGraphic::DrawShape()
 void CGraphic::ClearLog()
 {
 	string str;
-	str.resize((m_iEndOfScreenX - 1) * 2, ' ');
+	str.resize((m_iEndOfScreenX - 1) * WIDTH_MULTIPLY, ' ');
 
 	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_BLACK);
 	for (int i = m_iScreenSize + 3; i <= m_iScreenSize + m_iMaxLog + 2; i++)

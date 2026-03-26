@@ -4,6 +4,8 @@
 
 class CPlayer : public CCharacter
 {
+protected:
+	virtual ~CPlayer() {};
 public:
 	CPlayer(int Shape, int Color);
 
