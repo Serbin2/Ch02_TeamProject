@@ -1,4 +1,5 @@
 #include "ConsoleGraphic.h"
+#include "Interface.h"
 
 CGraphic* CGraphic::m_pInstance = nullptr;
 
@@ -29,6 +30,7 @@ CGraphic::CGraphic()
 	m_iMaxLog = LOG_HEIGHT;
 	m_DefaultBackgroundColor = TEXT_BACKGROUND_BLACK;
 	m_bOnDraw = false;
+	m_sBlank = "                                                           ";
 
 	//	게임 레이아웃을 그려둡니다
 	DrawShape();
@@ -48,6 +50,7 @@ void CGraphic::SetPixelText()
 	m_sPixels[horizontalLine] = "--";
 	m_sPixels[verticalLine] = "||";
 	m_sPixels[cross] = "++";
+	m_sPixels[dust] = "'.";
 }
 
 CGraphic* CGraphic::GetInstance()
@@ -134,20 +137,38 @@ void CGraphic::EndDraw()
 	m_bOnDraw = false;	//	그리기가 끝났습니다.
 }
 
+void CGraphic::ReDraw()
+{
+	//	화면 정리 및 레이아웃 그리기
+	DrawShape();
+
+	//	로그 재 출력
+	PrintLog();
+
+	//	UI 그리기
+	CInterface::GetInstance()->Redraw();
+}
+
 //	로그를 출력합니다
 void CGraphic::AddLog(string str)
 {
 	//	로그창을 지웁니다.
 	ClearLog();
 
+	string newString = str + m_sBlank;
 	//	새 로그를 큐에 넣습니다
-	m_aLog.push_back(str);
+	m_aLog.push_back(newString.substr(0, (m_iEndOfScreenX - 2) * WIDTH_MULTIPLY));
 	while (m_aLog.size() > m_iMaxLog)
 	{	//	큐가 넘치면 오래된 로그를 제거합니다.
 		m_aLog.pop_front();
 	}
 
 	//	로그를 다시 출력합니다.
+	PrintLog();
+}
+
+void CGraphic::PrintLog()
+{
 	int logSize = (int)m_aLog.size();
 	for (int i = 0; i < logSize; i++)
 	{
@@ -159,6 +180,8 @@ void CGraphic::AddLog(string str)
 //	게임 틀을 그립니다.
 void CGraphic::DrawShape()
 {
+	system("cls");
+
 	string line;
 	line.resize(m_iEndOfScreenX * WIDTH_MULTIPLY + BEZEL_WIDTH, ' ');
 	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_WHITE);

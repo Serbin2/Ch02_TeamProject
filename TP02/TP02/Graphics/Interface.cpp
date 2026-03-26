@@ -9,12 +9,24 @@ CInterface::CInterface()
 		m_iUIColor[i] = TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK;
 	}
 
-	m_sblank = "                    ";
+	m_sBlank = "                    ";
 }
 
 CInterface::~CInterface()
 {
 
+}
+
+CInterface* CInterface::m_pInstance = nullptr;
+
+CInterface* CInterface::GetInstance()
+{
+	if (m_pInstance == nullptr)
+	{
+		m_pInstance = new CInterface();
+	}
+
+	return m_pInstance;
 }
 
 //	UI를  추가합니다.
@@ -25,15 +37,7 @@ bool CInterface::AddUI(int index, string name)
 
 	//	UI 사용
 	m_bAccupied[index] = true;
-	m_sUIs[index] = name;
-
-	//	출력합니다
-	COORD pos;
-	pos.X = UI_POS_X;
-	pos.Y = index + 1;
-	SetConsoleCursorPosition(m_hOP, pos);
-	SetConsoleTextAttribute(m_hOP, m_iUIColor[index]);
-	cout << name;
+	m_sName[index] = name;
 
 	return true;
 }
@@ -52,21 +56,10 @@ bool CInterface::SetValue(int index, string value)
 {
 	if (!m_bAccupied[index])	return false;
 
-	size_t size = m_sUIs[index].length();
-	size_t valSize = value.length();
-	int blank = 20 - (int)size - (int)valSize;
-	string str = value + m_sblank;
-	
-	if (blank < 0)	blank = 0;
+	string str = m_sName[index] + value + m_sBlank;
+	m_sUIs[index] = str.substr(0, 20);
 	//	출력합니다
-	string str2 = str.substr(0, blank);
-	COORD pos;
-	pos.X = UI_POS_X + size;
-	pos.Y = index + 1;
-	SetConsoleCursorPosition(m_hOP, pos);
-	SetConsoleTextAttribute(m_hOP, m_iUIColor[index]);
-	cout << str2;
-
+	RenderUI(index);
 	return true;
 }
 
@@ -80,22 +73,26 @@ bool CInterface::RemoveUI(int index)
 	SetConsoleCursorPosition(m_hOP, pos);
 	int color = TEXT_BACKGROUND_BLACK;
 	SetConsoleTextAttribute(m_hOP, color);
-	cout << m_sblank;
+	cout << m_sBlank;
 
 	m_bAccupied[index] = false;
 	return true;
 }
 
-void CInterface::Redraw(int index)
+void CInterface::RenderUI(int index)
 {
 	COORD pos;
 	pos.X = UI_POS_X;
 	pos.Y = index + 1;
 	SetConsoleCursorPosition(m_hOP, pos);
-	int color = TEXT_BACKGROUND_BLACK;
-	SetConsoleTextAttribute(m_hOP, color);
-	cout << m_sblank;
-	SetConsoleCursorPosition(m_hOP, pos);
 	SetConsoleTextAttribute(m_hOP, m_iUIColor[index]);
 	cout << m_sUIs[index];
+}
+
+void CInterface::Redraw()
+{
+	for (int i = 0; i < WORLD_SIZE; i++)
+	{
+		RenderUI(i);
+	}
 }

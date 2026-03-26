@@ -31,7 +31,7 @@ int main()
 	CGraphic* pGraphic = CGraphic::GetInstance();
 	CInput* pInput = CInput::GetInstance();
 	CTimer Timer;
-	CInterface UI;
+	CInterface* UI = CInterface::GetInstance();
 	CGameWorld World;
 	World.Initialize();
 
@@ -48,16 +48,16 @@ int main()
 	shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	World.AddActor(pPlayer);
 
-	UI.AddUI(0, "FPS Count : ");
-	UI.AddUI(1, "FPS : ");
+	UI->AddUI(0, "FPS Count : ");
+	UI->AddUI(1, "FPS : ");
 	
 	Timer.Start();
 	///	게임 루프
 	while (1)
 	{
 		double DeltaTime = Timer.Update();
-		UI.SetValue(0, Timer.GetFpsCount());
-		UI.SetValue(1, Timer.GetFPS());
+		UI->SetValue(0, Timer.GetFpsCount());
+		UI->SetValue(1, Timer.GetFPS());
 		pInput->Update();
 		//	테스트 로직
 
@@ -66,14 +66,14 @@ int main()
 		if (pInput->IsKeyDown('T'))
 		{
 			pGraphic->AddLog("Toggle UI");
-			if (UI.AddUI(0, "FPS Count : "))
+			if (UI->AddUI(0, "FPS Count : "))
 			{
-				UI.AddUI(1, "FPS :");
+				UI->AddUI(1, "FPS : ");
 			}
 			else
 			{
-				UI.RemoveUI(0);
-				UI.RemoveUI(1);
+				UI->RemoveUI(0);
+				UI->RemoveUI(1);
 			}
 		}
 		if (pInput->IsKeyDown('Y')) Timer.SetTargetFps(60);
