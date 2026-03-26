@@ -48,9 +48,6 @@
     <ClCompile Include="Input\Input.cpp">
       <Filter>소스 파일\Input</Filter>
     </ClCompile>
-    <ClCompile Include="testmain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Resource\Sound\Sound.cpp">
       <Filter>소스 파일\Resource\Sound</Filter>
     </ClCompile>
