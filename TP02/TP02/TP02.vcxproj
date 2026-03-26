@@ -85,6 +85,7 @@
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
     <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Resource\ResourceBase.cpp" />
     <ClCompile Include="Resource\Sound\Sound.cpp" />
     <ClCompile Include="Input\Input.cpp" />
@@ -100,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Standard.h" />
     <ClInclude Include="Time\Timer.h" />
