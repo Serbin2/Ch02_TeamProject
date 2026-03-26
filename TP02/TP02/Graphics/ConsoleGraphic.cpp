@@ -27,7 +27,7 @@ CGraphic::CGraphic()
 
 	//	멤버 변수들을 초기화합니다
 	m_iMaxLog = 7;
-	m_DefaultBackgroundColor = TextColor::TEXT_BACKGROUND_GREEN;
+	m_DefaultBackgroundColor = TEXT_BACKGROUND_GREEN;
 	m_bOnDraw = false;
 
 	//	게임 레이아웃을 그려둡니다
@@ -80,7 +80,7 @@ void CGraphic::SetCursorPos(int x, int y)
 	SetConsoleCursorPosition(m_hOP, cdPos);
 }
 
-void CGraphic::RenderToBuffer(int x, int y, CGraphic::Pixel type, CGraphic::TextColor color)
+void CGraphic::RenderToBuffer(int x, int y, int type, int color)
 {
 	if (!m_bOnDraw)	return;
 	m_aBuffer[y][x].color = color;
@@ -88,7 +88,7 @@ void CGraphic::RenderToBuffer(int x, int y, CGraphic::Pixel type, CGraphic::Text
 }
 
 //	배경을 그립니다.
-void CGraphic::DrawBackground(CGraphic::TextColor color)
+void CGraphic::DrawBackground(int color)
 {
 	if (!m_bOnDraw)	return;
 	Shader s;
@@ -161,7 +161,7 @@ void CGraphic::DrawShape()
 {
 	string line;
 	line.resize(m_iEndOfScreenX * 2 + 2, ' ');
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_WHITE);
+	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_WHITE);
 	SetCursorPos(0, 0);
 	cout << line;
 	SetCursorPos(0, m_iScreenSize + 1);
@@ -188,11 +188,11 @@ void CGraphic::ClearLog()
 	string str;
 	str.resize((m_iEndOfScreenX - 1) * 2, ' ');
 
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK);
+	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_BLACK);
 	for (int i = m_iScreenSize + 3; i <= m_iScreenSize + m_iMaxLog + 2; i++)
 	{
 		SetCursorPos(1, i);
 		cout << str;
 	}
-	SetConsoleTextAttribute(m_hOP, TextColor::TEXT_BACKGROUND_BLACK | TextColor::TEXT_FOREGROUND_WHITE);
+	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_BLACK | TEXT_FOREGROUND_WHITE);
 }

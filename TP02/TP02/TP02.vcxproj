@@ -88,6 +88,7 @@
     <ClCompile Include="Resource\ResourceBase.cpp" />
     <ClCompile Include="Resource\Sound\Sound.cpp" />
     <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="Time\Timer.cpp" />
     <ClCompile Include="TP02.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -105,6 +106,7 @@
     <ClInclude Include="Resource\Sound\Sound.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Standard.h" />
+    <ClInclude Include="Time\Timer.h" />
     <ClInclude Include="Utils\Common.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
