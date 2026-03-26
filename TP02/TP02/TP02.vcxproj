@@ -83,6 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
+    <ClCompile Include="Graphics\Interface.cpp" />
     <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
     <ClCompile Include="Resource\ResourceBase.cpp" />
@@ -99,6 +100,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
+    <ClInclude Include="Graphics\Interface.h" />
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />
     <ClInclude Include="resource.h" />
