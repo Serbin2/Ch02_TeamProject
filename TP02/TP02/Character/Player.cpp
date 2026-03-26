@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Input/Input.h"
+#include "../Projectile/Projectile.h"
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -52,7 +53,11 @@ void CPlayer::Move()
 
 void CPlayer::Attack(COORD Direction)
 {
-	// TODO: 공격 로직 구현, 공격 쿨타임 체크, 공격 범위 내 적 탐색 및 피해 적용
+	CProjectile* pProjectile = new CProjectile(Pixel::circle, TEXT_FOREGROUND_YELLOW);
+	pProjectile->SetOwner(this);
+	pProjectile->SetPosition(m_cPosition);
+	pProjectile->SetSpeed(5.0f);
+	pProjectile->SetMoveDirection(Direction);
 }
 
 void CPlayer::OnHit(float Damage)
