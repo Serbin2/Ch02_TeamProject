@@ -151,7 +151,8 @@ void CBoss::FireProjectileToOutline()
 
 		//auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, Dir, 2.f);
 		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
-		pProjectile->SetOwner(this);
+		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
+		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(Pos.Pos);
 		pProjectile->SetMoveDirection(Dir);
 		pProjectile->SetSpeed(3.f);
@@ -224,8 +225,9 @@ void CBoss::WaveAttack()
 			continue;
 		}
 
-		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
-		pProjectile->SetOwner(this);
+		auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
+		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
+		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(AP.Pos);
 		pProjectile->SetMoveDirection({ 0,0 });
 		pProjectile->SetSpeed(0.f);

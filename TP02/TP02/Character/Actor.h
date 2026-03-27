@@ -1,9 +1,10 @@
 #pragma once
 
+#include <memory>
 #include "../Standard.h"
 #include "../Graphics/ConsoleGraphic.h"
 
-class CActor
+class CActor : public std::enable_shared_from_this<CActor>
 {
 public:
 	CActor() = default;
