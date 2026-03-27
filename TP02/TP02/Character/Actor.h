@@ -18,7 +18,9 @@ public:
 
 	virtual void Render()
 	{
-		if (!m_bIsValid)	return;
+		if (!m_bIsValid)
+			return;
+
 		CGraphic* pGraphic = CGraphic::GetInstance();
 		if (pGraphic)
 		{
@@ -37,8 +39,12 @@ public:
 	const float GetSpeed() const { return m_fSpeed; }
 	void SetSpeed(float NewSpeed) { m_fSpeed = NewSpeed; }
 
+
+	//	----- 작업자 : 나지호 ------  //
+	//	액터의 유효 처리
 	bool IsValid() { return m_bIsValid; };
 
+	//	태그 시스템
 	bool HasTag(ETag tag)
 	{
 		return m_eTag & tag;
@@ -54,6 +60,11 @@ public:
 		m_eTag = m_eTag & ~tag;
 	}
 
+	//	충돌  처리 관련
+	virtual bool ActorCustomCollisionTest(COORD pos) { return false; };
+
+	//	----------------------------	//
+
 protected:
 	int m_pShape;	        // 액터의 픽셀 모양
 	int m_tColor;           // 액터의 텍스트 색상
@@ -63,6 +74,9 @@ protected:
 	float m_fSpeed;			// 액터의 이동 속도(m/s)
 	double m_dMoveTimer;	// 액터의 이동 타이머
 
-	int m_eTag;
-	bool m_bIsValid = true;
+
+	//	-----	작업자 : 나지호 -----	//
+	int m_eTag;				//	태그
+	bool m_bIsValid = true;	//	유효한지
+	//	-----------------------------	//
 };

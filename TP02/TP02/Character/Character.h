@@ -19,10 +19,11 @@ public:
 	void SetAttackPower(float NewAttackPower) { m_fAttackPower = NewAttackPower; }
 
 protected:
-	float m_fHealth;	     // 체력
-	float m_fDefense;	     // 방어력
-	float m_fAttackPower;    // 공격력
-	int m_iAttackRange;	     // 공격 사거리
-	float m_fAttackCooldown; // 공격 쿨타임
+	float m_fHealth;	      // 체력
+	float m_fDefense;	      // 방어력
+	float m_fAttackPower;     // 공격력
+	int m_iAttackRange;	      // 공격 사거리
+	double m_dAttackCooldown; // 공격 쿨타임
+	double m_dAttackTimer;	  // 공격 타이머
 
 };

@@ -76,4 +76,9 @@ public:
 
 		ConsumeItem();
 	}
+
+
+class CItem
+{
+
 };
