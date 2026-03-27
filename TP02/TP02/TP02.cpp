@@ -96,6 +96,22 @@ int main()
 			menu.ShowMenu();
 			Timer.Resume();
 			pGraphic->ReDraw();
+			pGraphic->AddLog("G키를 눌렀습니다.");
+			CMenu inGameMenu;
+			int result = inGameMenu.ShowMenu();
+			Timer.Start();
+
+			if (result == 2)
+			{
+				// 게임 종료 → 메인메뉴로 복귀
+				CGraphic::Release();
+				CInput::Release();
+				cMainMenu frontMenu;
+				frontMenu.vRun();
+				return 0;
+			}
+			// result == 1: 게임 재개
+			// result == 3: 상점 (나중에 추가)
 		}
 
 		World->Update(DeltaTime);

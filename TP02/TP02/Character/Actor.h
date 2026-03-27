@@ -8,10 +8,8 @@ class CActor : public std::enable_shared_from_this<CActor>
 {
 public:
 	CActor() = default;
-
 	CActor(int Shape, int Color) : m_pShape(Shape), m_tColor(Color), m_eTag(ETag::actor) { }
 	virtual	~CActor() = default;
-	
 
 	virtual void Tick(double DeltaTime) = 0;
 	virtual void Move() = 0;

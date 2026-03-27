@@ -6,7 +6,7 @@ class CPlayer : public CCharacter
 {
 public:
 	CPlayer(int Shape, int Color);
-	virtual ~CPlayer() {};
+	virtual ~CPlayer() = default;
 
 	virtual void Tick(double DeltaTime) override;
 	virtual void Move() override;
