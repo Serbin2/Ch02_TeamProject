@@ -129,6 +129,7 @@
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
     <ClCompile Include="Graphics\Interface.cpp" />
     <ClCompile Include="InGameMenu\Menu.cpp" />
+    <ClCompile Include="Inventory\Inventory.cpp" />
     <ClCompile Include="Item\Item.cpp" />
     <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="FrontMenu\MainMenu.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
     <ClInclude Include="InGameMenu\Menu.h" />
+    <ClInclude Include="Inventory\Inventory.h" />
     <ClInclude Include="Item\Item.h" />
     <ClInclude Include="Graphics\Interface.h" />
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
