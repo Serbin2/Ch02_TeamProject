@@ -7,7 +7,7 @@
 #include <iostream>
 #include <memory>
 
-#include "Character/Character.h"
+#include "../Character/Character.h"
 
 
 class cItem
