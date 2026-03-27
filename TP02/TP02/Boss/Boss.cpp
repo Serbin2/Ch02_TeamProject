@@ -151,6 +151,7 @@ void CBoss::FireProjectileToOutline()
 			break;
 		}
 
+
 		//auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, Dir, 2.f);
 		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
@@ -261,6 +262,7 @@ void CBoss::GroggyAction()
 
 void CBoss::AttackAction()
 {
+	// [TODO-PJH] : 공격 패턴 쿨타임 조정이 필요해보임
 	SelectAttackPattern();
 	ChangeState(EBossState::Move, 3);
 }
