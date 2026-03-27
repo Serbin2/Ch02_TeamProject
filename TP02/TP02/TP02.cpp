@@ -33,8 +33,8 @@ int main()
 	CInput* pInput = CInput::GetInstance();
 	CTimer Timer;
 	CInterface* UI = CInterface::GetInstance();
-	CGameWorld World;
-	World.Initialize();
+	CGameWorld* World = CGameWorld::GetInstance();
+	World->Initialize();
 
 	if (!pGraphic || !pInput) return 0;
 
@@ -64,8 +64,8 @@ int main()
 
 	std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
 	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-	World.AddActor(pPlayer);
-	World.AddActor(pBoss);
+	World->AddActor(pPlayer);
+	World->AddActor(pBoss);
 
 	UI->AddUI(0, "FPS Count : ");
 	UI->AddUI(1, "FPS : ");
@@ -107,7 +107,7 @@ int main()
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
 
-		World.Update(DeltaTime);
+		World->Update(DeltaTime);
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요

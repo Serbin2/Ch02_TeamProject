@@ -15,6 +15,18 @@ CGameWorld::~CGameWorld()
 
 }
 
+CGameWorld* CGameWorld::m_pInstance = nullptr;
+
+CGameWorld* CGameWorld::GetInstance()
+{
+	if (m_pInstance == nullptr)
+	{
+		m_pInstance = new CGameWorld();
+	}
+
+	return m_pInstance;
+}
+
 void CGameWorld::Initialize()
 {
 	m_dMonsterSpawnInitialTime = 10.0;	//	10초마다 몬스터 스폰합니다
