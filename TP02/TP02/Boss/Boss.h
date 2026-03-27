@@ -145,7 +145,5 @@ protected:
 	int m_iCurrntWaveCount = 1;
 	int m_iMaxWaveCount = 3;
 	bool m_bIsActiveWaveAttack = false;
-
-	std::vector<shared_ptr<class CProjectile>> m_vProjectiles;
 };
 

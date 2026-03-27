@@ -4,6 +4,9 @@
 
 #include "../Projectile/BossProjectile.h"
 
+#include "../World/GameWorld.h"
+
+
 CBoss::CBoss(int Shape, int Color, FGridSize BossSize)
 	: CCharacter(Shape, Color)
 {
@@ -47,12 +50,6 @@ void CBoss::Tick(double DeltaTime)
 		}
 	}
 
-	for (auto Projectile : m_vProjectiles)
-	{
-		Projectile->Tick(DeltaTime);
-		//Projectile->Render();
-	}
-
 	Render();
 }
 
@@ -89,11 +86,11 @@ void CBoss::OnHit(float Damage)
 
 void CBoss::SelectAttackPattern()
 {
-	if (0 == rand() % 2)
-	{
-		FireProjectileToOutline();
-	}
-	else
+	//if (0 == rand() % 2)
+	//{
+	//	FireProjectileToOutline();
+	//}
+	//else
 	{
 		WaveAttack();
 	}
@@ -237,7 +234,6 @@ void CBoss::WaveAttack()
 		pProjectile->SetPosition(AP.Pos);
 		pProjectile->SetMoveDirection({ 0,0 });
 		pProjectile->SetSpeed(0.f);
-		m_vProjectiles.push_back(pProjectile);
 	}
 }
 
