@@ -50,8 +50,6 @@ int main()
 		return 0;
 	}
 
-	CPlayer* pPlayer = new CPlayer(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-	std::shared_ptr<CBoss> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
 	//auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
 	//pProjectile->SetMoveDirection({ 1, 0 });
 	//pProjectile->SetPosition({1, 0});
@@ -71,13 +69,15 @@ int main()
 		{
 			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
 			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
-			std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
-			pSound->Play(true);
+			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
+			//pSound->Play(true);
 		}
 	}
 
+	std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
 	shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	World.AddActor(pPlayer);
+	World.AddActor(pBoss);
 
 	UI->AddUI(0, "FPS Count : ");
 	UI->AddUI(1, "FPS : ");
@@ -120,8 +120,8 @@ int main()
 
 		//	테스트 그리기
 		// pGraphic->RenderToBuffer(x, y, pix, tex);
-		pPlayer->Tick(DeltaTime);
-		pBoss->Tick(DeltaTime);
+		//pPlayer->Tick(DeltaTime);
+		//pBoss->Tick(DeltaTime);
 		//pProjectile->Tick(DeltaTime);
 		World.Update(DeltaTime);
 
