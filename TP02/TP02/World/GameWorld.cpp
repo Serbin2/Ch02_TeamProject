@@ -43,13 +43,14 @@ void CGameWorld::Update(double deltaTime)
 	//	액터 풀 업데이트
 	for (auto it = m_aActors.begin(); it != m_aActors.end();)
 	{
-		if (!it->first->m_bIsValid)
+		if (!it->first->IsValid())
 		{	//	무효한 객체입니다.
 			it = m_aActors.erase(it);
 		}
 		else
-		{	
+		{
 			it->first->Tick(deltaTime);
+			it->first->Render();
 			it++;
 		}
 	}
