@@ -9,6 +9,9 @@ public:
 
 	virtual	~CBossProjectile();
 
+public:
+	void Tick(double DeltaTime) override;
+
 
 private:
 	double m_dLifeTime = 0.5;
