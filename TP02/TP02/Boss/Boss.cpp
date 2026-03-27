@@ -3,7 +3,6 @@
 #include "../Utils/Utils.h"
 
 #include "../Projectile/BossProjectile.h"
-
 #include "../World/GameWorld.h"
 
 
@@ -112,7 +111,7 @@ void CBoss::FireProjectileToOutline()
 {
 	// 공격 종료후 5초 후 이동 
 	//static int sTestRange = 1;
-	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(/*sTestRange++*/);
+	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(1);
 	std::string DebugMsg;
 	for (const auto& Pos : AttackPos)
 	{
@@ -159,7 +158,7 @@ void CBoss::FireProjectileToOutline()
 		pProjectile->SetPosition(Pos.Pos);
 		pProjectile->SetMoveDirection(Dir);
 		pProjectile->SetSpeed(3.f);
-		m_vProjectiles.push_back(pProjectile);
+
 
 		DebugMsg += "(" + std::to_string(Pos.Pos.X) + ", " + std::to_string(Pos.Pos.Y) + "), ";
 	}
@@ -212,7 +211,7 @@ void CBoss::WaveAttack()
 {
 	if (m_iCurrntWaveCount > m_iMaxWaveCount)
 	{
-		m_iCurrntWaveCount = 0;
+		m_iCurrntWaveCount = 1;
 		m_bIsActiveWaveAttack = false;
 		return;
 	}
@@ -228,15 +227,16 @@ void CBoss::WaveAttack()
 			continue;
 		}
 
-		auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
+		auto pProjectile = std::make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, 1.f);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(AP.Pos);
 		pProjectile->SetMoveDirection({ 0,0 });
 		pProjectile->SetSpeed(0.f);
+
+		CGameWorld::GetInstance()->AddActor(pProjectile);
 	}
 }
-
 
 void CBoss::ChangeState(EBossState NewState, float Delay)
 {

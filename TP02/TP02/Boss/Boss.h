@@ -140,7 +140,7 @@ protected:
 
 	// 웨이브 스킬 쿨타임 
 	bool bActive;
-	double m_iWaveAttackTriggerCooldown = 1.;
+	double m_iWaveAttackTriggerCooldown = 0.7;
 	double m_iAccWaveAttackTriggerCooldown = 0.2;
 	int m_iCurrntWaveCount = 1;
 	int m_iMaxWaveCount = 3;

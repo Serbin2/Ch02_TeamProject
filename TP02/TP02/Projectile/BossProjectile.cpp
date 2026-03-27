@@ -1,9 +1,8 @@
 #include "BossProjectile.h"
 
-CBossProjectile::CBossProjectile(int Shape, int Color, COORD MoveDirection, int LifeTime)
+CBossProjectile::CBossProjectile(int Shape, int Color, int LifeTime)
 	: CProjectile(Shape, Color)
 {
-	SetMoveDirection(MoveDirection);
 	m_dLifeTime = LifeTime;
 }
 
@@ -17,7 +16,7 @@ void CBossProjectile::Tick(double DeltaTime)
 	if (m_dLifeTime <= 0)
 	{
 		// 랜더 종료 
-		//m_bIsActive = false;
+		m_bIsActive = false;
 		m_bIsValid = false;
 		return;
 	}
