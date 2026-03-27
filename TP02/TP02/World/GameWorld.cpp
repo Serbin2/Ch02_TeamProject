@@ -50,6 +50,7 @@ void CGameWorld::Update(double deltaTime)
 		else
 		{	
 			it->first->Tick(deltaTime);
+			it->first->Render();
 			it++;
 		}
 	}
