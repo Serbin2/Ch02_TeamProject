@@ -36,8 +36,6 @@ void CPlayer::Tick(double DeltaTime)
 	{
 		m_cMoveDirection = { 0, 0 };
 	}
-
-	Render();
 }
 
 void CPlayer::Move()
