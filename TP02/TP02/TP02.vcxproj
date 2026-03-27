@@ -103,6 +103,7 @@
     <ClCompile Include="Graphics\Interface.cpp" />
     <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Projectile\BossProjectile.cpp" />
     <ClCompile Include="Resource\ResourceBase.cpp" />
     <ClCompile Include="Resource\Sound\Sound.cpp" />
@@ -135,6 +136,8 @@
     <ClInclude Include="Character\Character.h" />
     <ClInclude Include="Character\Player.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Graphics\Interface.h" />
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />
