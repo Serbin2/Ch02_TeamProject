@@ -120,6 +120,9 @@ public:
 		return m_fCurrentGroggy == m_fMaxGroggy;
 	}
 
+private:
+	void StopWaveAttack();
+
 protected:
 	EBossState m_CurrentState = EBossState::Attack;
 
@@ -140,8 +143,8 @@ protected:
 
 	// 웨이브 스킬 쿨타임 
 	bool bActive;
-	double m_iWaveAttackTriggerCooldown = 0.7;
-	double m_iAccWaveAttackTriggerCooldown = 0.2;
+	double m_iWaveAttackTriggerCooldown = 0.3;
+	double m_iAccWaveAttackTriggerCooldown = 0.0;
 	int m_iCurrntWaveCount = 1;
 	int m_iMaxWaveCount = 3;
 	bool m_bIsActiveWaveAttack = false;

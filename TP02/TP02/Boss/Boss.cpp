@@ -23,10 +23,10 @@ void CBoss::Tick(double DeltaTime)
 	m_fAccStateActionDelay += DeltaTime;
 	m_iAccWaveAttackTriggerCooldown += DeltaTime;
 
-	// 웨이브 어택을 위해서 사용
-	if (m_iAccWaveAttackTriggerCooldown >= m_iWaveAttackTriggerCooldown)
+	// 웨이브 어택
+	if (m_bIsActiveWaveAttack && m_iAccWaveAttackTriggerCooldown >= m_iWaveAttackTriggerCooldown)
 	{
-		m_iAccWaveAttackTriggerCooldown = 0;
+		m_iAccWaveAttackTriggerCooldown = 0.0;
 		WaveAttack();
 	}
 
@@ -85,11 +85,18 @@ void CBoss::OnHit(float Damage)
 
 void CBoss::SelectAttackPattern()
 {
-	//if (0 == rand() % 2)
-	//{
-	//	FireProjectileToOutline();
-	//}
-	//else
+	std::vector<std::shared_ptr<CActor>> vActors = CGameWorld::GetInstance()->FindActorsByTag(ETag::player);
+	const COORD cPlayerPos = vActors[0]->GetPosition();
+
+	// [TODO-PJH] : 플레이어와 거리를 계산하여 공격 패턴 선택
+
+
+
+	if (0 == rand() % 2)
+	{
+		FireProjectileToOutline();
+	}
+	else
 	{
 		WaveAttack();
 	}
@@ -151,16 +158,15 @@ void CBoss::FireProjectileToOutline()
 			break;
 		}
 
-
 		//auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, Dir, 2.f);
-		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
+		auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, 20.f);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(Pos.Pos);
 		pProjectile->SetMoveDirection(Dir);
-		pProjectile->SetSpeed(3.f);
+		pProjectile->SetSpeed(30.f);
 
-
+		CGameWorld::GetInstance()->AddActor(pProjectile);
 		DebugMsg += "(" + std::to_string(Pos.Pos.X) + ", " + std::to_string(Pos.Pos.Y) + "), ";
 	}
 
@@ -212,8 +218,7 @@ void CBoss::WaveAttack()
 {
 	if (m_iCurrntWaveCount > m_iMaxWaveCount)
 	{
-		m_iCurrntWaveCount = 1;
-		m_bIsActiveWaveAttack = false;
+		StopWaveAttack();
 		return;
 	}
 
@@ -272,4 +277,10 @@ void CBoss::MoveAction()
 	// 텔포 -> 공격 스테이 후 
 	Teleport();
 	ChangeState(EBossState::Attack, 2);
+}
+
+void CBoss::StopWaveAttack()
+{
+	m_iCurrntWaveCount = 1;
+	m_bIsActiveWaveAttack = false;
 }
