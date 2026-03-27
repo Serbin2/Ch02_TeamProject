@@ -3,10 +3,10 @@
 //	260325 지호나
 #include "Graphics/ConsoleGraphic.h"
 #include "Standard.h"
-#include "MainMenu.h"
+#include "InGameMenu/Menu.h"
 #include "Input/Input.h"
 #include "Time/Timer.h"
-#include "Menu.h"
+#include "FrontMenu/MainMenu.h"
 #include <windows.h>
 #include <iostream>
 #include <conio.h>
@@ -16,6 +16,7 @@
 #include "Boss/Boss.h"
 #include "Projectile/Projectile.h"
 #include "World/GameWorld.h"
+#include "Item/Item.h"
 
 
 // [2026-03-25, 박재현] 권한 테스트 2
