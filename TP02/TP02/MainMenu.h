@@ -51,7 +51,8 @@ private:
 
 		if (scene == MENU) { // start 일때 화살표 키로 iCount 
 			if (in == 13) {
-				if (iCount == 1) scene = CREDIT;
+				if (iCount == 0) scene = START;
+				else if (iCount == 1) scene = CREDIT;
 				else if (iCount == 2) scene = EXIT;
 			}
 
@@ -68,13 +69,13 @@ private:
 	}
 
 public:
-	int vRun() {
+	void vRun() {
 		while (scene != START) {
 			system("cls");
 
 			if (scene == MENU) vChoice();
 			else if (scene == CREDIT) vCredit();
-			else if (scene == EXIT) return 0;
+			else if (scene == EXIT) exit(0);
 
 			vScene();
 		}
