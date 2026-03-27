@@ -7,7 +7,7 @@ class cMainMenu {
 private:
 	enum eScene { MENU ,START, CREDIT, EXIT };
 	eScene scene = MENU;
-	int iCount = 0;
+	int m_iMaxAmount = 0;
 	int in = 0;
 
 	//타이틀에 넣고싶은거 넣기
@@ -36,9 +36,9 @@ private:
 	void vChoice() {
 		std::cout << cTitle;
 		std::cout << "\n┌──────────────────┐\n";
-		std::cout << (iCount == 0 ? "│    ▶ NEW GAME    │\n" : "│      NEW GAME    │\n");
-		std::cout << (iCount == 1 ? "│    ▶ CREDITS     │\n" : "│      CREDITS     │\n");
-		std::cout << (iCount == 2 ? "│    ▶ EXIT        │\n" : "│      EXIT        │\n");
+		std::cout << (m_iMaxAmount == 0 ? "│    ▶ NEW GAME    │\n" : "│      NEW GAME    │\n");
+		std::cout << (m_iMaxAmount == 1 ? "│    ▶ CREDITS     │\n" : "│      CREDITS     │\n");
+		std::cout << (m_iMaxAmount == 2 ? "│    ▶ EXIT        │\n" : "│      EXIT        │\n");
 		std::cout << "└──────────────────┘\n";
 	}
 
@@ -51,16 +51,16 @@ private:
 
 		if (scene == MENU) { // start 일때 화살표 키로 iCount 
 			if (in == 13) {
-				if (iCount == 0) scene = START;
-				else if (iCount == 1) scene = CREDIT;
-				else if (iCount == 2) scene = EXIT;
+				if (m_iMaxAmount == 0) scene = START;
+				else if (m_iMaxAmount == 1) scene = CREDIT;
+				else if (m_iMaxAmount == 2) scene = EXIT;
 			}
 
 			if (in == 0 || in == 224) {
 				in = _getch();
 
-				if (in == 72) iCount = (iCount + 2) % 3;
-				else if (in == 80) iCount = (iCount + 1) % 3;
+				if (in == 72) m_iMaxAmount = (m_iMaxAmount + 2) % 3;
+				else if (in == 80) m_iMaxAmount = (m_iMaxAmount + 1) % 3;
 			}
 		}
 		else if (scene == CREDIT) {

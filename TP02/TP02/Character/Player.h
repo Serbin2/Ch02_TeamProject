@@ -20,4 +20,7 @@ private:
 	int m_iLevel;
 	int m_iExp;
 
+
+	// PJH - 인벤토리 추가
+	std::shared_ptr<class CInventory> m_pInventory;
 };
