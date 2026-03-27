@@ -89,8 +89,14 @@ void CBoss::OnHit(float Damage)
 
 void CBoss::SelectAttackPattern()
 {
-	WaveAttack();
-	//FireProjectileToOutline();
+	if (0 == rand() % 2)
+	{
+		FireProjectileToOutline();
+	}
+	else
+	{
+		WaveAttack();
+	}
 }
 
 COORD CBoss::FindCanTelportPosition(/*CPlayer* Player*/)
@@ -108,8 +114,8 @@ void CBoss::Teleport()
 void CBoss::FireProjectileToOutline()
 {
 	// 공격 종료후 5초 후 이동 
-	static int sTestRange = 1;
-	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(sTestRange++);
+	//static int sTestRange = 1;
+	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(/*sTestRange++*/);
 	std::string DebugMsg;
 	for (const auto& Pos : AttackPos)
 	{
@@ -257,7 +263,7 @@ void CBoss::GroggyAction()
 
 void CBoss::AttackAction()
 {
-	//SelectAttackPattern();
+	SelectAttackPattern();
 	ChangeState(EBossState::Move, 3);
 }
 
