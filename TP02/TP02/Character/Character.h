@@ -9,6 +9,9 @@ public:
 	CCharacter(int Shape, int Color) : CActor(Shape, Color) { m_eTag = ETag::actor | ETag::character; }
 	virtual ~CCharacter() {};
 
+	float GetHealth() const { return m_fHealth; }
+	void SetHealth(float NewHealth) { m_fHealth = NewHealth; }
+
 	virtual void Attack(COORD Direction) = 0;
 	virtual void OnHit(float Damage) = 0;
 

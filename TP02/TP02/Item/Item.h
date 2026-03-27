@@ -5,6 +5,10 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <memory>
+
+#include "Character/Character.h"
+
 
 class Item
 {
@@ -18,6 +22,8 @@ public:
 	Item(std::string n = "Default", std::string d = "default", int p = 0, int c = 0)
 		: sName(n), sDesc(d), iPrice(p), iCount(c) {
 	}
+	virtual ~Item() = default;
+
 	//getter
 	std::string sGetName() const { return sName; }
 	std::string sGetDesc() const { return sDesc; }
@@ -46,24 +52,28 @@ public:
 };
 
 //예시 체력 회복포션
-//class Potion : public Item
-//{
-//private:
-//	int iHeal; 
-//
-//public:
-//	Potion(std::string n = "체력 포션",
-//		std::string d = "체력을 50 hp 회복한다.",
-//		int p = 100, int c = 1, int h = 50) 
-//		: Item(n, d, p, c), iHeal(h) {
-//	}
-//
-//	void UseItem() override {
-//		if (iCount <= 0) return;
-//
-//		std::cout << sName << " 사용! 체력을 "
-//			<< iHeal << "hp 회복했습니다.\n";
-//
-//		ConsumeItem();
-//	}
-//}; >> 이정도면 됐죠? 
+class Potion : public Item
+{
+private:
+	int iHeal;
+
+public:
+	Potion(std::string n = "체력 포션",
+		std::string d = "체력을 50 hp 회복한다.",
+		int p = 100, int c = 1, int h = 50)
+		: Item(n, d, p, c), iHeal(h) {
+	}
+
+	void UseItem(CCharacter& player) {
+		if (iCount <= 0) return;
+
+		float health = player.GetHealth();
+		health += iHeal;
+		player.SetHealth(health);
+
+		std::cout << sName << " 사용! 체력을 "
+			<< iHeal << "hp 회복했습니다.\n";
+
+		ConsumeItem();
+	}
+};
