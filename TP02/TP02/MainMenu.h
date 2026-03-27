@@ -5,8 +5,8 @@
 
 class cMainMenu {
 private:
-	enum eScene { START, CREDIT, EXIT };
-	eScene scene = START;
+	enum eScene { MENU ,START, CREDIT, EXIT };
+	eScene scene = MENU;
 	int iCount = 0;
 	int in = 0;
 
@@ -49,7 +49,7 @@ private:
 	void vScene() {
 		in = _getch();
 
-		if (scene == START) { // start 일때 화살표 키로 iCount 
+		if (scene == MENU) { // start 일때 화살표 키로 iCount 
 			if (in == 13) {
 				if (iCount == 1) scene = CREDIT;
 				else if (iCount == 2) scene = EXIT;
@@ -63,17 +63,18 @@ private:
 			}
 		}
 		else if (scene == CREDIT) {
-			if (in == 13) scene = START; // enter 일떄 back to start 
+			if (in == 13) scene = MENU; // enter 일떄 back to start 
 		}
 	}
 
 public:
-	void vRun() {
-		while (scene != EXIT) {
+	int vRun() {
+		while (scene != START) {
 			system("cls");
 
-			if (scene == START) vChoice();
+			if (scene == MENU) vChoice();
 			else if (scene == CREDIT) vCredit();
+			else if (scene == EXIT) return 0;
 
 			vScene();
 		}
