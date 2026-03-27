@@ -3,8 +3,6 @@
 #include "../Utils/Utils.h"
 
 #include "../Projectile/BossProjectile.h"
-#include "../World/GameWorld.h"
-
 
 CBoss::CBoss(int Shape, int Color, FGridSize BossSize)
 	: CCharacter(Shape, Color)
@@ -23,10 +21,10 @@ void CBoss::Tick(double DeltaTime)
 	m_fAccStateActionDelay += DeltaTime;
 	m_iAccWaveAttackTriggerCooldown += DeltaTime;
 
-	// 웨이브 어택
-	if (m_bIsActiveWaveAttack && m_iAccWaveAttackTriggerCooldown >= m_iWaveAttackTriggerCooldown)
+	// 웨이브 어택을 위해서 사용
+	if (m_iAccWaveAttackTriggerCooldown >= m_iWaveAttackTriggerCooldown)
 	{
-		m_iAccWaveAttackTriggerCooldown = 0.0;
+		m_iAccWaveAttackTriggerCooldown = 0;
 		WaveAttack();
 	}
 
@@ -47,6 +45,12 @@ void CBoss::Tick(double DeltaTime)
 			MoveAction();
 			break;
 		}
+	}
+
+	for (auto Projectile : m_vProjectiles)
+	{
+		Projectile->Tick(DeltaTime);
+		//Projectile->Render();
 	}
 
 	Render();
@@ -85,21 +89,8 @@ void CBoss::OnHit(float Damage)
 
 void CBoss::SelectAttackPattern()
 {
-	std::vector<std::shared_ptr<CActor>> vActors = CGameWorld::GetInstance()->FindActorsByTag(ETag::player);
-	const COORD cPlayerPos = vActors[0]->GetPosition();
-
-	// [TODO-PJH] : 플레이어와 거리를 계산하여 공격 패턴 선택
-
-
-
-	if (0 == rand() % 2)
-	{
-		FireProjectileToOutline();
-	}
-	else
-	{
-		WaveAttack();
-	}
+	WaveAttack();
+	//FireProjectileToOutline();
 }
 
 COORD CBoss::FindCanTelportPosition(/*CPlayer* Player*/)
@@ -117,8 +108,8 @@ void CBoss::Teleport()
 void CBoss::FireProjectileToOutline()
 {
 	// 공격 종료후 5초 후 이동 
-	//static int sTestRange = 1;
-	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(1);
+	static int sTestRange = 1;
+	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(sTestRange++);
 	std::string DebugMsg;
 	for (const auto& Pos : AttackPos)
 	{
@@ -159,14 +150,14 @@ void CBoss::FireProjectileToOutline()
 		}
 
 		//auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, Dir, 2.f);
-		auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, 20.f);
+		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(Pos.Pos);
 		pProjectile->SetMoveDirection(Dir);
-		pProjectile->SetSpeed(30.f);
+		pProjectile->SetSpeed(3.f);
+		m_vProjectiles.push_back(pProjectile);
 
-		CGameWorld::GetInstance()->AddActor(pProjectile);
 		DebugMsg += "(" + std::to_string(Pos.Pos.X) + ", " + std::to_string(Pos.Pos.Y) + "), ";
 	}
 
@@ -218,7 +209,8 @@ void CBoss::WaveAttack()
 {
 	if (m_iCurrntWaveCount > m_iMaxWaveCount)
 	{
-		StopWaveAttack();
+		m_iCurrntWaveCount = 0;
+		m_bIsActiveWaveAttack = false;
 		return;
 	}
 
@@ -233,16 +225,16 @@ void CBoss::WaveAttack()
 			continue;
 		}
 
-		auto pProjectile = std::make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, 1.);
+		auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(AP.Pos);
 		pProjectile->SetMoveDirection({ 0,0 });
 		pProjectile->SetSpeed(0.f);
-
-		CGameWorld::GetInstance()->AddActor(pProjectile);
+		m_vProjectiles.push_back(pProjectile);
 	}
 }
+
 
 void CBoss::ChangeState(EBossState NewState, float Delay)
 {
@@ -267,8 +259,7 @@ void CBoss::GroggyAction()
 
 void CBoss::AttackAction()
 {
-	// [TODO-PJH] : 공격 패턴 쿨타임 조정이 필요해보임
-	SelectAttackPattern();
+	//SelectAttackPattern();
 	ChangeState(EBossState::Move, 3);
 }
 
@@ -277,10 +268,4 @@ void CBoss::MoveAction()
 	// 텔포 -> 공격 스테이 후 
 	Teleport();
 	ChangeState(EBossState::Attack, 2);
-}
-
-void CBoss::StopWaveAttack()
-{
-	m_iCurrntWaveCount = 1;
-	m_bIsActiveWaveAttack = false;
 }

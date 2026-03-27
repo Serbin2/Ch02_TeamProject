@@ -88,7 +88,7 @@ protected:
 	virtual void FireProjectileToOutline();
 
 	// 사각형 형태의 보스의 Range  오프세만큼의 아웃라인 구하기
-	std::vector<FAttackPos> GetBossOutlineAttackRange(int Range = 1);
+	std::vector<FAttackPos> GetBossOutlineAttackRange(int Range);
 
 	// 플레이어 위치기준 한방향 최대 5번 단계저 공격 
 	// ㅁ 모양이 커지는 식으로 공격
@@ -120,9 +120,6 @@ public:
 		return m_fCurrentGroggy == m_fMaxGroggy;
 	}
 
-private:
-	void StopWaveAttack();
-
 protected:
 	EBossState m_CurrentState = EBossState::Attack;
 
@@ -143,10 +140,12 @@ protected:
 
 	// 웨이브 스킬 쿨타임 
 	bool bActive;
-	double m_iWaveAttackTriggerCooldown = 0.3;
-	double m_iAccWaveAttackTriggerCooldown = 0.0;
+	int m_iWaveAttackTriggerCooldown = 1.5f;
+	int m_iAccWaveAttackTriggerCooldown = 0.2f;
 	int m_iCurrntWaveCount = 1;
-	int m_iMaxWaveCount = 3;
+	int m_iMaxWaveCount = 5;
 	bool m_bIsActiveWaveAttack = false;
+
+	std::vector<shared_ptr<class CProjectile>> m_vProjectiles;
 };
 
