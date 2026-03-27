@@ -60,4 +60,5 @@ enum ETag
 	boss		=	1	<<	4,
 	projectile	=	1	<<	5,
 	effect		=	1	<<	6,
+	environment	=	1	<<	7,
 };

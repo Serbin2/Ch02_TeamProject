@@ -89,53 +89,41 @@ int main()
 		UI->SetValue(1, Timer.GetFPS());
 		pInput->Update();
 
-		if (pInput->IsKeyDown('G'))
+		if (pInput->IsKeyDown(VK_ESCAPE))
 		{
-			pGraphic->AddLog("G키를 눌렀습니다.");
+			Timer.Pause();
+			
 			CMenu inGameMenu;
 			int result = inGameMenu.ShowMenu();
-			Timer.Start();
 
 			if (result == 2)
 			{
 				// 게임 종료 → 메인메뉴로 복귀
 				CGraphic::Release();
 				CInput::Release();
-				cMainMenu frontMenu;
-				frontMenu.vRun();
-				return 0;
+				//cMainMenu frontMenu;
+				//frontMenu.vRun();
+				//return 0;	<--	게임 종료는 루프를 나가게 하도록 해주세요
+				break;
 			}
 			// result == 1: 게임 재개
 			// result == 3: 상점 (나중에 추가)
+
+			pGraphic->ReDraw();
+			Timer.Resume();
 		}
 
-		if (pInput->IsKeyDown('F')) pGraphic->AddLog("F키를 눌렀을까요? 와랄랄라 와랄랄루.");
-		if (pInput->IsKeyDown('T'))
-		{
-			pGraphic->AddLog("Toggle UI");
-			if (UI->AddUI(0, "FPS Count : "))
-			{
-				UI->AddUI(1, "FPS : ");
-			}
-			else
-			{
-				UI->RemoveUI(0);
-				UI->RemoveUI(1);
-			}
-		}
-		if (pInput->IsKeyDown('Y')) Timer.SetTargetFps(60);
+		World->Update(DeltaTime);
 
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
 
-		World->Update(DeltaTime);
+		World->Render();
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
 		pGraphic->EndDraw();
-
-		if (pInput->IsKeyDown(VK_ESCAPE)) break;
 	}
 
 	CGraphic::Release();
