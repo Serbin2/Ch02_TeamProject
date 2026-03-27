@@ -19,6 +19,7 @@
       <Filter>Item</Filter>
     </ClCompile>
     <ClCompile Include="InGameMenu\Menu.cpp" />
+    <ClCompile Include="Inventory\Inventory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
@@ -45,6 +46,7 @@
     </ClInclude>
     <ClInclude Include="FrontMenu\MainMenu.h" />
     <ClInclude Include="InGameMenu\Menu.h" />
+    <ClInclude Include="Inventory\Inventory.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />
