@@ -128,19 +128,14 @@
     <ClCompile Include="Boss\Boss.cpp" />
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
     <ClCompile Include="Graphics\Interface.cpp" />
+    <ClCompile Include="InGameMenu\Menu.cpp" />
+    <ClCompile Include="Item\Item.cpp" />
     <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Projectile\BossProjectile.cpp" />
     <ClCompile Include="Resource\ResourceBase.cpp" />
     <ClCompile Include="Resource\Sound\Sound.cpp" />
     <ClCompile Include="Input\Input.cpp" />
-    <ClCompile Include="testMain.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Time\Timer.cpp" />
     <ClCompile Include="Character\Player.cpp" />
     <ClCompile Include="Projectile\Projectile.cpp" />
@@ -157,10 +152,10 @@
     <ClInclude Include="Character\Actor.h" />
     <ClInclude Include="Character\Character.h" />
     <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="FrontMenu\MainMenu.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="InGameMenu\Menu.h" />
+    <ClInclude Include="Item\Item.h" />
     <ClInclude Include="Graphics\Interface.h" />
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />
