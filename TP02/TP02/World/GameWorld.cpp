@@ -128,7 +128,7 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByTag(ETag tag)
 	return retVec;
 }
 
-vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD statrPos, COORD endPos)
+vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD LTPos, COORD RBPos)
 {
 	vector<shared_ptr<CActor>> retVec;
 
@@ -136,10 +136,29 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD statrPos, COORD en
 	{
 		if (!i.first->m_bIsValid)	continue;
 
-		//if (i.first->HasTag(tag))
-		//{
-		//	retVec.push_back(i.first);
-		//}
+		COORD pos = i.first->GetPosition();
+
+		if (LTPos.X <= pos.X && pos.X < RBPos.X && LTPos.Y <= pos.Y && pos.Y < LTPos.Y)
+		{
+			retVec.push_back(i.first);
+		}
+	}
+
+	return retVec;
+}
+
+vector<shared_ptr<CActor>> CGameWorld::FindActorsByActorCustom(COORD pos)
+{
+	vector<shared_ptr<CActor>> retVec;
+
+	for (auto& i : m_aActors)
+	{
+		if (!i.first->m_bIsValid)	continue;
+
+		if (i.first->ActorCustomCollisionTest(pos))
+		{
+			retVec.push_back(i.first);
+		}
 	}
 
 	return retVec;

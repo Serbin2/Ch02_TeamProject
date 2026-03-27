@@ -16,7 +16,6 @@ void CBossProjectile::Tick(double DeltaTime)
 	if (m_dLifeTime <= 0)
 	{
 		// 랜더 종료 
-		m_bIsActive = false;
 		m_bIsValid = false;
 		return;
 	}
