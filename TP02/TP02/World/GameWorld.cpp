@@ -56,6 +56,17 @@ void CGameWorld::Update(double deltaTime)
 	}
 }
 
+void CGameWorld::Render()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		for (auto st : m_aSort[i])
+		{
+			st->Render();
+		}
+	}
+}
+
 void CGameWorld::Tick(double deltaTime)
 {
 	//	몬스터 스폰 이벤트
@@ -93,6 +104,20 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 		return false;
 	}
 
+	int tag = actor->m_eTag;
+	if (tag & ETag::environment)
+	{//	환경 오브젝트
+		m_aSort[0].push_back(actor);
+	}
+	else if (tag & ETag::effect)
+	{
+		m_aSort[2].push_back(actor);
+	}
+	else
+	{
+		m_aSort[1].push_back(actor);
+	}
+
 	return true;
 }
 
@@ -128,7 +153,7 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByTag(ETag tag)
 	return retVec;
 }
 
-vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD statrPos, COORD endPos)
+vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD LTPos, COORD RBPos)
 {
 	vector<shared_ptr<CActor>> retVec;
 
@@ -136,10 +161,29 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD statrPos, COORD en
 	{
 		if (!i.first->m_bIsValid)	continue;
 
-		//if (i.first->HasTag(tag))
-		//{
-		//	retVec.push_back(i.first);
-		//}
+		COORD pos = i.first->GetPosition();
+
+		if (LTPos.X <= pos.X && pos.X < RBPos.X && LTPos.Y <= pos.Y && pos.Y < LTPos.Y)
+		{
+			retVec.push_back(i.first);
+		}
+	}
+
+	return retVec;
+}
+
+vector<shared_ptr<CActor>> CGameWorld::FindActorsByActorCustom(COORD pos)
+{
+	vector<shared_ptr<CActor>> retVec;
+
+	for (auto& i : m_aActors)
+	{
+		if (!i.first->m_bIsValid)	continue;
+
+		if (i.first->ActorCustomCollisionTest(pos))
+		{
+			retVec.push_back(i.first);
+		}
 	}
 
 	return retVec;
