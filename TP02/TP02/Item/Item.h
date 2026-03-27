@@ -10,7 +10,7 @@
 #include "Character/Character.h"
 
 
-class Item
+class cItem
 {
 protected: // 이름, 설명, 가격
 	std::string sName;
@@ -19,10 +19,10 @@ protected: // 이름, 설명, 가격
 	int iCount;
 
 public:
-	Item(std::string n = "Default", std::string d = "default", int p = 0, int c = 0)
+	cItem(std::string n = "Default", std::string d = "default", int p = 0, int c = 0)
 		: sName(n), sDesc(d), iPrice(p), iCount(c) {
 	}
-	virtual ~Item() = default;
+	virtual ~cItem() = default;
 
 	//getter
 	std::string sGetName() const { return sName; }
@@ -52,7 +52,7 @@ public:
 };
 
 //예시 체력 회복포션
-class Potion : public Item
+class Potion : public cItem
 {
 private:
 	int iHeal;
@@ -61,7 +61,7 @@ public:
 	Potion(std::string n = "체력 포션",
 		std::string d = "체력을 50 hp 회복한다.",
 		int p = 100, int c = 1, int h = 50)
-		: Item(n, d, p, c), iHeal(h) {
+		: cItem(n, d, p, c), iHeal(h) {
 	}
 
 	void UseItem(CCharacter& player) {
