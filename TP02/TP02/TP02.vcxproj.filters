@@ -20,6 +20,8 @@
     </ClCompile>
     <ClCompile Include="InGameMenu\Menu.cpp" />
     <ClCompile Include="Inventory\Inventory.cpp" />
+    <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="Graphics\Effect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
@@ -47,6 +49,8 @@
     <ClInclude Include="FrontMenu\MainMenu.h" />
     <ClInclude Include="InGameMenu\Menu.h" />
     <ClInclude Include="Inventory\Inventory.h" />
+    <ClInclude Include="Enemy\Enemy.h" />
+    <ClInclude Include="Graphics\Effect.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />

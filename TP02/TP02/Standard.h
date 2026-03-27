@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <math.h>
 
 #define WORLD_SIZE		30								//	정사각형 맵의 크기
 

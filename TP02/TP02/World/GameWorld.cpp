@@ -1,6 +1,8 @@
 
 #include "GameWorld.h"
 #include "../Graphics/ConsoleGraphic.h"
+#include "../Character/Player.h"
+#include "../Boss/Boss.h"
 
 CGameWorld::CGameWorld()
 {
@@ -27,12 +29,27 @@ CGameWorld* CGameWorld::GetInstance()
 	return m_pInstance;
 }
 
+void CGameWorld::Release()
+{
+	if (m_pInstance == nullptr)	return;
+
+	delete m_pInstance;
+	m_pInstance = nullptr;
+}
+
 void CGameWorld::Initialize()
 {
 	m_dMonsterSpawnInitialTime = 10.0;	//	10초마다 몬스터 스폰합니다
 	m_dMonsterSpawnTime = m_dMonsterSpawnInitialTime;
 	m_bMonsterSpawn = true;
 	m_iNumberOfMonsterSpawn = 3;	//	3마리씩 스폰합니다.
+
+	std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
+	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	AddActor(pPlayer);
+	AddActor(pBoss);
+
+	m_pPlayer = pPlayer;
 }
 
 void CGameWorld::Update(double deltaTime)
@@ -45,7 +62,12 @@ void CGameWorld::Update(double deltaTime)
 	{
 		if (!it->first->IsValid())
 		{	//	무효한 객체입니다.
+			if (EraseActorFromSort(it->first))
+			{
+				CGraphic::GetInstance()->AddLog("Actor Successfuly Erased From Sort Container");
+			}
 			it = m_aActors.erase(it);
+			CGraphic::GetInstance()->AddLog("Actor Erased");
 		}
 		else
 		{
@@ -62,7 +84,7 @@ void CGameWorld::Render()
 	{
 		for (auto st : m_aSort[i])
 		{
-			st->Render();
+			st.first->Render();
 		}
 	}
 }
@@ -107,17 +129,18 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 	int tag = actor->m_eTag;
 	if (tag & ETag::environment)
 	{//	환경 오브젝트
-		m_aSort[0].push_back(actor);
+		m_aSort[0][actor]++;
 	}
-	else if (tag & ETag::effect)
-	{
-		m_aSort[2].push_back(actor);
+	else if (tag & ETag::effect || tag & ETag::projectile)
+	{//	발사체와 이펙트
+		m_aSort[2][actor]++;
 	}
 	else
 	{
-		m_aSort[1].push_back(actor);
+		m_aSort[1][actor]++;
 	}
 
+	CGraphic::GetInstance()->AddLog("Actor Successfuly Added");
 	return true;
 }
 
@@ -187,4 +210,14 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByActorCustom(COORD pos)
 	}
 
 	return retVec;
+}
+
+bool CGameWorld::EraseActorFromSort(shared_ptr<CActor> actor)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (m_aSort[i].erase(actor) > 0)	return true;
+	}
+
+	return false;
 }

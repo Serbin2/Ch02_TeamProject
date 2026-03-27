@@ -16,6 +16,7 @@ protected:
 public:
 
 	static CGameWorld* GetInstance();
+	static void Release();
 
 	//	게임 생성
 	//	초기 배치등 여기서 진행하시면 됩니다.
@@ -30,6 +31,9 @@ public:
 	//	액터 추가
 	//	이미 추가된 액터를 추가하려고 하면 실패합니다.
 	bool AddActor(shared_ptr<CActor> actor);
+
+	//	플레이어를 가져옵니다
+	shared_ptr<CActor> GetPlayerActor() { return m_pPlayer; };
 
 	//	위치에서 액터를 찾습니다.
 	shared_ptr<CActor> FindActorFromPosition(COORD pos);
@@ -56,17 +60,21 @@ private:
 	void Tick(double deltaTime);
 
 	void MonsterSpawnEvent(double deltaTime);
+	bool EraseActorFromSort(shared_ptr<CActor> actor);
 
 	double m_dMonsterSpawnInitialTime;
 	double m_dMonsterSpawnTime;
 	bool m_bMonsterSpawn;
 	int m_iNumberOfMonsterSpawn;
 
+	//	플레이어 액터는 특별 관리
+	shared_ptr<CActor> m_pPlayer;
+
 	//	전체 액터 관리용 마스터 컨테이너
 	unordered_map<shared_ptr<CActor>, int> m_aActors;
 
 
 	//	렌더 소팅용 컨테이너
-	vector<shared_ptr<CActor>> m_aSort[3];
+	unordered_map<shared_ptr<CActor>, int> m_aSort[3];
 };
 
