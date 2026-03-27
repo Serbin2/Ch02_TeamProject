@@ -19,10 +19,6 @@ void CProjectile::Tick(double DeltaTime)
 		m_dMoveTimer = 1.0 / m_fSpeed;
 	}
 
-	if (!m_bIsActive)
-	{
-		return;
-	}
 	CheckCollision();
 }
 
