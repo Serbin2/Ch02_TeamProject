@@ -32,5 +32,8 @@
     <ClInclude Include="Standard.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
