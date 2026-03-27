@@ -18,7 +18,9 @@ public:
 
 	virtual void Render()
 	{
-		if (!m_bIsValid)	return;
+		if (!m_bIsValid)
+			return;
+
 		CGraphic* pGraphic = CGraphic::GetInstance();
 		if (pGraphic)
 		{
