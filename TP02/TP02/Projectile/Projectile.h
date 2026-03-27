@@ -11,6 +11,8 @@ public:
 	void Tick(double DeltaTime) override;
 	void Move() override;
 
+	void CheckCollision();
+
 	std::weak_ptr<CCharacter> GetOwner() const { return m_pOwner; }
 	void SetOwner(std::weak_ptr<CCharacter> Owner) { m_pOwner = Owner; }
 

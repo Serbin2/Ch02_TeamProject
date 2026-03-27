@@ -18,6 +18,8 @@ void CProjectile::Tick(double DeltaTime)
 		Move();
 		m_dMoveTimer = 1.0 / m_fSpeed;
 	}
+
+	CheckCollision();
 }
 
 void CProjectile::Move()
@@ -27,4 +29,23 @@ void CProjectile::Move()
 
 	if (m_cPosition.X < 0 || m_cPosition.X >= 30 || m_cPosition.Y < 0 || m_cPosition.Y >= 30)
 		m_bIsValid = false;
+}
+
+void CProjectile::CheckCollision()
+{
+	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition);
+	if (!pActor || !pActor->HasTag(ETag::character))
+		return;
+
+	std::shared_ptr<CCharacter> pCharacter = std::dynamic_pointer_cast<CCharacter>(pActor);
+	if (!pCharacter)
+		return;
+
+	std::shared_ptr<CCharacter> pOwner = m_pOwner.lock();
+	if (pOwner && pOwner.get() != pCharacter.get())
+	{
+		pCharacter->OnHit(pOwner->GetAttackPower());
+		CGraphic::GetInstance()->AddLog("투사체가 캐릭터에 충돌했습니다.");
+		m_bIsValid = false;
+	}
 }
