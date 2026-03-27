@@ -40,6 +40,15 @@
     <Filter Include="소스 파일\Time">
       <UniqueIdentifier>{ca0d2c2a-8316-468e-bdfb-0ddc8ec30192}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Character">
+      <UniqueIdentifier>{67e5142c-d9b8-403f-a99d-06927c6882a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\World">
+      <UniqueIdentifier>{84c43145-f740-4fca-b0b9-3ee22f9901ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ProJectile">
+      <UniqueIdentifier>{f8968bc7-0776-461a-9235-6047aeb229d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TP02.cpp">
@@ -69,6 +78,15 @@
     <ClCompile Include="Graphics\Interface.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Character\Player.cpp">
+      <Filter>소스 파일\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="World\GameWorld.cpp">
+      <Filter>소스 파일\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile\Projectile.cpp">
+      <Filter>소스 파일\ProJectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\ConsoleGraphic.h">
@@ -79,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="Input\Input.h">
       <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor.h">
-      <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
@@ -109,6 +124,21 @@
     </ClInclude>
     <ClInclude Include="Graphics\Interface.h">
       <Filter>소스 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Actor.h">
+      <Filter>소스 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Character.h">
+      <Filter>소스 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Player.h">
+      <Filter>소스 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="World\GameWorld.h">
+      <Filter>소스 파일\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile\Projectile.h">
+      <Filter>소스 파일\ProJectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,10 +13,13 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_fAttackCooldown = 0.0f;
 	m_iLevel = 1;
 	m_iExp = 0;
+	m_eTag = ETag::player | ETag::character | ETag::actor;
 }
 
 void CPlayer::Tick(double DeltaTime)
 {
+	if (!m_bIsValid)	return;
+
 	if (m_dMoveTimer > 0.0)
 	{
 		m_dMoveTimer -= DeltaTime;
