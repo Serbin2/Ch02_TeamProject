@@ -61,7 +61,7 @@ public:
 	}
 
 	//	충돌  처리 관련
-	bool ActorCustomCollisionTest(COORD pos) { return false; };
+	virtual bool ActorCustomCollisionTest(COORD pos) { return false; };
 
 	//	----------------------------	//
 
