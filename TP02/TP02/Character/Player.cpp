@@ -56,11 +56,13 @@ void CPlayer::Move()
 
 void CPlayer::Attack(COORD Direction)
 {
-	CProjectile* pProjectile = new CProjectile(Pixel::circle, TEXT_FOREGROUND_YELLOW);
-	pProjectile->SetOwner(this);
+	auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_FOREGROUND_YELLOW);
+	auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
+	pProjectile->SetOwner(sharedOwner);
 	pProjectile->SetPosition(m_cPosition);
 	pProjectile->SetSpeed(5.0f);
 	pProjectile->SetMoveDirection(Direction);
+	
 }
 
 void CPlayer::OnHit(float Damage)
