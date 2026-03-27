@@ -98,9 +98,7 @@ int main()
 			menu.ShowMenu();
 			Timer.Start();
 		}
-	///	게임 루프
-	while (1)
-	{
+	
 		double DeltaTime = Timer.Update();
 		UI->SetValue(0, Timer.GetFpsCount());
 		UI->SetValue(1, Timer.GetFPS());
