@@ -62,7 +62,7 @@ void CPlayer::Attack(COORD Direction)
 	pProjectile->SetPosition(m_cPosition);
 	pProjectile->SetSpeed(5.0f);
 	pProjectile->SetMoveDirection(Direction);
-	
+	CGameWorld::GetInstance()->AddActor(pProjectile);
 }
 
 void CPlayer::OnHit(float Damage)
