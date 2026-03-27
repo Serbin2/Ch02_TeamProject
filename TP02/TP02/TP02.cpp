@@ -14,6 +14,7 @@
 #include "Graphics//Interface.h"
 #include "Character/Player.h"
 #include "Boss/Boss.h"
+#include "Projectile/Projectile.h"
 #include "World/GameWorld.h"
 #include "Item/Item.h"
 
@@ -71,10 +72,10 @@ int main()
 		}
 	}
 
-	//std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
+	std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
 	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	World->AddActor(pPlayer);
-	//World->AddActor(pBoss);
+	World->AddActor(pBoss);
 
 	UI->AddUI(0, "FPS Count : ");
 	UI->AddUI(1, "FPS : ");
