@@ -39,13 +39,7 @@ public:
 
 	//	범위에서 액터를 찾습니다.
 	//	시작위치는 포함하지만 끝위치는 포함하지 않습니다.
-	//	음수가 들어와도 검사 됩니다. (보정 X)
-	//	사각형은 좌상단 위치와 우하단 위치로 넣어주셔야됩니다.	LeftTop / RightBottom
-	vector<shared_ptr<CActor>> FindActorsByRect(COORD LTPos, COORD RBPos);
-
-	//	액터에게 충돌 여부 판정을 처리하게합니다
-	//	찾으려는 위치에 대해 true를 반환하는 액터들을 찾습니다.
-	vector<shared_ptr<CActor>> FindActorsByActorCustom(COORD pos);
+	vector<shared_ptr<CActor>> FindActorsByRect(COORD statrPos, COORD endPos);
 
 private:
 
