@@ -257,7 +257,7 @@ void CBoss::GroggyAction()
 
 void CBoss::AttackAction()
 {
-	SelectAttackPattern();
+	//SelectAttackPattern();
 	ChangeState(EBossState::Move, 3);
 }
 

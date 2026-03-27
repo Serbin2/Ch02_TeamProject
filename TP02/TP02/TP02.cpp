@@ -64,10 +64,12 @@ int main()
 		// 로드 
 		GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav");
 		GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav");
+		GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav");
 		{
 			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
 			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
-			//pSound->Play(true);
+			std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
+			pSound->Play(true);
 		}
 	}
 
