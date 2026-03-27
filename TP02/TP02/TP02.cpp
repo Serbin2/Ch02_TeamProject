@@ -16,9 +16,6 @@ int main()
 
 	char in = _getch();
 
-	// 메인화면
-
-
 	const char* cTitle = R"(██╗   ██╗███╗   ██╗████████╗██╗████████╗██╗     ███████╗██████╗ 
 ██║   ██║████╗  ██║╚══██╔══╝██║╚══██╔══╝██║     ██╔════╝██╔══██╗
 ██║   ██║██╔██╗ ██║   ██║   ██║   ██║   ██║     █████╗  ██║  ██║
@@ -33,67 +30,30 @@ int main()
 ██║  ██║██║     ╚██████╔╝
 ╚═╝  ╚═╝╚═╝      ╚═════╝ )";
 
-
-	const char* cMenu1 = R"(
-┌──────────────────┐
-│    ▶ NEW GAME    │
-│      CREDIT      │
-│      EXIT        │
-└──────────────────┘
-)";
-
-	const char* cMenu2 = R"(
-┌──────────────────┐
-│      NEW GAME    │
-│    ▶ CREDIT      │
-│      EXIT        │
-└──────────────────┘
-)";
-
-	const char* cMenu3 = R"(
-┌──────────────────┐
-│      NEW GAME    │
-│      CREDIT      │
-│    ▶ EXIT        │
-└──────────────────┘
-)";
-
 	int iCount = 0;
+
 
 	while (true) {
 		system("cls");
 
-		if (iCount == 0) {
-			std::cout << cTitle;
-			std::cout << cMenu1;
-		}
-		else if (iCount == 1) {
-			std::cout << cTitle;
-			std::cout << cMenu2;
-		}
-		else {
-			std::cout << cTitle;
-			std::cout << cMenu3;
-		}
+		std::cout << cTitle;
+		std::cout << "\n┌──────────────────┐\n";
+		std::cout << (iCount == 0 ? "│    ▶ NEW GAME    │\n" : "│      NEW GAME    │\n");
+		std::cout << (iCount == 1 ? "│    ▶ CREDITS     │\n" : "│      CREDITS     │\n");
+		std::cout << (iCount == 2 ? "│    ▶ EXIT        │\n" : "│      EXIT        │\n");
+		std::cout << "└──────────────────┘\n";
 
-		int in = _getch();
+		in = _getch();
 
 		if (in == 27) break;
 
-		if (in == 224 || in == 0) {
+		if (in == 0 || in == 224) {
 			in = _getch();
 
-			if (in == 72) {
-				iCount--;
-				if (iCount < 0) iCount = 2;
-			}
-			else if (in == 80) {
-				iCount++;
-				if (iCount > 2) iCount = 0;
-			}
+			if (in == 72) iCount = (iCount + 2) % 3;
+			else if (in == 80) iCount = (iCount + 1) % 3;
 		}
 	}
-
 
 
 
