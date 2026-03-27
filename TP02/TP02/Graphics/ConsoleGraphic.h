@@ -15,6 +15,7 @@ enum Pixel
 	horizontalLine,
 	verticalLine,
 	cross,
+	dust,
 
 
 	PixelMax,
@@ -39,6 +40,7 @@ public:
 
 
 	//	버퍼에 픽셀 하나를 그립니다.
+	//	그리기 위치 X, Y, 그릴 문자 모양, 그리기 색
 	void RenderToBuffer(int x, int y, int type, int color);
 
 	//	버퍼를 화면에 출력합니다
@@ -50,6 +52,8 @@ public:
 	//	로그를 추가합니다
 	void AddLog(string str);
 
+	//	화면을 모두 지우고 다시 그립니다.
+	void ReDraw();
 
 private:
 
@@ -74,6 +78,9 @@ private:
 	//	로그 영역을 지웁니다
 	void ClearLog();
 
+	//	로그를 출력합니다.
+	void PrintLog();
+
 protected:
 
 	static CGraphic* m_pInstance;		//	싱글톤 인스턴스
@@ -90,6 +97,7 @@ protected:
 	int m_iEndOfScreenY;					//	게임창의 끝 위치
 
 	deque<string> m_aLog;			//	로그 큐
+	string m_sBlank;				//	로그 문자열 정리용 공백문자열
 	int m_iMaxLog;					//	출력할 수 있는 최대 로그 메세지 수 입니다.
 
 	int m_DefaultBackgroundColor;	//	기본 배경 색입니다.

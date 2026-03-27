@@ -1,6 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="Boss\Boss.cpp" />
+    <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
+    <ClCompile Include="Graphics\Interface.cpp" />
+    <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
+    <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
+    <ClCompile Include="Resource\ResourceBase.cpp" />
+    <ClCompile Include="Resource\Sound\Sound.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="testMain.cpp" />
+    <ClCompile Include="Time\Timer.cpp" />
+    <ClCompile Include="Character\Player.cpp" />
+    <ClCompile Include="Projectile\Projectile.cpp" />
+    <ClCompile Include="TP02.cpp" />
+    <ClCompile Include="Projectile\BossProjectile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Boss\Boss.h" />
+    <ClInclude Include="Character\Actor.h" />
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="Graphics\ConsoleGraphic.h" />
+    <ClInclude Include="Graphics\Interface.h" />
+    <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
+    <ClInclude Include="Manager\SoundManager\SoundManager.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Resource\ResourceBase.h" />
+    <ClInclude Include="Resource\Sound\Sound.h" />
+    <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Standard.h" />
+    <ClInclude Include="Time\Timer.h" />
+    <ClInclude Include="Utils\Common.h" />
+    <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Projectile\Projectile.h" />
+    <ClInclude Include="Projectile\BossProjectile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TP02.rc" />
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
     <Filter Include="헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -42,6 +83,14 @@
     </Filter>
     <Filter Include="리소스 파일\소스 파일\Menu">
       <UniqueIdentifier>{c34153e0-8f52-4d32-9359-e95af914aae1}</UniqueIdentifier>
+    <Filter Include="소스 파일\Character">
+      <UniqueIdentifier>{67e5142c-d9b8-403f-a99d-06927c6882a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\World">
+      <UniqueIdentifier>{84c43145-f740-4fca-b0b9-3ee22f9901ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ProJectile">
+      <UniqueIdentifier>{f8968bc7-0776-461a-9235-6047aeb229d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +124,18 @@
     <ClCompile Include="Menu.cpp">
       <Filter>리소스 파일\소스 파일\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Interface.cpp">
+      <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Player.cpp">
+      <Filter>소스 파일\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="World\GameWorld.cpp">
+      <Filter>소스 파일\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile\Projectile.cpp">
+      <Filter>소스 파일\ProJectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\ConsoleGraphic.h">
@@ -88,6 +149,8 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>리소스 파일\소스 파일</Filter>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Common.h">
       <Filter>리소스 파일\소스 파일\Utils</Filter>
@@ -100,6 +163,24 @@
     </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>리소스 파일\소스 파일\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Interface.h">
+      <Filter>소스 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Actor.h">
+      <Filter>소스 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Character.h">
+      <Filter>소스 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Player.h">
+      <Filter>소스 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="World\GameWorld.h">
+      <Filter>소스 파일\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile\Projectile.h">
+      <Filter>소스 파일\ProJectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 #include "ConsoleGraphic.h"
+#include "Interface.h"
 
 CGraphic* CGraphic::m_pInstance = nullptr;
 
@@ -7,7 +8,7 @@ CGraphic::CGraphic()
 	//	콘솔 출력에 대한 기본 핸들을 가져옵니다
 	m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetPixelText();
-	m_iScreenSize = 30;
+	m_iScreenSize = WORLD_SIZE;
 	m_iEndOfScreenX = 43;
 	m_iEndOfScreenY = 40;
 
@@ -17,18 +18,19 @@ CGraphic::CGraphic()
 	SetConsoleCursorInfo(m_hOP, &m_CurInfo);
 
 	//	버퍼를 준비합니다
-	m_aPrevBuffer.resize(30);
-	m_aBuffer.resize(30);
-	for (int i = 0; i < 30; i++)
+	m_aPrevBuffer.resize(WORLD_SIZE);
+	m_aBuffer.resize(WORLD_SIZE);
+	for (int i = 0; i < WORLD_SIZE; i++)
 	{
-		m_aPrevBuffer[i].resize(30);
-		m_aBuffer[i].resize(30);
+		m_aPrevBuffer[i].resize(WORLD_SIZE);
+		m_aBuffer[i].resize(WORLD_SIZE);
 	}
 
 	//	멤버 변수들을 초기화합니다
-	m_iMaxLog = 7;
-	m_DefaultBackgroundColor = TEXT_BACKGROUND_GREEN;
+	m_iMaxLog = LOG_HEIGHT;
+	m_DefaultBackgroundColor = TEXT_BACKGROUND_BLACK;
 	m_bOnDraw = false;
+	m_sBlank = "                                                           ";
 
 	//	게임 레이아웃을 그려둡니다
 	DrawShape();
@@ -48,6 +50,7 @@ void CGraphic::SetPixelText()
 	m_sPixels[horizontalLine] = "--";
 	m_sPixels[verticalLine] = "||";
 	m_sPixels[cross] = "++";
+	m_sPixels[dust] = "'.";
 }
 
 CGraphic* CGraphic::GetInstance()
@@ -75,7 +78,7 @@ void CGraphic::Release()
 void CGraphic::SetCursorPos(int x, int y)
 {
 	COORD cdPos;
-	cdPos.X = x * 2;
+	cdPos.X = x * WIDTH_MULTIPLY;	//	두칸씩 찍어서 정사각형에 근접한 모양을 잡고있음
 	cdPos.Y = y;
 	SetConsoleCursorPosition(m_hOP, cdPos);
 }
@@ -111,9 +114,9 @@ void CGraphic::EndDraw()
 {
 	if (!m_bOnDraw)	return;	//	그리기중이 아닙니다.
 
-	for (int y = 0; y < 30; y++)
+	for (int y = 0; y < WORLD_SIZE; y++)
 	{
-		for (int x = 0; x < 30; x++)
+		for (int x = 0; x < WORLD_SIZE; x++)
 		{
 			//	이전 화면과 같은 내용이면 넘어갑니다
 			if (m_aPrevBuffer[y][x].vertex == m_aBuffer[y][x].vertex &&
@@ -134,20 +137,38 @@ void CGraphic::EndDraw()
 	m_bOnDraw = false;	//	그리기가 끝났습니다.
 }
 
+void CGraphic::ReDraw()
+{
+	//	화면 정리 및 레이아웃 그리기
+	DrawShape();
+
+	//	로그 재 출력
+	PrintLog();
+
+	//	UI 그리기
+	CInterface::GetInstance()->Redraw();
+}
+
 //	로그를 출력합니다
 void CGraphic::AddLog(string str)
 {
 	//	로그창을 지웁니다.
 	ClearLog();
 
+	string newString = str + m_sBlank;
 	//	새 로그를 큐에 넣습니다
-	m_aLog.push_back(str);
+	m_aLog.push_back(newString.substr(0, (m_iEndOfScreenX - 2) * WIDTH_MULTIPLY));
 	while (m_aLog.size() > m_iMaxLog)
 	{	//	큐가 넘치면 오래된 로그를 제거합니다.
 		m_aLog.pop_front();
 	}
 
 	//	로그를 다시 출력합니다.
+	PrintLog();
+}
+
+void CGraphic::PrintLog()
+{
 	int logSize = (int)m_aLog.size();
 	for (int i = 0; i < logSize; i++)
 	{
@@ -159,8 +180,10 @@ void CGraphic::AddLog(string str)
 //	게임 틀을 그립니다.
 void CGraphic::DrawShape()
 {
+	system("cls");
+
 	string line;
-	line.resize(m_iEndOfScreenX * 2 + 2, ' ');
+	line.resize(m_iEndOfScreenX * WIDTH_MULTIPLY + BEZEL_WIDTH, ' ');
 	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_WHITE);
 	SetCursorPos(0, 0);
 	cout << line;
@@ -186,7 +209,7 @@ void CGraphic::DrawShape()
 void CGraphic::ClearLog()
 {
 	string str;
-	str.resize((m_iEndOfScreenX - 1) * 2, ' ');
+	str.resize((m_iEndOfScreenX - 1) * WIDTH_MULTIPLY, ' ');
 
 	SetConsoleTextAttribute(m_hOP, TEXT_BACKGROUND_BLACK);
 	for (int i = m_iScreenSize + 3; i <= m_iScreenSize + m_iMaxLog + 2; i++)

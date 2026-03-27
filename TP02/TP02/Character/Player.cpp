@@ -1,9 +1,11 @@
 #include "Player.h"
 #include "../Input/Input.h"
+#include "../Projectile/Projectile.h"
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
 	m_cPosition = { 15, 15 };
+	m_fSpeed = 3.0f;
 	m_fHealth = 100.0f;
 	m_fAttackPower = 15.0f;
 	m_fDefense = 5.0f;
@@ -11,22 +13,54 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_fAttackCooldown = 0.0f;
 	m_iLevel = 1;
 	m_iExp = 0;
+	m_eTag = ETag::player | ETag::character | ETag::actor;
 }
 
 void CPlayer::Tick(double DeltaTime)
 {
+	if (!m_bIsValid)	return;
+
+	if (m_dMoveTimer > 0.0)
+	{
+		m_dMoveTimer -= DeltaTime;
+	}
+
 	Input();
+
+	if ((m_cMoveDirection.X != 0 || m_cMoveDirection.Y != 0) && m_dMoveTimer <= 0.0)
+	{
+		Move();
+		m_dMoveTimer = 1.0 / m_fSpeed;
+	}
+	else
+	{
+		m_cMoveDirection = { 0, 0 };
+	}
+
 	Render();
 }
 
 void CPlayer::Move()
 {
-	// TODO: 플레이어 위치 변경, 맵 경계 체크
+	int nextX = m_cPosition.X + m_cMoveDirection.X;
+	int nextY = m_cPosition.Y + m_cMoveDirection.Y;
+
+	if (nextX >= 0 && nextX < 30 && nextY >= 0 && nextY < 30)
+	{
+		m_cPosition.X = nextX;
+		m_cPosition.Y = nextY;
+	}
+
+	m_cMoveDirection = { 0, 0 }; // 이동 후 방향 초기화
 }
 
 void CPlayer::Attack(COORD Direction)
 {
-	// TODO: 공격 로직 구현, 공격 쿨타임 체크, 공격 범위 내 적 탐색 및 피해 적용
+	CProjectile* pProjectile = new CProjectile(Pixel::circle, TEXT_FOREGROUND_YELLOW);
+	pProjectile->SetOwner(this);
+	pProjectile->SetPosition(m_cPosition);
+	pProjectile->SetSpeed(5.0f);
+	pProjectile->SetMoveDirection(Direction);
 }
 
 void CPlayer::OnHit(float Damage)
@@ -37,16 +71,15 @@ void CPlayer::OnHit(float Damage)
 void CPlayer::Input()
 {
 	CInput* pInput = CInput::GetInstance();
-	pInput->Update();
 	
 	// 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다.
 	// Key Code: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 
 	// Move input
-	if (pInput->IsKeyDown('W'))	m_cMoveDirection = { 0, -1 };
-	if (pInput->IsKeyDown('S')) m_cMoveDirection = { 0,  1 };
-	if (pInput->IsKeyDown('A')) m_cMoveDirection = { -1, 0 };
-	if (pInput->IsKeyDown('D')) m_cMoveDirection = { 1,  0 };
+	if (pInput->IsKeyPressed('W')) m_cMoveDirection = { 0, -1 };
+	if (pInput->IsKeyPressed('S')) m_cMoveDirection = { 0,  1 };
+	if (pInput->IsKeyPressed('A')) m_cMoveDirection = { -1, 0 };
+	if (pInput->IsKeyPressed('D')) m_cMoveDirection = { 1,  0 };
 
 	// Attack input
 	if (pInput->IsKeyDown(VK_UP))    Attack({ 0, -1 }); // [↑]

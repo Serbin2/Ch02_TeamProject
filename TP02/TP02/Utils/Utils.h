@@ -16,3 +16,22 @@ public:										\
 #define GET_SINGLE(classname)	classname::GetInstance()
 
 
+namespace MathUtil
+{
+	template <typename T>
+	[[nodiscard]] inline T Clamp(T Value, T Min, T Max)
+	{
+		if (Value < Min)
+		{
+			return Min;
+		}
+		else if (Max < Value)
+		{
+			return Max;
+		}
+		else
+		{
+			return Value;
+		}
+	}
+}

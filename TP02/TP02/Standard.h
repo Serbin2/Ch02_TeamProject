@@ -5,7 +5,17 @@
 #include <conio.h>
 #include <string>
 #include <vector>
+#include <memory>
 
+#define WORLD_SIZE		30								//	정사각형 맵의 크기
+
+#define BEZEL_WIDTH		2
+#define WIDTH_MULTIPLY	2
+#define UI_POS_X		(WORLD_SIZE + 2) * WIDTH_MULTIPLY			//	UI 작성 시작위치
+#define LOG_POS_Y		WORLD_SIZE + 3					//	Log 작성 시작위치
+
+#define UI_WITDH		10
+#define LOG_HEIGHT		7
 
 #define TEXT_FOREGROUND_BLUE		 FOREGROUND_BLUE
 #define TEXT_FOREGROUND_BLUE_INT	 FOREGROUND_BLUE | FOREGROUND_INTENSITY
@@ -38,3 +48,15 @@
 #define TEXT_BACKGROUND_GRAY		 TEXT_BACKGROUND_RED | TEXT_BACKGROUND_BLUE | TEXT_BACKGROUND_GREEN
 #define TEXT_BACKGROUND_WHITE		 TEXT_BACKGROUND_GRAY | BACKGROUND_INTENSITY
 #define TEXT_BACKGROUND_BLACK		 0
+
+
+enum ETag
+{
+	actor		=	1	<<	0,
+	character	=	1	<<	1,
+	player		=	1	<<	2,
+	monster		=	1	<<	3,
+	boss		=	1	<<	4,
+	projectile	=	1	<<	5,
+	effect		=	1	<<	6,
+};
