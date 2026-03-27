@@ -38,19 +38,10 @@ int main()
 
 	if (!pGraphic || !pInput) return 0;
 
-	int pix = Pixel::square;
-	int tex = TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN;
-	int x = 15;
-	int y = 15;
 	if (pInput == nullptr)
 	{	//	입력이 없습니다
 		return 0;
 	}
-
-	//auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
-	//pProjectile->SetMoveDirection({ 1, 0 });
-	//pProjectile->SetPosition({1, 0});
-	//pProjectile->SetSpeed(3.f);
 
 	// 사운드 테스트
 	{
@@ -72,7 +63,7 @@ int main()
 	}
 
 	std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
-	shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	World.AddActor(pPlayer);
 	World.AddActor(pBoss);
 
@@ -83,13 +74,10 @@ int main()
 
 	while (1)
 	{
-		double deltaTime = Timer.Update();
+		double DeltaTime = Timer.Update();
+		UI->SetValue(0, Timer.GetFpsCount());
+		UI->SetValue(1, Timer.GetFPS());
 		pInput->Update();
-
-		if (pInput->IsKeyDown('W')) y--;
-		if (pInput->IsKeyDown('A')) x--;
-		if (pInput->IsKeyDown('S')) y++;
-		if (pInput->IsKeyDown('D')) x++;
 
 		if (pInput->IsKeyDown('G'))
 		{
@@ -98,18 +86,7 @@ int main()
 			menu.ShowMenu();
 			Timer.Start();
 		}
-	
-		double DeltaTime = Timer.Update();
-		UI->SetValue(0, Timer.GetFpsCount());
-		UI->SetValue(1, Timer.GetFPS());
-		pInput->Update();
-		//	테스트 로직
 
-		//if (pInput->IsKeyDown('W'))	y--;	//	*** 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다. ***
-		//if (pInput->IsKeyDown('A')) x--;
-		//if (pInput->IsKeyDown('S')) y++;
-		//if (pInput->IsKeyDown('D')) x++;
-		if (pInput->IsKeyDown('G')) pGraphic->AddLog("G키를 눌렀습니다.");
 		if (pInput->IsKeyDown('F')) pGraphic->AddLog("F키를 눌렀을까요? 와랄랄라 와랄랄루.");
 		if (pInput->IsKeyDown('T'))
 		{
@@ -126,17 +103,11 @@ int main()
 		}
 		if (pInput->IsKeyDown('Y')) Timer.SetTargetFps(60);
 
+		//	그리기 시작
+		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
-		pGraphic->RenderToBuffer(x, y, pix, tex);
 
-		//	테스트 그리기
-		// pGraphic->RenderToBuffer(x, y, pix, tex);
-		//pPlayer->Tick(DeltaTime);
-		//pBoss->Tick(DeltaTime);
-		//pProjectile->Tick(DeltaTime);
 		World.Update(DeltaTime);
-
-		//pPlayer->Tick(DeltaTime);
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
