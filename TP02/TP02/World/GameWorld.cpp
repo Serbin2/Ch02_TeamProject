@@ -56,6 +56,17 @@ void CGameWorld::Update(double deltaTime)
 	}
 }
 
+void CGameWorld::Render()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		for (auto st : m_aSort[i])
+		{
+			st->Render();
+		}
+	}
+}
+
 void CGameWorld::Tick(double deltaTime)
 {
 	//	몬스터 스폰 이벤트
@@ -91,6 +102,20 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 	{	//	이미 추가되어 있던 액터임
 		m_aActors[actor]--;
 		return false;
+	}
+
+	int tag = actor->m_eTag;
+	if (tag & ETag::environment)
+	{//	환경 오브젝트
+		m_aSort[0].push_back(actor);
+	}
+	else if (tag & ETag::effect)
+	{
+		m_aSort[2].push_back(actor);
+	}
+	else
+	{
+		m_aSort[1].push_back(actor);
 	}
 
 	return true;

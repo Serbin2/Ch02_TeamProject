@@ -25,6 +25,8 @@ public:
 	//	업데이트
 	void Update(double daltaTime);	
 
+	void Render();
+
 	//	액터 추가
 	//	이미 추가된 액터를 추가하려고 하면 실패합니다.
 	bool AddActor(shared_ptr<CActor> actor);
@@ -60,7 +62,11 @@ private:
 	bool m_bMonsterSpawn;
 	int m_iNumberOfMonsterSpawn;
 
-	//vector<CActor*> m_aActors;
+	//	전체 액터 관리용 마스터 컨테이너
 	unordered_map<shared_ptr<CActor>, int> m_aActors;
+
+
+	//	렌더 소팅용 컨테이너
+	vector<shared_ptr<CActor>> m_aSort[3];
 };
 
