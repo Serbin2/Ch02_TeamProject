@@ -3,10 +3,13 @@
 CProjectile::CProjectile(int Shape, int Color) : CActor(Shape, Color)
 {
 	m_bIsActive = true;
+	m_eTag = ETag::actor | ETag::projectile;
 }
 
 void CProjectile::Tick(double DeltaTime)
 {
+	if (!m_bIsValid)	return;
+
 	if (m_dMoveTimer > 0.0)
 	{
 		m_dMoveTimer -= DeltaTime;

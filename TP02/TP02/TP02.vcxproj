@@ -106,9 +106,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="World\GameWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="Boss\Boss.h" />
+=======
+>>>>>>> main
     <ClInclude Include="Character\Actor.h" />
     <ClInclude Include="Character\Character.h" />
     <ClInclude Include="Character\Player.h" />
@@ -116,7 +120,10 @@
     <ClInclude Include="Graphics\Interface.h" />
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />
+<<<<<<< HEAD
     <ClInclude Include="Projectile\BossProjectile.h" />
+=======
+>>>>>>> main
     <ClInclude Include="Projectile\Projectile.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\ResourceBase.h" />
@@ -126,6 +133,7 @@
     <ClInclude Include="Time\Timer.h" />
     <ClInclude Include="Utils\Common.h" />
     <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="World\GameWorld.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />
