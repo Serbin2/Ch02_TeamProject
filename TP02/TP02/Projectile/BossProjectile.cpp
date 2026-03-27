@@ -1,6 +1,6 @@
 #include "BossProjectile.h"
 
-CBossProjectile::CBossProjectile(int Shape, int Color, int LifeTime)
+CBossProjectile::CBossProjectile(int Shape, int Color, double LifeTime)
 	: CProjectile(Shape, Color)
 {
 	m_dLifeTime = LifeTime;

@@ -227,7 +227,7 @@ void CBoss::WaveAttack()
 			continue;
 		}
 
-		auto pProjectile = std::make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, 1.f);
+		auto pProjectile = std::make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, 1.);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(AP.Pos);

@@ -7,7 +7,7 @@
 class CBossProjectile : public CProjectile
 {
 public:
-	CBossProjectile(int Shape, int Color, int LifeTime);
+	CBossProjectile(int Shape, int Color, double LifeTime);
 
 	virtual	~CBossProjectile();
 
