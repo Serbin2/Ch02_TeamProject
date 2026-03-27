@@ -1,0 +1,22 @@
+#pragma once
+
+#include "../Character/Character.h"
+
+class CProjectile : public CActor
+{
+public:
+	CProjectile(int Shape, int Color);
+	~CProjectile() { };
+
+	void Tick(double DeltaTime) override;
+	void Move() override;
+
+	void SetOwner(std::weak_ptr<CCharacter> Owner) { m_pOwner = Owner; }
+
+	const bool IsActive() const { return m_bIsActive; }
+
+protected:
+	std::weak_ptr<CCharacter> m_pOwner; // 투사체의 소유자 (발사한 캐릭터)
+	bool m_bIsActive;					// 투사체 활성 상태
+
+};
