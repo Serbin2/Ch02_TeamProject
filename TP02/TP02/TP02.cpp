@@ -91,9 +91,21 @@ int main()
 		if (pInput->IsKeyDown('G'))
 		{
 			pGraphic->AddLog("G키를 눌렀습니다.");
-			CMenu menu;
-			menu.ShowMenu();
+			CMenu inGameMenu;
+			int result = inGameMenu.ShowMenu();
 			Timer.Start();
+
+			if (result == 2)
+			{
+				// 게임 종료 → 메인메뉴로 복귀
+				CGraphic::Release();
+				CInput::Release();
+				cMainMenu frontMenu;
+				frontMenu.vRun();
+				return 0;
+			}
+			// result == 1: 게임 재개
+			// result == 3: 상점 (나중에 추가)
 		}
 
 		if (pInput->IsKeyDown('F')) pGraphic->AddLog("F키를 눌렀을까요? 와랄랄라 와랄랄루.");

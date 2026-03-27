@@ -5,6 +5,6 @@
 class CMenu
 {
 public:
-	void ShowMenu();
+	int ShowMenu();  // void -> int 로 변경
 };
 
