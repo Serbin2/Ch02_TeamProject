@@ -9,9 +9,13 @@
 
 class CGameWorld
 {
-public:
+protected:
 	CGameWorld();
 	~CGameWorld();
+	
+public:
+
+	static CGameWorld* GetInstance();
 
 	//	게임 생성
 	//	초기 배치등 여기서 진행하시면 됩니다.
@@ -36,6 +40,8 @@ public:
 	vector<shared_ptr<CActor>> FindActorsByRect(COORD statrPos, COORD endPos);
 
 private:
+
+	static CGameWorld* m_pInstance;
 
 	//	월드 자체의 업데이트 입니다.
 	//	각종 이벤트는 여기서 실행하세요.
