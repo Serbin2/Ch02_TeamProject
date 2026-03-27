@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+#include "../World/GameWorld.h"
 
 class CCharacter : public CActor
 {
