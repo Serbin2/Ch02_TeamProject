@@ -14,7 +14,6 @@
 #include "Graphics//Interface.h"
 #include "Character/Player.h"
 #include "Boss/Boss.h"
-#include "Projectile/Projectile.h"
 #include "World/GameWorld.h"
 #include "Item/Item.h"
 
