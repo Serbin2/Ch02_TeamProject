@@ -2,6 +2,8 @@
 //	콘솔 창의 설정에서 기본 시작 크기를 조정해서 게임플레이의 적당한 크기를 미리 설정하고 다시 실행해주세요.
 //	260325 지호나
 #include "Graphics/ConsoleGraphic.h"
+#include "Standard.h"
+#include "MainMenu.h"
 #include "Input/Input.h"
 #include "Time/Timer.h"
 #include "Menu.h"
@@ -29,6 +31,13 @@ int main()
 	std::cout << "아무 키를 눌러 계속합니다.\n";
 	char in = _getch();
 
+	cMainMenu menu;
+	menu.vRun();
+
+
+	///////////////////////////////////////////////
+	//	여기서부터 게임 로직을 작성합니다
+	///////////////////////////////////////////////
 	CGraphic* pGraphic = CGraphic::GetInstance();
 	CInput* pInput = CInput::GetInstance();
 	CTimer Timer;
