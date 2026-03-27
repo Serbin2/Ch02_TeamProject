@@ -89,41 +89,26 @@ int main()
 		UI->SetValue(1, Timer.GetFPS());
 		pInput->Update();
 
-		if (pInput->IsKeyDown('G'))
+		if (pInput->IsKeyDown(VK_ESCAPE))
 		{
-			pGraphic->AddLog("G키를 눌렀습니다.");
+			Timer.Pause();
 			CMenu menu;
 			menu.ShowMenu();
-			Timer.Start();
+			Timer.Resume();
+			pGraphic->ReDraw();
 		}
 
-		if (pInput->IsKeyDown('F')) pGraphic->AddLog("F키를 눌렀을까요? 와랄랄라 와랄랄루.");
-		if (pInput->IsKeyDown('T'))
-		{
-			pGraphic->AddLog("Toggle UI");
-			if (UI->AddUI(0, "FPS Count : "))
-			{
-				UI->AddUI(1, "FPS : ");
-			}
-			else
-			{
-				UI->RemoveUI(0);
-				UI->RemoveUI(1);
-			}
-		}
-		if (pInput->IsKeyDown('Y')) Timer.SetTargetFps(60);
+		World->Update(DeltaTime);
 
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
 
-		World->Update(DeltaTime);
+		World->Render();
 
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
 		pGraphic->EndDraw();
-
-		if (pInput->IsKeyDown(VK_ESCAPE)) break;
 	}
 
 	CGraphic::Release();

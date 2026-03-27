@@ -25,7 +25,6 @@ void CProjectile::Tick(double DeltaTime)
 	{
 		return;
 	}
-	Render();
 }
 
 void CProjectile::Move()
