@@ -3,6 +3,8 @@
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Character/Player.h"
 #include "../Boss/Boss.h"
+#include "../Character/Sniper/Sniper.h"
+#include "../Enemy/Slime.h"
 
 CGameWorld::CGameWorld()
 {
@@ -40,14 +42,15 @@ void CGameWorld::Release()
 void CGameWorld::Initialize()
 {
 	m_dMonsterSpawnInitialTime = 10.0;	//	10초마다 몬스터 스폰합니다
-	m_dMonsterSpawnTime = m_dMonsterSpawnInitialTime;
+	m_dMonsterSpawnTime = 3.0;
 	m_bMonsterSpawn = true;
 	m_iNumberOfMonsterSpawn = 3;	//	3마리씩 스폰합니다.
 
-	std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
-	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	//std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
+	//std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	std::shared_ptr<CActor> pPlayer = make_shared<CSniper>();
 	AddActor(pPlayer);
-	AddActor(pBoss);
+	//AddActor(pBoss);
 
 	m_pPlayer = pPlayer;
 }
@@ -106,8 +109,9 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 	for (int i = 0; i < m_iNumberOfMonsterSpawn; i++)
 	{
 		//	몬스터 생성
-
+		shared_ptr<CActor> slime = make_shared<CSlime>();
 		//	몬스터 액터 풀에 넣기
+		AddActor(slime);
 	}
 
 	CGraphic::GetInstance()->AddLog("몬스터를 세마리 생성했습니다.");
@@ -196,21 +200,19 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD LTPos, COORD RBPos
 	return retVec;
 }
 
-vector<shared_ptr<CActor>> CGameWorld::FindActorsByActorCustom(COORD pos)
+shared_ptr<CActor> CGameWorld::FindActorByActorCustom(COORD pos)
 {
-	vector<shared_ptr<CActor>> retVec;
-
 	for (auto& i : m_aActors)
 	{
 		if (!i.first->m_bIsValid)	continue;
 
 		if (i.first->ActorCustomCollisionTest(pos))
 		{
-			retVec.push_back(i.first);
+			return i.first;
 		}
 	}
 
-	return retVec;
+	return nullptr;
 }
 
 bool CGameWorld::EraseActorFromSort(shared_ptr<CActor> actor)
@@ -243,7 +245,40 @@ shared_ptr<CActor> CGameWorld::RayTrace(COORD startPos, COORD direction, int tag
 			return nullptr;
 		}
 
-		result = FindActorFromPosition(COORD(startPos.X + direction.X, startPos.Y + direction.Y));
+		result = FindActorFromPosition(COORD(findingPos.X, findingPos.Y));
+		if (result == nullptr)	continue;
+		if (result.get()->m_eTag & tag)
+		{
+			return result;
+		}
+		//	아직 유효한 결과를 찾지 못함
+		result = nullptr;
+	}
+
+	return nullptr;
+}
+
+shared_ptr<CActor> CGameWorld::RayTraceWithActorCustom(COORD startPos, COORD direction, int tag)
+{
+	shared_ptr<CActor> result = nullptr;
+	if (direction.X == 0 && direction.Y == 0)	return nullptr;	//	유효하지 않은 방향
+
+	if (tag == ETag::none)
+	{
+		tag = ~tag;
+	}
+	COORD findingPos = startPos;
+	while (1)
+	{
+		findingPos.X += direction.X;
+		findingPos.Y += direction.Y;
+		if (findingPos.X < 0 || findingPos.X > 29 || findingPos.Y < 0 || findingPos.Y > 29)
+		{	//	맵을 벗어남
+			//	유효한 결과를 찾지 못함
+			return nullptr;
+		}
+
+		result = FindActorByActorCustom(COORD(findingPos.X, findingPos.Y));
 		if (result == nullptr)	continue;
 		if (result.get()->m_eTag & tag)
 		{

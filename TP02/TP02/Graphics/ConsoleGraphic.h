@@ -17,6 +17,7 @@ enum Pixel
 	cross,
 	dust,
 	star,
+	Sniper,
 
 
 	PixelMax,

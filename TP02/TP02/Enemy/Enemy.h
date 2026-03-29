@@ -4,6 +4,7 @@
 
 class CEnemy : public CCharacter
 {
+public:
 	CEnemy(int Shape, int Color);
 	~CEnemy() = default;
 

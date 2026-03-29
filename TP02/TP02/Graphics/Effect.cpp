@@ -24,10 +24,10 @@ void CEffect::CreateStaticEffect(int shape,	int color, COORD LT, COORD RB, doubl
 	m_pShape = shape;
 	m_tColor = color;
 	//	그리기 영역에 맞게 보정
-	m_cRectLT.X = max(0, LT.X);
-	m_cRectLT.Y = max(0, LT.Y);
-	m_cRectRB.X = min(29, RB.X);
-	m_cRectRB.Y = min(29, RB.Y);
+	m_cRectLT.X = max(0, min(LT.X, RB.X));
+	m_cRectLT.Y = max(0, min(LT.Y, RB.Y));
+	m_cRectRB.X = min(29, max(LT.X, RB.X));
+	m_cRectRB.Y = min(29, max(LT.Y, RB.Y));
 	m_dDuration = duration;
 #ifdef _DEBUG
 	CGraphic::GetInstance()->AddLog("이펙트를 생성했습니다");
@@ -48,10 +48,14 @@ void CEffect::CreateDynamicEffect(int level, vector<pair<int, int>> shape, vecto
 
 	for (auto& i : m_aDynamicShape)
 	{
-		i.first.X = max(0, i.first.X);
-		i.first.Y = max(0, i.first.Y);
-		i.second.X = min(29, i.second.X);
-		i.second.Y = min(29, i.second.Y);
+		COORD LT;
+		COORD RB;
+		LT.X = max(0, min(i.first.X, i.second.X));
+		LT.Y = max(0, min(i.first.Y, i.second.Y));
+		RB.X = min(29, max(i.first.X, i.second.X));
+		RB.Y = min(29, max(i.first.Y, i.second.Y));
+		i.first = LT;
+		i.second = RB;
 	}
 
 	m_bDynamic = true;
@@ -90,6 +94,7 @@ void CEffect::Move()
 void CEffect::Render()
 {
 	if (!m_bIsValid)	return;
+	if (m_iDynamicCurLevel < 0)	return;	//	다이나믹 이펙트로 생성했으나 아직 Tick을 타지 않은 상태 : 터질 수 있음
 
 	//	렉트 크기만큼 그립니다
 	CGraphic* pGraphic = CGraphic::GetInstance();
