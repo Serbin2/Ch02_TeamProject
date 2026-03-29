@@ -51,6 +51,8 @@ public:
 	void StartDraw();
 	void EndDraw();
 
+	//	TODO : Buffer Flushing
+
 	//	로그를 추가합니다
 	void AddLog(string str);
 

@@ -78,7 +78,7 @@ int main()
 		pInput->Update();
 
 		if (pInput->IsKeyDown(VK_ESCAPE))
-		{
+		{	//	게임 일시 정지
 			Timer.Pause();
 			
 			CMenu inGameMenu;
@@ -86,12 +86,6 @@ int main()
 
 			if (result == 2)
 			{
-				// 게임 종료 → 메인메뉴로 복귀
-				CGraphic::Release();
-				CInput::Release();
-				//cMainMenu frontMenu;
-				//frontMenu.vRun();
-				//return 0;	<--	게임 종료는 루프를 나가게 하도록 해주세요
 				break;
 			}
 			// result == 1: 게임 재개
@@ -100,7 +94,7 @@ int main()
 			pGraphic->ReDraw();
 			Timer.Resume();
 		}
-
+#ifdef _DEBUG	//	이펙트 테스트용 
 		if (pInput->IsKeyDown('O'))
 		{	//	이펙트 테스트
 			shared_ptr<CEffect> FX = make_shared<CEffect>();
@@ -108,10 +102,33 @@ int main()
 			LT.X = 10;
 			LT.Y = testPosition;
 			COORD RB = { LT.X + 1, LT.Y + 2 };
-			FX->Create(Pixel::star, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW, LT, RB, 3.0);
+			FX->CreateStaticEffect(Pixel::star, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW, LT, RB, 3.0);
 			CGameWorld::GetInstance()->AddActor(FX);
 			testPosition += 2;
 		}
+
+		if (pInput->IsKeyDown('P'))
+		{
+			shared_ptr<CEffect> FX = make_shared<CEffect>();
+			vector<pair<int, int >> material;
+			vector<pair<COORD, COORD>> shape;
+			material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW | TEXT_BACKGROUND_RED_INT));
+			material.push_back(make_pair(Pixel::square, TEXT_FOREGROUND_RED_INT | TEXT_BACKGROUND_RED));
+			material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW));
+			material.push_back(make_pair(Pixel::dust, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
+			shape.push_back(make_pair(COORD(22, 22), COORD(23, 23)));
+			shape.push_back(make_pair(COORD(20, 20), COORD(25, 25)));
+			shape.push_back(make_pair(COORD(21, 21), COORD(24, 24)));
+			shape.push_back(make_pair(COORD(22, 22), COORD(23, 23)));
+			vector<double> duration;
+			duration.push_back(0.1);
+			duration.push_back(0.5);
+			duration.push_back(1.0);
+			duration.push_back(1.0);
+			FX->CreateDynamicEffect(4,material, shape, duration);
+			CGameWorld::GetInstance()->AddActor(FX);
+		}
+#endif
 
 		World->Update(DeltaTime);
 

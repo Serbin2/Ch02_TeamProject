@@ -51,6 +51,8 @@ public:
 	//	찾으려는 위치에 대해 true를 반환하는 액터들을 찾습니다.
 	vector<shared_ptr<CActor>> FindActorsByActorCustom(COORD pos);
 
+	//	TODO : Ray Trace(Hit Scan)
+
 private:
 
 	static CGameWorld* m_pInstance;

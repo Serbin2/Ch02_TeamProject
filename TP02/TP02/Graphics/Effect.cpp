@@ -6,6 +6,10 @@ CEffect::CEffect()
 	m_cRectRB = { 0, };
 	m_dDuration = 0.0;
 
+	m_bDynamic = false;
+	m_iDynamicLevel = 0;
+	m_iDynamicCurLevel = 0;
+
 	m_eTag = ETag::actor | ETag::effect;
 	m_isFired = false;
 }
@@ -15,7 +19,7 @@ CEffect::~CEffect()
 	
 }
 
-void CEffect::Create(int shape,	int color, COORD LT, COORD RB, double duration )
+void CEffect::CreateStaticEffect(int shape,	int color, COORD LT, COORD RB, double duration )
 {
 	m_pShape = shape;
 	m_tColor = color;
@@ -25,8 +29,37 @@ void CEffect::Create(int shape,	int color, COORD LT, COORD RB, double duration )
 	m_cRectRB.X = min(29, RB.X);
 	m_cRectRB.Y = min(29, RB.Y);
 	m_dDuration = duration;
-
+#ifdef _DEBUG
 	CGraphic::GetInstance()->AddLog("이펙트를 생성했습니다");
+#endif
+	m_isFired = true;
+}
+
+void CEffect::CreateDynamicEffect(int level, vector<pair<int, int>> shape, vector<pair<COORD,COORD>> rect, vector<double> duration)
+{
+	m_iDynamicLevel = level;
+	m_aDynamicMaterial = shape;
+	m_aDynamicShape = rect;
+	m_aDynamicDuration = duration;
+
+	m_aDynamicShape.resize(level);
+	m_aDynamicMaterial.resize(level);
+	m_aDynamicDuration.resize(level);
+
+	for (auto& i : m_aDynamicShape)
+	{
+		i.first.X = max(0, i.first.X);
+		i.first.Y = max(0, i.first.Y);
+		i.second.X = min(29, i.second.X);
+		i.second.Y = min(29, i.second.Y);
+	}
+
+	m_bDynamic = true;
+	m_iDynamicCurLevel = -1;
+	m_dDuration = 0;
+#ifdef _DEBUG
+	CGraphic::GetInstance()->AddLog("이펙트를 생성했습니다");
+#endif
 	m_isFired = true;
 }
 
@@ -37,11 +70,15 @@ void CEffect::Tick(double deltaTime)
 
 	m_dDuration -= deltaTime;
 
+	if (m_bDynamic)	DynamicEffectTick(deltaTime);
+
 	if (m_dDuration > 0)	return;
 
 	//	이펙트 지속시간이 끝났습니다.
 	m_bIsValid = false;
+#ifdef _DEBUG
 	CGraphic::GetInstance()->AddLog("이펙트가 삭제되었습니다");
+#endif
 }
 
 void CEffect::Move()
@@ -64,4 +101,26 @@ void CEffect::Render()
 			pGraphic->RenderToBuffer(x, y, m_pShape, m_tColor);
 		}
 	}
+}
+
+void CEffect::DynamicEffectTick(double deltaTime)
+{	//	다이나믹 이펙트를 다음 레벨로 진행시킵니다.
+	if (m_dDuration > 0)	return;
+	
+	//	레벨을 증가시킵니다.
+	m_iDynamicCurLevel++;
+
+	//	최대 레벨을 넘었으면 비활성화합니다.
+	if (m_iDynamicCurLevel >= m_iDynamicLevel)
+	{	//	CurLevel은 인덱스를 사용하므로 0부터시작
+		m_bIsValid = false;
+		m_isFired = false;
+		return;
+	}
+	
+	m_pShape = m_aDynamicMaterial[m_iDynamicCurLevel].first;
+	m_tColor = m_aDynamicMaterial[m_iDynamicCurLevel].second;
+	m_cRectLT = m_aDynamicShape[m_iDynamicCurLevel].first;
+	m_cRectRB = m_aDynamicShape[m_iDynamicCurLevel].second;
+	m_dDuration = m_aDynamicDuration[m_iDynamicCurLevel];
 }

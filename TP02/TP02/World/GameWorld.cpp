@@ -123,6 +123,7 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 	if (m_aActors[actor] > 1)
 	{	//	이미 추가되어 있던 액터임
 		m_aActors[actor]--;
+		CGraphic::GetInstance()->AddLog("Error : Already Added Actor");
 		return false;
 	}
 
