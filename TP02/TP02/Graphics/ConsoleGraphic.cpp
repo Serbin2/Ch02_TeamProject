@@ -17,23 +17,12 @@ CGraphic::CGraphic()
 	m_CurInfo.dwSize = 1;
 	SetConsoleCursorInfo(m_hOP, &m_CurInfo);
 
-	//	버퍼를 준비합니다
-	m_aPrevBuffer.resize(WORLD_SIZE);
-	m_aBuffer.resize(WORLD_SIZE);
-	for (int i = 0; i < WORLD_SIZE; i++)
-	{
-		m_aPrevBuffer[i].resize(WORLD_SIZE);
-		m_aBuffer[i].resize(WORLD_SIZE);
-	}
-
 	//	멤버 변수들을 초기화합니다
 	m_iMaxLog = LOG_HEIGHT;
 	m_DefaultBackgroundColor = TEXT_BACKGROUND_BLACK;
 	m_bOnDraw = false;
 	m_sBlank = "                                                           ";
 
-	//	게임 레이아웃을 그려둡니다
-	DrawShape();
 }
 
 CGraphic::~CGraphic()
@@ -43,14 +32,16 @@ CGraphic::~CGraphic()
 
 void CGraphic::SetPixelText()
 {//	여기서 픽셀의 형태를 정의하세요
-	m_sPixels[blank] = "  ";
-	m_sPixels[square] = "HH";
-	m_sPixels[triangle] = "<>";
-	m_sPixels[circle] = "()";
-	m_sPixels[horizontalLine] = "--";
-	m_sPixels[verticalLine] = "||";
-	m_sPixels[cross] = "++";
-	m_sPixels[dust] = "'.";
+	m_sPixels[blank]				= "  ";
+	m_sPixels[square]				= "HH";
+	m_sPixels[triangle]				= "<>";
+	m_sPixels[circle]				= "()";
+	m_sPixels[horizontalLine]		= "--";
+	m_sPixels[verticalLine]			= "||";
+	m_sPixels[cross]				= "++";
+	m_sPixels[dust]					= "'.";
+	m_sPixels[star]					= "**";
+	m_sPixels[Sniper] = "Sn";
 }
 
 CGraphic* CGraphic::GetInstance()
@@ -72,6 +63,21 @@ void CGraphic::Release()
 
 	delete m_pInstance;
 	m_pInstance = nullptr;
+}
+
+void CGraphic::Initialize()
+{
+	//	버퍼를 준비합니다
+	m_aPrevBuffer.resize(WORLD_SIZE);
+	m_aBuffer.resize(WORLD_SIZE);
+	for (int i = 0; i < WORLD_SIZE; i++)
+	{
+		m_aPrevBuffer[i].resize(WORLD_SIZE);
+		m_aBuffer[i].resize(WORLD_SIZE);
+	}
+
+	//	게임 레이아웃을 그려둡니다
+	DrawShape();
 }
 
 //	커서의 위치를 변경합니다
@@ -137,6 +143,18 @@ void CGraphic::EndDraw()
 	m_bOnDraw = false;	//	그리기가 끝났습니다.
 }
 
+void CGraphic::FlushingBuffer()
+{
+	Shader s;
+	for (int y = 0; y < WORLD_SIZE; y++)
+	{
+		for (int x = 0; x < WORLD_SIZE; x++)
+		{
+			m_aPrevBuffer[y][x] = s;
+		}
+	}
+}
+
 void CGraphic::ReDraw()
 {
 	//	화면 정리 및 레이아웃 그리기
@@ -169,6 +187,7 @@ void CGraphic::AddLog(string str)
 
 void CGraphic::PrintLog()
 {
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE|TEXT_BACKGROUND_BLACK);
 	int logSize = (int)m_aLog.size();
 	for (int i = 0; i < logSize; i++)
 	{

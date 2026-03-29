@@ -11,7 +11,7 @@ CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 1.0;
 	m_dAttackTimer = 0.0;
-	m_eTag = ETag::actor | ETag::character;
+	m_eTag = ETag::actor | ETag::character | ETag::monster;
 }
 
 void CEnemy::Tick(double DeltaTime)

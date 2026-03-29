@@ -8,7 +8,7 @@ class CActor : public std::enable_shared_from_this<CActor>
 {
 public:
 	CActor() = default;
-	CActor(int Shape, int Color) : m_pShape(Shape), m_tColor(Color), m_eTag(ETag::actor) { }
+	CActor(int Shape, int Color) : m_pShape(Shape), m_tColor(Color), m_eTag(ETag::actor), m_sName("액터") {}
 	virtual	~CActor() = default;
 
 	virtual void Tick(double DeltaTime) = 0;
@@ -34,6 +34,8 @@ public:
 
 	const float GetSpeed() const { return m_fSpeed; }
 	void SetSpeed(float NewSpeed) { m_fSpeed = NewSpeed; }
+
+	const string GetName() const { return m_sName; };
 
 
 	//	----- 작업자 : 나지호 ------  //
@@ -72,6 +74,7 @@ protected:
 
 
 	//	-----	작업자 : 나지호 -----	//
+	string m_sName;			//	이름
 	int m_eTag;				//	태그
 	bool m_bIsValid = true;	//	유효한지
 	//	-----------------------------	//
