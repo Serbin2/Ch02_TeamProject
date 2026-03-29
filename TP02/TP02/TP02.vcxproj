@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boss\Boss.cpp" />
+    <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
     <ClCompile Include="Graphics\Interface.cpp" />
     <ClCompile Include="InGameMenu\Menu.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Character\Actor.h" />
     <ClInclude Include="Character\Character.h" />
     <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="FrontMenu\MainMenu.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
     <ClInclude Include="InGameMenu\Menu.h" />
