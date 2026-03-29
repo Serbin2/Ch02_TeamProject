@@ -15,6 +15,7 @@ private:
 public:
 
 	static CInterface* GetInstance();
+	static void Release();
 
 	//	UI를 추가합니다.
 	//	이미 사용중인 UI가 있으면 실패합니다.
