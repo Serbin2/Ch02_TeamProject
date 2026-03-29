@@ -55,7 +55,7 @@ void CSniper::Tick(double DeltaTime)
 			m_bInvincible = false;
 		}
 	}
-
+	
 	//	여기서 입력 처리를 함께 했습니다.
 	Move();
 }

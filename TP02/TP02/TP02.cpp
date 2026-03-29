@@ -64,8 +64,8 @@ int main()
 
 	UI->AddUI(0, "FPS Count : ");
 	UI->AddUI(1, "FPS : ");
-	World->Initialize();
 	pGraphic->Initialize();
+	World->Initialize();
 	Timer.Start();
 
 	//	이펙트 테스트용
