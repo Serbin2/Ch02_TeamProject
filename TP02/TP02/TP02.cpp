@@ -91,6 +91,7 @@ int main()
 			// result == 1: 게임 재개
 			// result == 3: 상점 (나중에 추가)
 
+			pGraphic->FlushingBuffer();
 			pGraphic->ReDraw();
 			Timer.Resume();
 		}

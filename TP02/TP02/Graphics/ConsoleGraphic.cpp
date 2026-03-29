@@ -142,6 +142,18 @@ void CGraphic::EndDraw()
 	m_bOnDraw = false;	//	그리기가 끝났습니다.
 }
 
+void CGraphic::FlushingBuffer()
+{
+	Shader s;
+	for (int y = 0; y < WORLD_SIZE; y++)
+	{
+		for (int x = 0; x < WORLD_SIZE; x++)
+		{
+			m_aPrevBuffer[y][x] = s;
+		}
+	}
+}
+
 void CGraphic::ReDraw()
 {
 	//	화면 정리 및 레이아웃 그리기
@@ -174,6 +186,7 @@ void CGraphic::AddLog(string str)
 
 void CGraphic::PrintLog()
 {
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE|TEXT_BACKGROUND_BLACK);
 	int logSize = (int)m_aLog.size();
 	for (int i = 0; i < logSize; i++)
 	{

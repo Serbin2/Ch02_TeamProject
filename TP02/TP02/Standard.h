@@ -54,6 +54,7 @@
 
 enum ETag
 {
+	none		=	0,
 	actor		=	1	<<	0,
 	character	=	1	<<	1,
 	player		=	1	<<	2,

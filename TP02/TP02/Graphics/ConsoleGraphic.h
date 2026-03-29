@@ -51,7 +51,9 @@ public:
 	void StartDraw();
 	void EndDraw();
 
-	//	TODO : Buffer Flushing
+	//	그리기 버퍼를 비워줍니다.
+	//	화면을 다시 그려야 할 때 호출하여 이전 프레임 버퍼를 비우도록 해야합니다.
+	void FlushingBuffer();
 
 	//	로그를 추가합니다
 	void AddLog(string str);

@@ -222,3 +222,36 @@ bool CGameWorld::EraseActorFromSort(shared_ptr<CActor> actor)
 
 	return false;
 }
+
+shared_ptr<CActor> CGameWorld::RayTrace(COORD startPos, COORD direction, int tag) 
+{
+	shared_ptr<CActor> result = nullptr;
+	if (direction.X == 0 && direction.Y == 0)	return nullptr;	//	유효하지 않은 방향
+
+	if (tag == ETag::none)
+	{
+		tag = ~tag;
+	}
+	COORD findingPos = startPos;
+	while (1)
+	{
+		findingPos.X += direction.X;
+		findingPos.Y += direction.Y;
+		if (findingPos.X < 0 || findingPos.X > 29 || findingPos.Y < 0 || findingPos.Y > 29)
+		{	//	맵을 벗어남
+			//	유효한 결과를 찾지 못함
+			return nullptr;
+		}
+
+		result = FindActorFromPosition(COORD(startPos.X + direction.X, startPos.Y + direction.Y));
+		if (result == nullptr)	continue;
+		if (result.get()->m_eTag & tag)
+		{
+			return result;
+		}
+		//	아직 유효한 결과를 찾지 못함
+		result = nullptr;
+	}
+
+	return nullptr;
+}

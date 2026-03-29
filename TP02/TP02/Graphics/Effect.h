@@ -33,14 +33,6 @@ public:
 
 protected:
 
-	//int m_pShape;	        // 액터의 픽셀 모양
-	//int m_tColor;           // 액터의 텍스트 색상
-	//
-	//COORD m_cPosition;		// 액터의 현재 위치
-	//COORD m_cMoveDirection; // 액터의 이동 방향
-	//float m_fSpeed;			// 액터의 이동 속도(m/s)
-	//double m_dMoveTimer;	// 액터의 이동 타이머
-
 	void DynamicEffectTick(double deltaTime);
 
 	//	사각형 영역입니다.

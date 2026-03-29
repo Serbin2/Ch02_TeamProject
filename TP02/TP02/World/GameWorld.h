@@ -51,7 +51,11 @@ public:
 	//	찾으려는 위치에 대해 true를 반환하는 액터들을 찾습니다.
 	vector<shared_ptr<CActor>> FindActorsByActorCustom(COORD pos);
 
-	//	TODO : Ray Trace(Hit Scan)
+	//	RayTrace
+	//	해당 방향으로 가장 먼저 적중하는 액터를 반환합니다.
+	//	태그를 사용할 경우 해당 태그에서만 검색합니다.
+	//	최적화 되어있지 않음 사용시 주의 할 것
+	shared_ptr<CActor> RayTrace(COORD startPos, COORD direction, int tag = ETag::none);
 
 private:
 
