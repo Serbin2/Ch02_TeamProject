@@ -6,6 +6,13 @@
 
 class CSound;
 
+
+enum class ESoundType
+{
+	BGM,
+	SFX
+};
+
 class CResourceManager
 {
 	DECLARE_SINGLE(CResourceManager)
@@ -16,7 +23,7 @@ public:
 
 public:
 	std::shared_ptr<CSound> GetSound(const std::wstring& key);
-	std::shared_ptr<CSound> LoadSound(const std::wstring& key, const std::wstring& path);
+	std::shared_ptr<CSound> LoadSound(const std::wstring& key, const std::wstring& path, ESoundType SoundType);
 
 private:
 	HWND m_hHwnd;

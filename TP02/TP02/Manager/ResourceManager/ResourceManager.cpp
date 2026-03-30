@@ -17,7 +17,7 @@ std::shared_ptr<CSound> CResourceManager::GetSound(const std::wstring& key)
 	return m_pSounds[key]; 
 }
 
-std::shared_ptr<CSound>  CResourceManager::LoadSound(const std::wstring& key, const std::wstring& path)
+std::shared_ptr<CSound>  CResourceManager::LoadSound(const std::wstring& key, const std::wstring& path, ESoundType SoundType)
 {
 	// 이미 존재하는 경우 
 	if (m_pSounds.find(key) != m_pSounds.end())
@@ -25,7 +25,19 @@ std::shared_ptr<CSound>  CResourceManager::LoadSound(const std::wstring& key, co
 		return m_pSounds[key];
 	}
 
-	fs::path Path = m_ResourcePath / "Sound" / path;
+	std::string Folder;
+
+	switch (SoundType)
+	{
+	case ESoundType::BGM:
+		Folder = "BGM";
+		break;
+	case ESoundType::SFX:
+		Folder = "SFX";
+		break;
+	}
+
+	fs::path Path = m_ResourcePath / "Sound" / Folder / path;
 
 	std::shared_ptr<CSound> pSound = std::make_shared<CSound>();
 	pSound->LoadWave(Path);
