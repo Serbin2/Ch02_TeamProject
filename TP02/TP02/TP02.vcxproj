@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boss\Boss.cpp" />
+    <ClCompile Include="FrontMenu\MainMenu.cpp" />
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
     <ClCompile Include="Graphics\Interface.cpp" />
     <ClCompile Include="InGameMenu\Menu.cpp" />

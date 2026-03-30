@@ -32,7 +32,7 @@ int main()
 	std::cout << "아무 키를 눌러 계속합니다.\n";
 	char in = _getch();
 
-	cMainMenu menu;
+	CMainMenu menu;
 	menu.vRun();
 
 
@@ -101,7 +101,7 @@ int main()
 				// 게임 종료 → 메인메뉴로 복귀
 				CGraphic::Release();
 				CInput::Release();
-				cMainMenu frontMenu;
+				CMainMenu frontMenu;
 				frontMenu.vRun();
 				return 0;
 			}
