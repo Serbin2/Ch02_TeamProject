@@ -4,7 +4,7 @@
 
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Graphics/Interface.h"
-
+#include "../Item/Bomb.h"
 
 CInventory::CInventory()
 {
@@ -20,6 +20,8 @@ CInventory::CInventory()
 
 #ifdef _DEBUG
 		AddItem(std::make_shared<Potion>(), 3);
+		AddItem(std::make_shared<Potion>(), 3);
+		AddItem(std::make_shared<CBombItem>(), 3);
 #endif
 }
 

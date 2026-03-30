@@ -1,0 +1,123 @@
+#include "Bomb.h"
+
+
+CBomb::CBomb(int Shape, int Color)
+	: CActor(Pixel::star, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN)
+{
+	m_eTag = ETag::actor; 
+	m_sName = "폭탄";
+}
+
+void CBomb::Tick(double DeltaTime)
+{
+	m_dLifeTime -= DeltaTime;
+	if (m_dLifeTime <= 0)
+	{
+		// 데미지 입히는 로직 
+		Burst();
+		m_bIsValid = false;
+	}
+}
+
+std::vector<COORD> CBomb::GetBombOutlinePos(int Range)
+{
+	const COORD pos = GetPosition();
+	const int width = 1;
+	const int height = 1;
+
+	std::vector<COORD> result;
+
+	const int left = pos.X - Range;
+	const int right = pos.X + width + Range - 1;
+	const int top = pos.Y - Range;
+	const int bottom = pos.Y + height + Range - 1;
+
+	// Top Edge
+	for (int x = left; x <= right; ++x)
+	{
+		result.push_back({(SHORT)x, (SHORT)top});
+	}
+
+	// Bottom Edge
+	for (int x = left; x <= right; ++x)
+	{
+		result.push_back({(SHORT)x, (SHORT)bottom});
+	}
+
+	// Left Edge
+	for (int y = top + 1; y < bottom; ++y)
+	{
+		result.push_back({(SHORT)left, (SHORT)y});
+	}
+
+	// Right Edge
+	for (int y = top + 1; y < bottom; ++y)
+	{
+		result.push_back({(SHORT)right, (SHORT)y});
+	}
+
+	return result;
+}
+
+void CBomb::Burst()
+{
+	std::vector<COORD> CheckPoint;
+	for (int i = 1; i <= 3; ++i)
+	{
+		std::vector<COORD> Outline = GetBombOutlinePos(i);
+		CheckPoint.insert(CheckPoint.end(), Outline.begin(), Outline.end());
+	}
+	CheckPoint.push_back(GetPosition());
+	
+
+	for (const auto& Point : CheckPoint)
+	{
+		if (Point.X < 0 || 30 <= Point.X
+			|| Point.Y < 0 || 30 <= Point.Y)
+		{
+			continue;
+		}
+
+		auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(Point);
+		if (!pActor)
+		{
+			continue;
+		}
+
+		auto pCharacter = std::static_pointer_cast<CCharacter>(pActor);
+		if (!pCharacter)
+		{
+			continue;
+		}
+
+		pCharacter->OnHit(100.f);
+	}
+}
+
+CBombItem::CBombItem()
+{
+	m_sName = "Bomb";
+	m_sDesc = "폭탄기준 3의 추가영역에 데미지";
+	m_iPrice = 400;
+	m_iMaxAmount = 3;
+}
+
+void CBombItem::UseItem(std::weak_ptr<CPlayer> pPlayer)
+{
+	// 유효성 확인
+	std::shared_ptr<CPlayer> Player = pPlayer.lock();
+	if (!Player)
+	{
+		return;
+	}
+
+	const COORD& SpawnPosition = Player->GetPosition();
+	std::shared_ptr<CActor> Bomb = std::make_shared<CBomb>(Pixel::star, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	if (!Bomb)
+	{
+		return;
+	}
+
+	Bomb->SetPosition(SpawnPosition);
+	CGameWorld::GetInstance()->AddActor(Bomb);
+}
