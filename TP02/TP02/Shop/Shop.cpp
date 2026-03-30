@@ -182,6 +182,7 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 		pPlayer->GetInventory()->AddItem(newPotion, 1);// 플레이어 가방에 넣음
 	}
 
+
 	std::cout << pad << "[" << m_ShopItems[index]->GetName() << "] 을(를) 구매했습니다!\n";
 	std::cin.get();
 }

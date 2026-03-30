@@ -1,16 +1,11 @@
-// [작성자] : 박다현
-// [Desc] : 아이템 베이스 클래스
-
-
 #pragma once
 #include <string>
 #include <iostream>
-#include <memory>
 
 #include "../Character/Player.h"
 
 // 아이템 인터페이스 클래스 
-class cItem abstract
+class CItem abstract
 {
 protected: 
 	std::string m_sName;		// 이름
@@ -19,15 +14,12 @@ protected:
 	int m_iMaxAmount;			// 아이템 최대 소지 개수
 
 public:
-	cItem(const std::string& sName = "Default", const std::string& sDesc = "default", int iPrice = 0, int iMaxAmount = 0)
-		: m_sName(sName), m_sDesc(sDesc), m_iPrice(iPrice), m_iMaxAmount(iMaxAmount)
-	{
+	CItem(const std::string& sName = "Default", const std::string& sDesc = "default", int iPrice = 0, int iMaxAmount = 0);
 
-	}
 
-	virtual ~cItem() = default;
+	virtual ~CItem() = default;
 
-	bool operator==(const cItem& Other)
+	bool operator==(const CItem& Other)
 	{
 		return Other.m_sName == m_sName;
 	}
@@ -39,7 +31,7 @@ public:
 	int GetMaxAmount() const { return m_iMaxAmount; }
 
 	//만약을 위한 setter (가격 변경)
-	void SetPrice(int p) { if (p >= 0) m_iPrice = p; }
+	void SetPrice(int itemPrice);
 
 	// 개수 처리
 	// void GetItem(int amount = 1) { m_iMaxAmount += amount; } // 아이템획득
@@ -53,7 +45,7 @@ public:
 };
 
 //예시 체력 회복포션
-class Potion : public cItem
+class Potion : public CItem
 {
 private:
 	int m_iHeal;
@@ -61,7 +53,7 @@ private:
 public:
 	Potion(const std::string & sName = "체력 포션", const std::string & sDesc = "체력을 50 hp 회복한다.",
 		int iPrice = 100, int iMaxAmount = 10, int iHeal = 50)
-		: cItem(sName, sDesc, iPrice, iMaxAmount)
+		: CItem(sName, sDesc, iPrice, iMaxAmount)
 		, m_iHeal(iHeal)
 	{
 

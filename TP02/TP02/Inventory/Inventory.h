@@ -7,7 +7,7 @@
 
 constexpr INT UI_IVNENTORY__START_LINE = 10;
 
-class cItem;
+class CItem;
 
 struct FInventorySlot
 {
@@ -37,7 +37,7 @@ struct FInventorySlot
 		return m_bEmpty;
 	}
 
-	std::shared_ptr<cItem> m_pItem;
+	std::shared_ptr<CItem> m_pItem;
 	int m_iOwningAmount;
 	bool m_bEmpty = true;
 }; 
@@ -55,10 +55,10 @@ public:
 	// 아이템 사용 함수 
 	void UseItem(int iItemIdx, std::weak_ptr<class CPlayer> pPlayer);
 
-	bool CanAddItem(std::shared_ptr<cItem> pItem, int iAmount);
+	bool CanAddItem(std::shared_ptr<CItem> pItem, int iAmount);
 
 	// 아이템 추가 함수
-	bool AddItem(std::shared_ptr<cItem> pItem, int iAmount);
+	bool AddItem(std::shared_ptr<CItem> pItem, int iAmount);
 
 	// 인벤토리 내부 아이템 찾는 함수
 	std::vector<int> FindItem(const std::string& sItemName);
@@ -74,7 +74,7 @@ public:
 
 	bool IsEmpty() const;
 
-	std::shared_ptr<cItem> GetItem(int Index);
+	std::shared_ptr<CItem> GetItem(int Index);
 
 
 private:

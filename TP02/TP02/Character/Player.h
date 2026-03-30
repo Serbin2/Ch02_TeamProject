@@ -29,6 +29,7 @@ private:
 	// 골드 (상점 시스템용)
 	int m_iGold = 500;
 
+
 public:
 	// 골드
 	int  GetGold() const { return m_iGold; }

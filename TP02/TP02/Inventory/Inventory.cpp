@@ -33,7 +33,7 @@ CInventory::~CInventory()
 	m_vSlots.clear();
 }
 
-bool CInventory::CanAddItem(std::shared_ptr<cItem> pItem, int iAmount)
+bool CInventory::CanAddItem(std::shared_ptr<CItem> pItem, int iAmount)
 {
 	int Remaining = iAmount;
 
@@ -93,7 +93,7 @@ void CInventory::UseItem(int iItemIdx, std::weak_ptr<class CPlayer> pPlayer)
 	}
 }
 
-bool CInventory::AddItem(std::shared_ptr<cItem> pItem, int iAmount)
+bool CInventory::AddItem(std::shared_ptr<CItem> pItem, int iAmount)
 {
 	if (!CanAddItem(pItem, iAmount))
 	{
@@ -223,7 +223,7 @@ bool CInventory::IsEmpty() const
 	return true;
 }
 
-std::shared_ptr<cItem> CInventory::GetItem(int Index)
+std::shared_ptr<CItem> CInventory::GetItem(int Index)
 {
 	if (Index < 0 || Index >= (int)GetSize())
 	{

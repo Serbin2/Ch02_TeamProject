@@ -22,5 +22,5 @@ private:
 
 	void InitShopItems();				// 판매 목록 초기화
 
-	std::vector<std::shared_ptr<cItem>> m_ShopItems;	// 상점 판매 목록
+	std::vector<std::shared_ptr<CItem>> m_ShopItems;	// 상점 판매 목록
 };
