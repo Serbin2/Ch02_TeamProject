@@ -5,6 +5,9 @@
 #include "../Standard.h"
 #include "../Item/Item.h"
 
+constexpr INT UI_IVNENTORY__START_LINE = 10;
+constexpr INT UI_IVNENTORY__END_LINE = 14;
+
 class CItem;
 
 struct FInventorySlot
@@ -21,6 +24,12 @@ struct FInventorySlot
 	std::string PrintItemData() const
 	{
 		std::string sMsg = "이름 : " + m_pItem->GetName() + " 보유 수량 : " + std::to_string(m_iOwningAmount) + " 최대 소지 가능 수량 : " + std::to_string(m_pItem->GetMaxAmount()) + "\n" + m_pItem->GetDesc();
+		return sMsg;
+	}
+
+	std::string PrintItemDataMinial() const
+	{
+		std::string sMsg = "Name : " + m_pItem->GetName() + " Amount : " + std::to_string(m_iOwningAmount);
 		return sMsg;
 	}
 
@@ -60,6 +69,11 @@ public:
 	
 	// 아이템 정보 출력 함수 
 	void PrintItem();
+
+	int GetSlotSize() const
+	{
+		return m_ciMaxSlot;
+	}
 
 private:
 	const int m_ciMaxSlot = 5;

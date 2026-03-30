@@ -1,22 +1,16 @@
 //	Window 11 이상의 콘솔창은 콘솔 창 크기 강제 조절이 안됩니다.
 //	콘솔 창의 설정에서 기본 시작 크기를 조정해서 게임플레이의 적당한 크기를 미리 설정하고 다시 실행해주세요.
 //	260325 지호나
-#include "Graphics/ConsoleGraphic.h"
 #include "Standard.h"
-#include "InGameMenu/Menu.h"
+#include "Graphics/ConsoleGraphic.h"
+#include "Graphics//Interface.h"
 #include "Input/Input.h"
 #include "Time/Timer.h"
+#include "InGameMenu/Menu.h"
 #include "FrontMenu/MainMenu.h"
-#include <windows.h>
-#include <iostream>
-#include <conio.h>
-
-#include "Graphics//Interface.h"
-#include "Character/Player.h"
-#include "Boss/Boss.h"
-#include "Projectile/Projectile.h"
 #include "World/GameWorld.h"
 #include "Item/Item.h"
+#include "Graphics/Effect.h"
 
 
 // [2026-03-25, 박재현] 권한 테스트 2
@@ -27,14 +21,6 @@
 int main()
 {
 	SetConsoleOutputCP(CP_UTF8);
-	std::cout << "윈도우 10 이상의 콘솔창은 코드에서의 콘솔 창 크기 강제 조절이 동작하지 않을 수 있습니다.\n";
-	std::cout << "게임을 시작하기 전에 콘솔 창 크기를 적절하게 조절 한 후 진행하시기 바랍니다.\n";
-	std::cout << "아무 키를 눌러 계속합니다.\n";
-	char in = _getch();
-
-	cMainMenu menu;
-	menu.vRun();
-
 
 	///////////////////////////////////////////////
 	//	여기서부터 게임 로직을 작성합니다
@@ -44,7 +30,9 @@ int main()
 	CTimer Timer;
 	CInterface* UI = CInterface::GetInstance();
 	CGameWorld* World = CGameWorld::GetInstance();
-	World->Initialize();
+
+	cMainMenu menu;
+	menu.vRun();
 
 	if (!pGraphic || !pInput) return 0;
 
@@ -72,16 +60,16 @@ int main()
 		}
 	}
 
-	std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
-	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-	World->AddActor(pPlayer);
-	World->AddActor(pBoss);
+	
 
 	UI->AddUI(0, "FPS Count : ");
 	UI->AddUI(1, "FPS : ");
-	
+	pGraphic->Initialize();
+	World->Initialize();
 	Timer.Start();
 
+	//	이펙트 테스트용
+	int testPosition = 10;
 	while (1)
 	{
 		double DeltaTime = Timer.Update();
@@ -90,7 +78,7 @@ int main()
 		pInput->Update();
 
 		if (pInput->IsKeyDown(VK_ESCAPE))
-		{
+		{	//	게임 일시 정지
 			Timer.Pause();
 			
 			CMenu inGameMenu;
@@ -98,20 +86,50 @@ int main()
 
 			if (result == 2)
 			{
-				// 게임 종료 → 메인메뉴로 복귀
-				CGraphic::Release();
-				CInput::Release();
-				//cMainMenu frontMenu;
-				//frontMenu.vRun();
-				//return 0;	<--	게임 종료는 루프를 나가게 하도록 해주세요
 				break;
 			}
 			// result == 1: 게임 재개
 			// result == 3: 상점 (나중에 추가)
 
+			pGraphic->FlushingBuffer();
 			pGraphic->ReDraw();
 			Timer.Resume();
 		}
+#ifdef _DEBUG	//	이펙트 테스트용 
+		if (pInput->IsKeyDown('O'))
+		{	//	이펙트 테스트
+			shared_ptr<CEffect> FX = make_shared<CEffect>();
+			COORD LT;
+			LT.X = 10;
+			LT.Y = testPosition;
+			COORD RB = { LT.X + 1, LT.Y + 2 };
+			FX->CreateStaticEffect(Pixel::star, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW, LT, RB, 3.0);
+			CGameWorld::GetInstance()->AddActor(FX);
+			testPosition += 2;
+		}
+
+		if (pInput->IsKeyDown('P'))
+		{
+			shared_ptr<CEffect> FX = make_shared<CEffect>();
+			vector<pair<int, int >> material;
+			vector<pair<COORD, COORD>> shape;
+			material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW | TEXT_BACKGROUND_RED_INT));
+			material.push_back(make_pair(Pixel::square, TEXT_FOREGROUND_RED_INT | TEXT_BACKGROUND_RED));
+			material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW));
+			material.push_back(make_pair(Pixel::dust, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
+			shape.push_back(make_pair(COORD(22, 22), COORD(23, 23)));
+			shape.push_back(make_pair(COORD(20, 20), COORD(25, 25)));
+			shape.push_back(make_pair(COORD(21, 21), COORD(24, 24)));
+			shape.push_back(make_pair(COORD(22, 22), COORD(23, 23)));
+			vector<double> duration;
+			duration.push_back(0.1);
+			duration.push_back(0.5);
+			duration.push_back(1.0);
+			duration.push_back(1.0);
+			FX->CreateDynamicEffect(4,material, shape, duration);
+			CGameWorld::GetInstance()->AddActor(FX);
+		}
+#endif
 
 		World->Update(DeltaTime);
 
@@ -128,5 +146,7 @@ int main()
 
 	CGraphic::Release();
 	CInput::Release();
+	CInterface::Release();
+	CGameWorld::Release();
 	return 0;
 }

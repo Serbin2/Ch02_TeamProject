@@ -16,6 +16,8 @@ enum Pixel
 	verticalLine,
 	cross,
 	dust,
+	star,
+	Sniper,
 
 
 	PixelMax,
@@ -38,6 +40,7 @@ public:
 	static CGraphic* GetInstance();		//	싱글톤 인스턴스 가져오기
 	static void Release();				//	사용이 끝나면 정리
 
+	void Initialize();
 
 	//	버퍼에 픽셀 하나를 그립니다.
 	//	그리기 위치 X, Y, 그릴 문자 모양, 그리기 색
@@ -48,6 +51,10 @@ public:
 	//	각 프레임의 끝에 EndDraw()를 호출합니다.
 	void StartDraw();
 	void EndDraw();
+
+	//	그리기 버퍼를 비워줍니다.
+	//	화면을 다시 그려야 할 때 호출하여 이전 프레임 버퍼를 비우도록 해야합니다.
+	void FlushingBuffer();
 
 	//	로그를 추가합니다
 	void AddLog(string str);

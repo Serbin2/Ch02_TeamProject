@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <math.h>
 
 #define WORLD_SIZE		30								//	정사각형 맵의 크기
 
@@ -53,6 +54,7 @@
 
 enum ETag
 {
+	none		=	0,
 	actor		=	1	<<	0,
 	character	=	1	<<	1,
 	player		=	1	<<	2,

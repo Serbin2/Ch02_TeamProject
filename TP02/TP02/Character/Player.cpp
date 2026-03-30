@@ -2,6 +2,7 @@
 #include "../Input/Input.h"
 #include "../Projectile/Projectile.h"
 #include "../Inventory/Inventory.h"
+#include "../Graphics/Interface.h"
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -23,8 +24,13 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	if (m_pInventory)
 	{
 		m_pInventory->AddItem(std::make_shared<Potion>(), 3);
+		m_pInventory->AddItem(std::make_shared<Potion>(), 3);
+		m_pInventory->AddItem(std::make_shared<Potion>(), 3);
 	}
 #endif
+
+	CInterface::GetInstance()->AddUI(2, "HP : ");
+	CInterface::GetInstance()->SetValue(2, m_fHealth);
 }
 
 void CPlayer::Tick(double DeltaTime)
@@ -80,6 +86,9 @@ void CPlayer::Attack(COORD Direction)
 
 void CPlayer::OnHit(float Damage)
 {
+	m_fHealth -= Damage;
+	CInterface::GetInstance()->SetValue(2, m_fHealth);
+
 	// TODO: 피해 계산, 체력 감소, 사망 처리, 피격 효과 등 구현
 }
 

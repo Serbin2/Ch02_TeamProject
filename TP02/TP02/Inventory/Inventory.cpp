@@ -3,10 +3,24 @@
 #include "../Utils/Utils.h"
 
 #include "../Graphics/ConsoleGraphic.h"
+#include "../Graphics/Interface.h"
+
 
 CInventory::CInventory()
 {
 	m_vSlots.resize(m_ciMaxSlot);
+
+	CInterface::GetInstance()->AddUI(10, "Slot1 : ");
+	CInterface::GetInstance()->AddUI(11, "Slot2 : ");
+	CInterface::GetInstance()->AddUI(12, "Slot3 : ");
+	CInterface::GetInstance()->AddUI(13, "Slot4 : ");
+	CInterface::GetInstance()->AddUI(14, "Slot5 : ");
+
+	CInterface::GetInstance()->SetValue(10, "empty");
+	CInterface::GetInstance()->SetValue(11, "empty");
+	CInterface::GetInstance()->SetValue(12, "empty");
+	CInterface::GetInstance()->SetValue(13, "empty");
+	CInterface::GetInstance()->SetValue(14, "empty");
 }
 
 CInventory::CInventory(int iMaxSlot)
@@ -173,8 +187,6 @@ void CInventory::RemoveItem(int iItemIdx, int iRemoveAmount)
 
 void CInventory::PrintItem()
 {
-	std::cout << "===== Inventory =====\n";
-
 	int iSize = (int)m_vSlots.size();
 
 	for (int i = 0; i < iSize; ++i)
@@ -185,9 +197,7 @@ void CInventory::PrintItem()
 		}
 		else
 		{
-			std::cout << i + 1 << " 번 슬롯\n" << m_vSlots[i].PrintItemData() << std::endl;
+			std::cout << i + 1 << " 번 슬롯\n" << m_vSlots[i].PrintItemDataMinial() << std::endl;
 		}
 	}
-
-	std::cout << "===== Inventory =====\n";
 }

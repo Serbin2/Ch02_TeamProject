@@ -29,6 +29,14 @@ CInterface* CInterface::GetInstance()
 	return m_pInstance;
 }
 
+void CInterface::Release()
+{
+	if (m_pInstance == nullptr)	return;
+
+	delete m_pInstance;
+	m_pInstance = nullptr;
+}
+
 //	UI를  추가합니다.
 bool CInterface::AddUI(int index, string name)
 {
