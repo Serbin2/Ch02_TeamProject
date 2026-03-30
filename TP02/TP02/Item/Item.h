@@ -5,7 +5,7 @@
 #include "../Character/Character.h"
 
 
-class cItem
+class CItem
 {
 protected:
 	std::string sName;

@@ -41,9 +41,6 @@ int main()
 	CInterface* UI = CInterface::GetInstance();
 	CGameWorld* World = CGameWorld::GetInstance();
 
-	cMainMenu menu;
-	menu.vRun();
-
 	if (!pGraphic || !pInput) return 0;
 
 	if (pInput == nullptr)
