@@ -30,6 +30,7 @@ CSemiBoss::CSemiBoss() : CEnemy(0,0)
 	m_dShotDelay = SHOT_DELAY;
 	m_iAttackCount = 0;
 	m_bPatternOn = false;
+	m_dAccel = 0.0;
 
 	m_sName = "[빅헤드]";
 
@@ -54,6 +55,8 @@ void CSemiBoss::Tick(double DeltaTime)
 	Attack();
 
 	m_dMoveTimer -= DeltaTime;
+	m_dAccel += DeltaTime / 4.0;
+	if (m_dAccel > 0.95)	m_dAccel = 0.95;
 	if (m_dMoveTimer > 0)	return;
 
 	Move();
@@ -61,13 +64,13 @@ void CSemiBoss::Tick(double DeltaTime)
 
 void CSemiBoss::Move()
 {
-	m_dMoveTimer = 1.0;
 	switch (m_eState)
 	{
 	case MovingLeft:
 		if (m_cPosition.X == 0)
 		{
 			m_eState = Await;
+			m_dAccel = 0.0;
 			break;
 		}
 		m_cPosition.X--;
@@ -76,6 +79,7 @@ void CSemiBoss::Move()
 		if (m_cPosition.X == 25)
 		{
 			m_eState = Await;
+			m_dAccel = 0.0;
 			break;
 		}
 		m_cPosition.X++;
@@ -89,8 +93,10 @@ void CSemiBoss::Move()
 		{
 			m_eState = MovingLeft;
 		}
+		m_dAccel = 0.0;
 		break;
 	}
+	m_dMoveTimer = 1.0 - m_dAccel;
 }
 
 void CSemiBoss::Render()
