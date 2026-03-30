@@ -23,6 +23,14 @@
 int main()
 {
 	SetConsoleOutputCP(CP_UTF8);
+	std::cout << "윈도우 10 이상의 콘솔창은 코드에서의 콘솔 창 크기 강제 조절이 동작하지 않을 수 있습니다.\n";
+	std::cout << "게임을 시작하기 전에 콘솔 창 크기를 적절하게 조절 한 후 진행하시기 바랍니다.\n";
+	std::cout << "아무 키를 눌러 계속합니다.\n";
+	char in = _getch();
+
+	CMainMenu menu;
+	menu.vRun();
+
 
 	///////////////////////////////////////////////
 	//	여기서부터 게임 로직을 작성합니다
@@ -89,6 +97,12 @@ int main()
 			if (result == 2)
 			{
 				break;
+				// 게임 종료 → 메인메뉴로 복귀
+				CGraphic::Release();
+				CInput::Release();
+				CMainMenu frontMenu;
+				frontMenu.vRun();
+				return 0;
 			}
 			else if (result == 3)
 			{
