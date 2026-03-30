@@ -10,17 +10,17 @@ CInventory::CInventory()
 {
 	m_vSlots.resize(m_ciMaxSlot);
 
-	CInterface::GetInstance()->AddUI(10, "Slot1 : ");
-	CInterface::GetInstance()->AddUI(11, "Slot2 : ");
-	CInterface::GetInstance()->AddUI(12, "Slot3 : ");
-	CInterface::GetInstance()->AddUI(13, "Slot4 : ");
-	CInterface::GetInstance()->AddUI(14, "Slot5 : ");
+	CInterface::GetInstance()->AddUI(10, "1.");
+	CInterface::GetInstance()->AddUI(11, "2.");
+	CInterface::GetInstance()->AddUI(12, "3.");
+	CInterface::GetInstance()->AddUI(13, "4.");
+	CInterface::GetInstance()->AddUI(14, "5.");
 
-	CInterface::GetInstance()->SetValue(10, "empty");
-	CInterface::GetInstance()->SetValue(11, "empty");
-	CInterface::GetInstance()->SetValue(12, "empty");
-	CInterface::GetInstance()->SetValue(13, "empty");
-	CInterface::GetInstance()->SetValue(14, "empty");
+	//UpdateUI();
+
+#ifdef _DEBUG
+		AddItem(std::make_shared<Potion>(), 3);
+#endif
 }
 
 CInventory::CInventory(int iMaxSlot)
@@ -123,7 +123,10 @@ bool CInventory::AddItem(std::shared_ptr<cItem> pItem, int iAmount)
 
 			// 남은 아이템 개수가 0보다 작거나 같으면, 존재하는 슬롯에 아이템을 다 넣은 상태
 			if (Remaining <= 0)
+			{
+				UpdateUI();
 				return true;
+			}
 		}
 	}
 
@@ -148,7 +151,10 @@ bool CInventory::AddItem(std::shared_ptr<cItem> pItem, int iAmount)
 
 			// 0보다 작으면 모두 수납완료
 			if (Remaining <= 0)
+			{
+				UpdateUI();
 				return true;
+			}
 		}
 	}
 
@@ -183,9 +189,11 @@ void CInventory::RemoveItem(int iItemIdx, int iRemoveAmount)
 	{
 		Slot.Clear();
 	}
+
+	UpdateUI();
 }
 
-void CInventory::PrintItem()
+void CInventory::UpdateUI()
 {
 	int iSize = (int)m_vSlots.size();
 
@@ -193,11 +201,39 @@ void CInventory::PrintItem()
 	{
 		if (m_vSlots[i].IsEmpty())
 		{
-			std::cout << i + 1 << " 번 슬롯은 비어있습니다." << std::endl;
+			CInterface::GetInstance()->SetValue(UI_IVNENTORY__START_LINE + i, "empty");
 		}
 		else
 		{
-			std::cout << i + 1 << " 번 슬롯\n" << m_vSlots[i].PrintItemDataMinial() << std::endl;
+			CInterface::GetInstance()->SetValue(UI_IVNENTORY__START_LINE + i, m_vSlots[i].PrintItemDataMinial());
 		}
 	}
+}
+
+bool CInventory::IsEmpty() const
+{
+	for (const auto& Slot : m_vSlots)
+	{
+		if (!Slot.IsEmpty())
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+std::shared_ptr<cItem> CInventory::GetItem(int Index)
+{
+	if (Index < 0 || Index >= (int)GetSize())
+	{
+		return nullptr;
+	}
+
+	if (m_vSlots[Index].IsEmpty())
+	{
+		return nullptr;
+	}
+
+	return m_vSlots[Index].m_pItem;
 }

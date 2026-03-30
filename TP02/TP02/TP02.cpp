@@ -11,6 +11,8 @@
 #include "World/GameWorld.h"
 #include "Item/Item.h"
 #include "Graphics/Effect.h"
+#include "Shop/Shop.h"
+#include "Character/Player.h"
 
 
 // [2026-03-25, 박재현] 권한 테스트 2
@@ -60,7 +62,7 @@ int main()
 		}
 	}
 
-	
+
 
 	UI->AddUI(0, "FPS Count : ");
 	UI->AddUI(1, "FPS : ");
@@ -77,10 +79,10 @@ int main()
 		UI->SetValue(1, Timer.GetFPS());
 		pInput->Update();
 
-		if (pInput->IsKeyDown(VK_ESCAPE))
+		if ((pInput->IsKeyDown(VK_ESCAPE)) || pInput->IsKeyDown('G'))
 		{	//	게임 일시 정지
 			Timer.Pause();
-			
+
 			CMenu inGameMenu;
 			int result = inGameMenu.ShowMenu();
 
@@ -88,8 +90,21 @@ int main()
 			{
 				break;
 			}
-			// result == 1: 게임 재개
-			// result == 3: 상점 (나중에 추가)
+			else if (result == 3)
+			{
+				CShop shop;
+
+				shared_ptr<CActor> actor = CGameWorld::GetInstance()->GetPlayerActor();
+				CPlayer* player = static_cast<CPlayer*>(actor.get());
+
+				if (player != nullptr)
+				{
+					shop.Enter(player);
+				}
+
+				pGraphic->ReDraw();
+				Timer.Resume();
+			}
 
 			pGraphic->FlushingBuffer();
 			pGraphic->ReDraw();
@@ -126,7 +141,7 @@ int main()
 			duration.push_back(0.5);
 			duration.push_back(1.0);
 			duration.push_back(1.0);
-			FX->CreateDynamicEffect(4,material, shape, duration);
+			FX->CreateDynamicEffect(4, material, shape, duration);
 			CGameWorld::GetInstance()->AddActor(FX);
 		}
 #endif

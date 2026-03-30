@@ -20,14 +20,6 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 
 	// PJH - 인벤토리 추가
 	m_pInventory = std::make_shared<CInventory>();
-#ifdef _DEBUG
-	if (m_pInventory)
-	{
-		m_pInventory->AddItem(std::make_shared<Potion>(), 3);
-		m_pInventory->AddItem(std::make_shared<Potion>(), 3);
-		m_pInventory->AddItem(std::make_shared<Potion>(), 3);
-	}
-#endif
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
@@ -90,6 +82,11 @@ void CPlayer::OnHit(float Damage)
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
 
 	// TODO: 피해 계산, 체력 감소, 사망 처리, 피격 효과 등 구현
+}
+
+std::shared_ptr<class CInventory> CPlayer::GetInventory() const
+{
+	return m_pInventory;
 }
 
 void CPlayer::Input()

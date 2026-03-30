@@ -49,7 +49,7 @@ public:
 	// 
 	
 	// 아이템 사용시 효과
-	virtual void UseItem(std::weak_ptr<class CPlayer> pPlayer) = 0;
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) = 0;
 };
 
 //예시 체력 회복포션
@@ -67,16 +67,18 @@ public:
 
 	}
 
-	void UseItem(std::weak_ptr<class CPlayer> pPlayer) override
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer)
 	{
 		// 유효성 확인
 		std::shared_ptr<CPlayer> Player = pPlayer.lock();
 		if (!Player)
 		{
 			return;
-		}
+		}	
 
 		CGraphic::GetInstance()->AddLog("사용! 체력을 " + std::to_string(m_iHeal) + "hp 회복했습니다.");
-		Player->SetHealth(Player->GetHealth() + m_iHeal);
+
+		float NewHealth = Player->GetHealth() + m_iHeal;
+		Player->SetHealth(NewHealth);
 	}
 };
