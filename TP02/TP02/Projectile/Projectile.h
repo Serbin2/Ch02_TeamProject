@@ -10,7 +10,8 @@ public:
 
 	void Tick(double DeltaTime) override;
 	void Move() override;
-	void CheckCollision();
+
+	virtual void CheckCollision() override;
 
 	void SetOwner(std::weak_ptr<CCharacter> Owner) { m_pOwner = Owner; }
 

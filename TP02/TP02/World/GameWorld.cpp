@@ -5,6 +5,7 @@
 #include "../Boss/Boss.h"
 #include "../Character/Sniper/Sniper.h"
 #include "../Enemy/Slime.h"
+#include <cstdlib>
 
 CGameWorld::CGameWorld()
 {
@@ -47,8 +48,8 @@ void CGameWorld::Initialize()
 	m_iNumberOfMonsterSpawn = 3;	//	3마리씩 스폰합니다.
 
 	//std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
-	//std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-	std::shared_ptr<CActor> pPlayer = make_shared<CSniper>();
+	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	//std::shared_ptr<CActor> pPlayer = make_shared<CSniper>();
 	AddActor(pPlayer);
 	//AddActor(pBoss);
 
@@ -96,8 +97,6 @@ void CGameWorld::Tick(double deltaTime)
 {
 	//	몬스터 스폰 이벤트
 	MonsterSpawnEvent(deltaTime);
-
-
 }
 
 void CGameWorld::MonsterSpawnEvent(double deltaTime)
@@ -109,9 +108,38 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 	for (int i = 0; i < m_iNumberOfMonsterSpawn; i++)
 	{
 		//	몬스터 생성
-		shared_ptr<CActor> slime = make_shared<CSlime>();
+		shared_ptr<CActor> enemy = make_shared<CEnemy>(Pixel::triangle, TEXT_FOREGROUND_RED);
+		COORD spawnPos = { 0, 0 };
+
+		// 0: 위, 1: 아래, 2: 왼쪽, 3: 오른쪽
+		switch (rand() % 4)
+		{
+		case 0: // 위쪽 테두리 (Y는 0 고정, X는 무작위)
+			spawnPos.X = rand() % 30;
+			spawnPos.Y = 0;
+			break;
+
+		case 1: // 아래쪽 테두리 (Y는 29 고정, X는 무작위)
+			spawnPos.X = rand() % 30;
+			spawnPos.Y = 29;
+			break;
+
+		case 2: // 왼쪽 테두리 (X는 0 고정, Y는 무작위)
+			spawnPos.X = 0;
+			spawnPos.Y = rand() % 30;
+			break;
+
+		case 3: // 오른쪽 테두리 (X는 29 고정, Y는 무작위)
+			spawnPos.X = 29;
+			spawnPos.Y = rand() % 30;
+			break;
+		}
+
+		// 몬스터 생성 위치 설정
+		enemy->SetPosition(spawnPos);
+
 		//	몬스터 액터 풀에 넣기
-		AddActor(slime);
+		AddActor(enemy);
 	}
 
 	CGraphic::GetInstance()->AddLog("몬스터를 세마리 생성했습니다.");
