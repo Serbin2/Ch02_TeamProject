@@ -3,12 +3,9 @@
 #include <vector>
 #include <memory>
 
-class CEnemy;
-
 class CPlayer : public CCharacter
 {
 public:
-
 	CPlayer(int Shape, int Color);
 	virtual ~CPlayer() = default;
 
@@ -38,7 +35,6 @@ private:
 	double m_dItemInvincibleTime; // 아이템 무적시간
 	bool m_bIsInvincibleByItem; // 아이템에 의해 무적상태
 
-	
 public:
 	// 골드
 	int  GetGold() const { return m_iGold; }

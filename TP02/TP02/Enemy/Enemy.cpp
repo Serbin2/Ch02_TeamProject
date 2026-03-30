@@ -1,8 +1,4 @@
 #include "Enemy.h"
-#include "../Character/Player.h"
-#include "../World/GameWorld.h"
-#include "../Graphics/ConsoleGraphic.h"
-#include <cstdlib>
 
 CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -17,14 +13,13 @@ CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 1.0;
 	m_dAttackTimer = 0.0;
-	m_iExpReward = 50;
-	m_bIsDead = false;
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 }
 
 void CEnemy::Tick(double DeltaTime)
 {
-	if (!m_bIsValid) return;
+	if (!m_bIsValid)
+		return;
 
 	if (m_dMoveTimer > 0.0) m_dMoveTimer -= DeltaTime;
 	if (m_dInvincibleTimer > 0.0) m_dInvincibleTimer -= DeltaTime;
@@ -37,7 +32,6 @@ void CEnemy::Move()
 {
 	if (m_dMoveTimer > 0.0)
 		return;
-	int direction = rand() % 4;
 
 	auto pPlayer = CGameWorld::GetInstance()->GetPlayerActor();
 	if (pPlayer == nullptr)
@@ -61,7 +55,6 @@ void CEnemy::Move()
 	{
 		m_cPosition.X = nextX;
 		m_cPosition.Y = nextY;
-	
 	}
 
 	m_cMoveDirection = { 0, 0 };
@@ -102,19 +95,4 @@ void CEnemy::OnHit(float Damage)
 
 	if (m_fHealth <= 0.0f)
 		Die();
-}
-
-void CEnemy::Die()
-{
-	if (m_bIsDead) return;
-
-	m_fHealth = 0.0f;
-	m_bIsDead = true;
-	m_bIsValid = false;
-
-	CPlayer* player = CGameWorld::GetInstance()->GetPlayer();
-	if (player != nullptr)
-	{
-		player->AddExp(this);
-	}
 }
