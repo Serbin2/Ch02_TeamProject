@@ -1,12 +1,10 @@
 #pragma once
 #include "../Character/Character.h"
 
-class CPlayer;
-
 class CEnemy : public CCharacter
 {
 protected:
-	CPlayer* player = nullptr;
+	bool m_bIsDead;
 	int m_iExpReward;
 
 public:
@@ -18,8 +16,6 @@ public:
 	virtual void Attack(COORD Direction) override;
 	virtual void OnHit(float Damage) override;
 
-	virtual void Die();
-	virtual void DropReward();
-	virtual void SetPlayer(CPlayer* InPlayer);
-
+	void Die();
+	bool IsDead() const { return m_bIsDead; }
 };

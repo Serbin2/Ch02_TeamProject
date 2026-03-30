@@ -4,6 +4,8 @@
 #include "../Character/Actor.h"
 #include <unordered_map>
 
+class CPlayer;
+
 //	게임에 존재하는 액터들을 관리하는 매니저 클래스입니다.
 //	각 객체의 생성과 업데이트를 담당하도록 합니다.
 
@@ -12,7 +14,7 @@ class CGameWorld
 protected:
 	CGameWorld();
 	~CGameWorld();
-	
+
 public:
 
 	static CGameWorld* GetInstance();
@@ -24,7 +26,7 @@ public:
 	void Initialize();
 
 	//	업데이트
-	void Update(double daltaTime);	
+	void Update(double daltaTime);
 
 	void Render();
 
@@ -32,8 +34,9 @@ public:
 	//	이미 추가된 액터를 추가하려고 하면 실패합니다.
 	bool AddActor(shared_ptr<CActor> actor);
 
-	//	플레이어를 가져옵니다
+	//	플레이어 가져오기
 	shared_ptr<CActor> GetPlayerActor() { return m_pPlayer; };
+	CPlayer* GetPlayer() const;
 
 	//	위치에서 액터를 찾습니다.
 	shared_ptr<CActor> FindActorFromPosition(COORD pos);
@@ -85,4 +88,3 @@ private:
 	//	렌더 소팅용 컨테이너
 	unordered_map<shared_ptr<CActor>, int> m_aSort[3];
 };
-

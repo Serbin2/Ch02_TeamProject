@@ -1,5 +1,4 @@
 #include "Slime.h"
-#include "../Character/Player.h"
 #include <cstdlib>
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
@@ -50,12 +49,11 @@ void CSlime::Move()
 	// 테스트용: 움직이지 않음
 }
 
-void CSlime::OnHit(float damage)
+void CSlime::OnHit(float Damage)
 {
-	CEnemy::OnHit(damage);
-	if (!m_bIsValid) return;
+    CEnemy::OnHit(Damage);
+    if (m_bIsDead) return;
 
-	m_pShape = m_iShapeHitted;
-	m_dAnimationTime = 1.0;
+    m_pShape = m_iShapeHitted;
+    m_dAnimationTime = 1.0;
 }
-

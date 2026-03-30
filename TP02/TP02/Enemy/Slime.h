@@ -11,8 +11,7 @@ public:
 
 	virtual void Tick(double DeltaTime) override;
 	virtual void Move() override;
-	virtual void OnHit(float damage)	override;
-
+	virtual void OnHit(float Damage)	override;
 
 protected:
 

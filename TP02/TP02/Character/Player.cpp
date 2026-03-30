@@ -3,8 +3,7 @@
 #include "../Projectile/Projectile.h"
 #include "../Graphics/Interface.h"
 #include "../Graphics/ConsoleGraphic.h"
-
-
+#include "../Enemy/Enemy.h"
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -16,12 +15,15 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 0.5;
 	m_dAttackTimer = 0.0;
-	m_iLevel = 1;
-	m_iExp = 0; // 레벨과 exp 는 int
+	m_dLevel = 1.0;
+	m_dExp = 0.0;
 	m_eTag = ETag::player | ETag::character | ETag::actor;
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
+
+	CInterface::GetInstance()->AddUI(3, "Lv : ");
+	CInterface::GetInstance()->SetValue(3, (float)m_dLevel);
 }
 
 void CPlayer::Tick(double DeltaTime)
@@ -71,7 +73,7 @@ void CPlayer::Attack(COORD Direction)
 	pProjectile->SetSpeed(5.0f);
 	pProjectile->SetMoveDirection(Direction);
 	CGameWorld::GetInstance()->AddActor(pProjectile);
-	
+
 	m_dAttackTimer = m_dAttackCooldown;
 }
 
@@ -86,7 +88,7 @@ void CPlayer::OnHit(float Damage)
 void CPlayer::Input()
 {
 	CInput* pInput = CInput::GetInstance();
-	
+
 	// 콘솔 그래픽은 4사분면((0, 0)의 위치가 좌상단)이므로 y축이 반대로 동작해야합니다.
 	// Key Code: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 
@@ -105,24 +107,24 @@ void CPlayer::Input()
 
 //exp & levels
 
-void CPlayer::AddExp(int exp)
+void CPlayer::AddExp(CEnemy* Enemy)
 {
-	if (exp <= 0) return;
+	if (Enemy == nullptr) return;
+	if (!Enemy->IsDead()) return;
 
-	m_iExp += exp;
-
-	//level up
-	while (m_iExp >= m_iLevel * 20)
+	m_dExp += 20.0;
+	while (m_dExp >= m_dLevel * 20)
 	{
-		m_iExp -= m_iLevel * 20;
-		m_iLevel++;
+		m_dExp -= m_dLevel * 20;
+		m_dLevel++;
 
 		m_fHealth += 20.0f;
 		m_fAttackPower += 5.0f;
 		m_fDefense += 2.0f;
 	}
-	
-
+	CInterface::GetInstance()->SetValue(3, (float)m_dLevel);
 }
+
+
 
 

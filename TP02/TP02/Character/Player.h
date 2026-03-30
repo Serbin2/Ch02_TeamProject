@@ -27,12 +27,6 @@ private:
 	int m_iGold;
 	std::vector<std::shared_ptr<CItem>> m_Inventory;
 
-private: // 레벨 exp
-	int m_iLevel;
-	int m_iExp;
-
-	
-
 public:
 	// 골드
 	int  GetGold() const { return m_iGold; }
@@ -55,6 +49,10 @@ public:
 	}
 
 	//레벨 EXP
-	void AddExp(int exp); // level 과 exp 는 int
+	void AddExp(CEnemy* Enemy);
+
+private: // 레벨 exp
+	double m_dLevel;
+	double m_dExp;
 
 };
