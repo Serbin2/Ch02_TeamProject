@@ -22,6 +22,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iExp = 0;
 	m_iGold = 500;
 	m_eTag = ETag::player | ETag::character | ETag::actor;
+	m_sName = "[아이작]";
 
 	// PJH - 인벤토리 추가
 	m_pInventory = std::make_shared<CInventory>();

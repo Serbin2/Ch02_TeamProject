@@ -18,6 +18,7 @@ enum Pixel
 	dust,
 	star,
 	Sniper,
+	Skeleton,
 
 
 	PixelMax,
