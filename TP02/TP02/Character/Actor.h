@@ -58,24 +58,28 @@ public:
 		m_eTag = m_eTag & ~tag;
 	}
 
-	//	충돌  처리 관련
+	// 충돌 처리 관련
+	virtual void OnHit(float Damage) { return; }
+	virtual void CheckCollision() { return; }
 	virtual bool ActorCustomCollisionTest(COORD pos) { return false; };
 
 	//	----------------------------	//
 
 protected:
-	int m_pShape;	        // 액터의 픽셀 모양
-	int m_tColor;           // 액터의 텍스트 색상
+	int m_pShape;					// 액터의 픽셀 모양
+	int m_tColor;					// 액터의 텍스트 색상
 
-	COORD m_cPosition;		// 액터의 현재 위치
-	COORD m_cMoveDirection; // 액터의 이동 방향
-	float m_fSpeed;			// 액터의 이동 속도(m/s)
-	double m_dMoveTimer;	// 액터의 이동 타이머
+	COORD m_cPosition;				// 액터의 현재 위치
+	COORD m_cMoveDirection;			// 액터의 이동 방향
+	float m_fSpeed;					// 액터의 이동 속도(m/s)
+	double m_dMoveTimer;			// 다음 이동까지 남은 시간
 
+	double m_fInvincibleDuration;   // 피격 시 부여되는 무적 시간
+	double m_dInvincibleTimer;      // 현재 남은 무적 시간
 
-	//	-----	작업자 : 나지호 -----	//
-	string m_sName;			//	이름
-	int m_eTag;				//	태그
-	bool m_bIsValid = true;	//	유효한지
-	//	-----------------------------	//
+	// ------ 작업자 : 나지호 ------  //
+	string m_sName;					//	이름
+	int m_eTag;						//	태그
+	bool m_bIsValid = true;			//	유효한지
+	// ---------------------------- //
 };

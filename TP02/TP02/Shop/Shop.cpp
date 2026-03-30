@@ -3,6 +3,7 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include "../Inventory/Inventory.h"
 
 // 콘솔 가운데 정렬용 계산
 static std::string GetPad(int contentWidth)
@@ -38,9 +39,9 @@ void CShop::InitShopItems()
 {
 	// 상점 판매 아이템 목록
 	// 아이템 추가는 여기에 작성 가능
-	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (소)", "체력을 30 hp 회복한다.", 50, 1, 30));
-	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (중)", "체력을 80 hp 회복한다.", 120, 1, 80));
-	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (대)", "체력을 200 hp 회복한다.", 300, 1, 200));
+	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (소)", "체력을 30 hp 회복한다.", 50, 1, 30));
+	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (중)", "체력을 80 hp 회복한다.", 120, 1, 80));
+	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (대)", "체력을 200 hp 회복한다.", 300, 1, 200));
 }
 
 //상점 입장 : 플레이어가 상점에 들어왔을 때 무한 루프를 돌며 메뉴
@@ -83,10 +84,10 @@ void CShop::ShowShopUI(CPlayer* pPlayer) // 구매 메뉴 어떤 물건을 살�
 	{
 		int sellPrice = (int)(m_ShopItems[i]->GetPrice() * 0.6f);
 		std::cout << pad << "  " << (i + 1) << ". "
-			<< m_ShopItems[i]->sGetName()
+			<< m_ShopItems[i]->GetName()
 			<< "  구매: " << m_ShopItems[i]->GetPrice() << "G"
 			<< "  판매: " << sellPrice << "G\n";
-		std::cout << pad << "      " << m_ShopItems[i]->sGetDesc() << "\n";
+		std::cout << pad << "      " << m_ShopItems[i]->GetDesc() << "\n";
 	}
 	std::cout << pad << "================================\n";
 }
@@ -103,6 +104,7 @@ void CShop::BuyMenu(CPlayer* pPlayer)
 	if (index == 0) return;
 	BuyItem(pPlayer, index - 1);
 }
+
 // 실제 판매 처리: 플레이어 가방에서 빼고 돈을 뻄
 void CShop::SellMenu(CPlayer* pPlayer)
 {
@@ -110,7 +112,7 @@ void CShop::SellMenu(CPlayer* pPlayer)
 	int contentWidth = 32;
 	std::string pad = GetPad(contentWidth);
 
-	int lineCount = 5 + (int)pPlayer->GetInventory().size() + 3;
+	int lineCount = 5 + (int)pPlayer->GetInventory()->GetSize() + 3;
 	PrintTopPadding(lineCount);
 
 	std::cout << pad << "================================\n";
@@ -119,8 +121,8 @@ void CShop::SellMenu(CPlayer* pPlayer)
 	std::cout << pad << "  보유 골드 : " << pPlayer->GetGold() << " G\n";
 	std::cout << pad << "================================\n";
 
-	auto& inv = pPlayer->GetInventory();
-	if (inv.empty())
+	auto inv = pPlayer->GetInventory();
+	if (inv->IsEmpty())
 	{
 		std::cout << pad << "  보유 중인 아이템이 없습니다.\n";
 		std::cout << pad << "================================\n";
@@ -128,12 +130,20 @@ void CShop::SellMenu(CPlayer* pPlayer)
 		return;
 	}
 
-	for (int i = 0; i < (int)inv.size(); i++)
+	for (int i = 0; i < (int)inv->GetSize(); i++)
 	{
-		int sellPrice = (int)(inv[i]->GetPrice() * 0.6f);
-		std::cout << pad << "  " << (i + 1) << ". "
-			<< inv[i]->sGetName()
-			<< "  판매가: " << sellPrice << "G\n";
+		if (inv->GetItem(i))
+		{
+			int sellPrice = (int)(inv->GetItem(i)->GetPrice() * 0.6f);
+
+			std::string Msg = pad + "  " + std::to_string(i + 1) + ". "
+				+ inv->GetItem(i)->GetName()
+				+ "  판매가: " + std::to_string(sellPrice) + "G\n";
+
+			std::cout << pad << "  " << (i + 1) << ". "
+				<< inv->GetItem(i)->GetName()
+				<< "  판매가: " << sellPrice << "G\n";
+		}
 	}
 	std::cout << pad << "================================\n";
 	std::cout << "\n" << pad << "판매할 아이템 번호 입력 (0: 취소) : ";
@@ -165,32 +175,39 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 	}
 
 	// 구매할 때마다 새 포션 복사본 생성
-	//Potion* original = dynamic_cast<Potion*>(m_ShopItems[index].get());
-	//if (original)
-	//{
-	//	auto newPotion = std::make_shared<Potion>(*original); // 새 포션 생성
-	//	pPlayer->AddItem(newPotion);// 플레이어 가방에 넣음
-	//}
+	Potion* original = dynamic_cast<Potion*>(m_ShopItems[index].get());
+	if (original)
+	{
+		auto newPotion = std::make_shared<Potion>(*original); // 새 포션 생성
+		pPlayer->GetInventory()->AddItem(newPotion, 1);// 플레이어 가방에 넣음
+	}
 
-	std::cout << pad << "[" << m_ShopItems[index]->sGetName() << "] 을(를) 구매했습니다!\n";
+
+	std::cout << pad << "[" << m_ShopItems[index]->GetName() << "] 을(를) 구매했습니다!\n";
 	std::cin.get();
 }
 
 void CShop::SellItem(CPlayer* pPlayer, int index)
 {
 	std::string pad = GetPad(32);
-	auto& inv = pPlayer->GetInventory();
-	if (index < 0 || index >= (int)inv.size())
+	auto inv = pPlayer->GetInventory();
+	
+	if (!inv->GetItem(index))
+	{
+		return;
+	}
+	
+	if (index < 0 || index >= (int)inv->GetSize())
 	{
 		std::cout << pad << "잘못된 번호입니다.\n";
 		std::cin.get();
 		return;
 	}
 
-	int sellPrice = (int)(inv[index]->GetPrice() * 0.6f); // 판매가는 원래 가격의 60%
-	std::string name = inv[index]->sGetName();
+	int sellPrice = (int)(inv->GetItem(index)->GetPrice() * 0.6f); // 판매가는 원래 가격의 60%
+	std::string name = inv->GetItem(index)->GetName();
 
-	pPlayer->RemoveItem(index);// 플레이어 가방에서 해당 아이템 삭제
+	inv->RemoveItem(index, 1);// 플레이어 가방에서 해당 아이템 삭제
 	pPlayer->AddGold(sellPrice);// 깎인 만큼 돈을 추가
 
 	std::cout << pad << "[" << name << "] 을(를) " << sellPrice << "G에 판매했습니다!\n";

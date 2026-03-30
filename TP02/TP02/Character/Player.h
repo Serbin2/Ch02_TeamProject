@@ -1,6 +1,5 @@
 #pragma once
 #include "Character.h"
-#include "../Item/Item.h"
 #include <vector>
 #include <memory>
 
@@ -15,15 +14,21 @@ public:
 	virtual void Attack(COORD Direction) override;
 	virtual void OnHit(float Damage) override;
 
+public:
+	std::shared_ptr<class CInventory> GetInventory() const;
+
 private:
 	void Input();
 
 private:
+	// PJH - 인벤토리 추가
+	std::shared_ptr<class CInventory> m_pInventory;
+
 	int m_iLevel;
 	int m_iExp;
-	// 골드 & 인벤토리 (상점 시스템용)
-	int m_iGold;
-	std::vector<std::shared_ptr<CItem>> m_Inventory;
+	// 골드 (상점 시스템용)
+	int m_iGold = 500;
+
 
 public:
 	// 골드
@@ -33,16 +38,6 @@ public:
 	{
 		if (m_iGold < amount) return false;
 		m_iGold -= amount;
-		return true;
-	}
-
-	// 인벤토리
-	void AddItem(std::shared_ptr<CItem> item) { m_Inventory.push_back(item); }
-	std::vector<std::shared_ptr<CItem>>& GetInventory() { return m_Inventory; }
-	bool RemoveItem(int index)
-	{
-		if (index < 0 || index >= (int)m_Inventory.size()) return false;
-		m_Inventory.erase(m_Inventory.begin() + index);
 		return true;
 	}
 };
