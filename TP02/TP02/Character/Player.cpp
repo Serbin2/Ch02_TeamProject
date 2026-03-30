@@ -12,6 +12,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_fInvincibleDuration = 1.0;
 	m_dInvincibleTimer = 0.0;
 	m_fHealth = 100.0f;
+	m_fMaxHealth = 100;
 	m_fAttackPower = 15.0f;
 	m_fDefense = 5.0f;
 	m_iAttackRange = 1;
@@ -38,6 +39,16 @@ void CPlayer::Tick(double DeltaTime)
 	if (m_dMoveTimer > 0.0) m_dMoveTimer -= DeltaTime;
 	if (m_dAttackTimer > 0.0) m_dAttackTimer -= DeltaTime;
 	if (m_dInvincibleTimer > 0.0) m_dInvincibleTimer -= DeltaTime;
+
+	if (m_bIsInvincibleByItem)
+	{
+		m_dItemInvincibleTime -= DeltaTime;
+		if (m_dItemInvincibleTime <= 0)
+		{
+			m_dItemInvincibleTime = 0;
+			m_bIsInvincibleByItem = false;
+		}
+	}
 
 	Input();
 	Move();
@@ -83,11 +94,21 @@ void CPlayer::Attack(COORD Direction)
 
 void CPlayer::OnHit(float Damage)
 {
+	if (m_bIsInvincibleByItem)
+		return;
+
 	if (m_dInvincibleTimer > 0.0)
 		return;
 
 	float finalDamage = Damage - m_fDefense;
-	m_fHealth -= finalDamage > 0 ? finalDamage : 0; // 방어력이 공격력보다 높으면 피해는 0으로 처리
+
+	// PJH -> 체력을 수동으로 변경시 음수값으로 가는 오류 발생 -> SetHealth를 사용하도록 변경함
+	// m_fHealth -= finalDamage > 0 ? finalDamage : 0; // 방어력이 공격력보다 높으면 피해는 0으로 처리
+	if (finalDamage > 0.f)
+	{
+		SetHealth(GetHealth() - finalDamage);
+	}
+	
 	m_dInvincibleTimer = m_fInvincibleDuration;
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
 }
@@ -96,6 +117,13 @@ std::shared_ptr<class CInventory> CPlayer::GetInventory() const
 {
 	return m_pInventory;
 }
+
+void CPlayer::SetInvincibleStateByItem(double InvincibleTime)
+{
+	m_bIsInvincibleByItem = true;
+	m_dItemInvincibleTime = InvincibleTime;
+}
+
 
 void CPlayer::Input()
 {

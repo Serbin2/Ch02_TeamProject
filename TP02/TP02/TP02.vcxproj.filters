@@ -27,6 +27,7 @@
     <ClCompile Include="Shop\Shop.cpp" />
     <ClCompile Include="FrontMenu\MainMenu.cpp" />
     <ClCompile Include="Item\Bomb.cpp" />
+    <ClCompile Include="Character\Character.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />

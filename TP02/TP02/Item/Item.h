@@ -80,10 +80,10 @@ public:
 };
 
 // 무적으로 만들어주는 포션 
-class CInvincible : public CItem
+class CInvinciblePotion : public CItem
 {
 public:
-	CInvincible();
+	CInvinciblePotion();
 
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
 

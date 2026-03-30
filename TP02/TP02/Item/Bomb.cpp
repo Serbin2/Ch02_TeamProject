@@ -96,7 +96,7 @@ void CBomb::Burst()
 
 CBombItem::CBombItem()
 {
-	m_sName = "Bomb";
+	m_sName = "폭탄";
 	m_sDesc = "폭탄기준 3의 추가영역에 데미지";
 	m_iPrice = 400;
 	m_iMaxAmount = 3;
