@@ -7,6 +7,9 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
 	m_cPosition = { 15, 15 };
 	m_fSpeed = 3.0f;
+	m_dMoveTimer = 0.0;
+	m_fInvincibleDuration = 1.0;
+	m_dInvincibleTimer = 0.0;
 	m_fHealth = 100.0f;
 	m_fAttackPower = 15.0f;
 	m_fDefense = 5.0f;
@@ -19,6 +22,8 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
+	CInterface::GetInstance()->AddUI(4, "x ");
+	CInterface::GetInstance()->AddUI(5, "y ");
 }
 
 void CPlayer::Tick(double DeltaTime)
@@ -28,32 +33,32 @@ void CPlayer::Tick(double DeltaTime)
 
 	if (m_dMoveTimer > 0.0) m_dMoveTimer -= DeltaTime;
 	if (m_dAttackTimer > 0.0) m_dAttackTimer -= DeltaTime;
+	if (m_dInvincibleTimer > 0.0) m_dInvincibleTimer -= DeltaTime;
 
 	Input();
-
-	if ((m_cMoveDirection.X != 0 || m_cMoveDirection.Y != 0) && m_dMoveTimer <= 0.0)
-	{
-		Move();
-		m_dMoveTimer = 1.0 / m_fSpeed;
-	}
-	else
-	{
-		m_cMoveDirection = { 0, 0 };
-	}
+	Move();
 }
 
 void CPlayer::Move()
 {
+	if ((m_cMoveDirection.X == 0 && m_cMoveDirection.Y == 0) || m_dMoveTimer > 0.0)
+		return;
+
 	int nextX = m_cPosition.X + m_cMoveDirection.X;
 	int nextY = m_cPosition.Y + m_cMoveDirection.Y;
 
+	// 화면 경계 검사 후 좌표 갱신
 	if (nextX >= 0 && nextX < 30 && nextY >= 0 && nextY < 30)
 	{
 		m_cPosition.X = nextX;
 		m_cPosition.Y = nextY;
+
+		CInterface::GetInstance()->SetValue(4, m_cPosition.X);
+		CInterface::GetInstance()->SetValue(5, m_cPosition.Y);
 	}
 
 	m_cMoveDirection = { 0, 0 }; // 이동 후 방향 초기화
+	m_dMoveTimer = 1.0 / m_fSpeed;
 }
 
 void CPlayer::Attack(COORD Direction)
@@ -74,10 +79,13 @@ void CPlayer::Attack(COORD Direction)
 
 void CPlayer::OnHit(float Damage)
 {
-	m_fHealth -= Damage;
-	CInterface::GetInstance()->SetValue(2, m_fHealth);
+	if (m_dInvincibleTimer > 0.0)
+		return;
 
-	// TODO: 피해 계산, 체력 감소, 사망 처리, 피격 효과 등 구현
+	float finalDamage = Damage - m_fDefense;
+	m_fHealth -= finalDamage > 0 ? finalDamage : 0; // 방어력이 공격력보다 높으면 피해는 0으로 처리
+	m_dInvincibleTimer = m_fInvincibleDuration;
+	CInterface::GetInstance()->SetValue(2, m_fHealth);
 }
 
 void CPlayer::Input()
@@ -88,13 +96,15 @@ void CPlayer::Input()
 	// Key Code: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 
 	// Move input
-	if (pInput->IsKeyPressed('W')) m_cMoveDirection = { 0, -1 };
-	if (pInput->IsKeyPressed('S')) m_cMoveDirection = { 0,  1 };
-	if (pInput->IsKeyPressed('A')) m_cMoveDirection = { -1, 0 };
-	if (pInput->IsKeyPressed('D')) m_cMoveDirection = { 1,  0 };
+	m_cMoveDirection = { 0, 0 };
 
-	// Attack input
-	if (pInput->IsKeyDown(VK_UP))         Attack({ 0, -1 }); // [↑]
+	if (pInput->IsKeyPressed('W')) m_cMoveDirection.Y -= 1;
+	if (pInput->IsKeyPressed('S')) m_cMoveDirection.Y += 1;
+	if (pInput->IsKeyPressed('A')) m_cMoveDirection.X -= 1;
+	if (pInput->IsKeyPressed('D')) m_cMoveDirection.X += 1;
+
+	// Attack Input
+	if (pInput->IsKeyDown(VK_UP))		  Attack({ 0, -1 }); // [↑]
 	else if (pInput->IsKeyDown(VK_DOWN))  Attack({ 0,  1 }); // [↓]
 	else if (pInput->IsKeyDown(VK_LEFT))  Attack({ -1, 0 }); // [←]
 	else if (pInput->IsKeyDown(VK_RIGHT)) Attack({ 1,  0 }); // [→]

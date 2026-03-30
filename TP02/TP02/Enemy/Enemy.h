@@ -10,6 +10,6 @@ public:
 
 	virtual void Tick(double DeltaTime) override;
 	virtual void Move() override;
-	virtual void Attack(COORD Direction) override;
+	virtual void CheckCollision() override;
 	virtual void OnHit(float Damage) override;
 };
