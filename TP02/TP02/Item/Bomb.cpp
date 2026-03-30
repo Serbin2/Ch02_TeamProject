@@ -9,7 +9,6 @@ CBomb::CBomb(int Shape, int Color, const COORD& Pos)
 
 	m_cPosition =  Pos;
 
-
 	for (int i = 1; i <= 3; ++i)
 	{
 		std::pair<COORD, COORD> Adge;
@@ -22,9 +21,10 @@ CBomb::CBomb(int Shape, int Color, const COORD& Pos)
 
 	shared_ptr<CEffect> FX = make_shared<CEffect>();
 	vector<pair<int, int >> material;
-	material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW | TEXT_BACKGROUND_RED_INT));
-	material.push_back(make_pair(Pixel::square, TEXT_FOREGROUND_RED_INT | TEXT_BACKGROUND_RED));
+	//material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW | TEXT_BACKGROUND_RED_INT));
 	material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW));
+	material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW));
+	material.push_back(make_pair(Pixel::square, TEXT_FOREGROUND_RED_INT | TEXT_BACKGROUND_RED));
 	//material.push_back(make_pair(Pixel::dust, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
 	vector<double> duration;
 	duration.push_back(1.0);
@@ -94,7 +94,6 @@ void CBomb::Burst()
 		CheckPoint.insert(CheckPoint.end(), Outline.begin(), Outline.end());
 	}
 	CheckPoint.push_back(GetPosition());
-	
 
 	for (const auto& Point : CheckPoint)
 	{
@@ -125,7 +124,7 @@ CBombItem::CBombItem()
 	m_sName = "폭탄";
 	m_sDesc = "폭탄기준 3의 추가영역에 데미지";
 	m_iPrice = 400;
-	m_iMaxAmount = INT_MAX;
+	m_iMaxAmount = 10;
 }
 
 void CBombItem::UseItem(std::weak_ptr<CPlayer> pPlayer)

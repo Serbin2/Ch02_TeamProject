@@ -73,9 +73,13 @@ bool CSound::LoadWave(fs::path fullPath)
 	return true;
 }
 
-void CSound::Play(bool loop)
+void CSound::Play(bool loop, bool resume)
 {
-	m_SoundBuffer->SetCurrentPosition(0);
+	// resume이 false일 때만 처음(0)으로 되돌립니다.
+	if (!resume)
+	{
+		m_SoundBuffer->SetCurrentPosition(0);
+	}
 
 	if (loop)
 		m_SoundBuffer->Play(0, 0, DSBPLAY_LOOPING);
