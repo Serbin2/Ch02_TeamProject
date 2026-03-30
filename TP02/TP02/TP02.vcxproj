@@ -143,6 +143,8 @@
     <ClCompile Include="Manager\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
     <ClCompile Include="Projectile\BossProjectile.cpp" />
+    <ClCompile Include="Projectile\BouncingProjectile.cpp" />
+    <ClCompile Include="Projectile\TripleProjectile.cpp" />
     <ClCompile Include="Resource\ResourceBase.cpp" />
     <ClCompile Include="Resource\Sound\Sound.cpp" />
     <ClCompile Include="Input\Input.cpp" />
@@ -179,7 +181,9 @@
     <ClInclude Include="Manager\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />
     <ClInclude Include="Projectile\BossProjectile.h" />
+    <ClInclude Include="Projectile\BouncingProjectile.h" />
     <ClInclude Include="Projectile\Projectile.h" />
+    <ClInclude Include="Projectile\TripleProjectile.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\ResourceBase.h" />
     <ClInclude Include="Resource\Sound\Sound.h" />

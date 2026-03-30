@@ -5,14 +5,17 @@
 class CProjectile : public CActor
 {
 public:
+	CProjectile() : CProjectile(Pixel::circle, TEXT_FOREGROUND_YELLOW) { }
 	CProjectile(int Shape, int Color);
 	~CProjectile() = default;
 
-	void Tick(double DeltaTime) override;
-	void Move() override;
+	virtual std::shared_ptr<CProjectile> Clone() { return std::make_shared<CProjectile>(*this); }
 
+	virtual void Tick(double DeltaTime) override;
+	virtual void Move() override;
 	virtual void CheckCollision() override;
 
+	std::weak_ptr<CCharacter> GetOwner() const { return m_pOwner; }
 	void SetOwner(std::weak_ptr<CCharacter> Owner) { m_pOwner = Owner; }
 
 protected:

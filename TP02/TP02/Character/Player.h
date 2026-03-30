@@ -1,6 +1,6 @@
 #pragma once
 #include "Character.h"
-#include <vector>
+#include "../Projectile/Projectile.h"
 #include <memory>
 
 class CEnemy;
@@ -17,8 +17,9 @@ public:
 	virtual void OnHit(float Damage) override;
 
 public:
-	std::shared_ptr<class CInventory> GetInventory() const;
-
+	std::shared_ptr<class CInventory> GetInventory() const { return m_pInventory; }
+	std::shared_ptr<CProjectile> GetProjectile() const { return m_pProjectile; }
+	void SetProjectile(const std::shared_ptr<CProjectile>& NewProjectile) { m_pProjectile = NewProjectile; }
 	void SetInvincibleStateByItem(double InvincibleTime);
 
 private:
@@ -27,6 +28,7 @@ private:
 private:
 	// PJH - 인벤토리 추가
 	std::shared_ptr<class CInventory> m_pInventory;
+	std::shared_ptr<CProjectile> m_pProjectile;
 
 	int m_iLevel;
 	int m_iExp;
