@@ -38,9 +38,9 @@ void CShop::InitShopItems()
 {
 	// 상점 판매 아이템 목록
 	// 아이템 추가는 여기에 작성 가능
-	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (소)", "체력을 30 hp 회복한다.", 50, 1, 30));
-	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (중)", "체력을 80 hp 회복한다.", 120, 1, 80));
-	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (대)", "체력을 200 hp 회복한다.", 300, 1, 200));
+	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (소)", "체력을 30 hp 회복한다.", 50, 1, 30));
+	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (중)", "체력을 80 hp 회복한다.", 120, 1, 80));
+	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (대)", "체력을 200 hp 회복한다.", 300, 1, 200));
 }
 
 //상점 입장 : 플레이어가 상점에 들어왔을 때 무한 루프를 돌며 메뉴
@@ -165,12 +165,12 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 	}
 
 	// 구매할 때마다 새 포션 복사본 생성
-	Potion* original = dynamic_cast<Potion*>(m_ShopItems[index].get());
-	if (original)
-	{
-		auto newPotion = std::make_shared<Potion>(*original); // 새 포션 생성
-		pPlayer->AddItem(newPotion);// 플레이어 가방에 넣음
-	}
+	//Potion* original = dynamic_cast<Potion*>(m_ShopItems[index].get());
+	//if (original)
+	//{
+	//	auto newPotion = std::make_shared<Potion>(*original); // 새 포션 생성
+	//	pPlayer->AddItem(newPotion);// 플레이어 가방에 넣음
+	//}
 
 	std::cout << pad << "[" << m_ShopItems[index]->sGetName() << "] 을(를) 구매했습니다!\n";
 	std::cin.get();

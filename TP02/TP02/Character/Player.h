@@ -23,7 +23,7 @@ private:
 	int m_iExp;
 	// 골드 & 인벤토리 (상점 시스템용)
 	int m_iGold;
-	std::vector<std::shared_ptr<cItem>> m_Inventory;
+	std::vector<std::shared_ptr<CItem>> m_Inventory;
 
 public:
 	// 골드
@@ -37,8 +37,8 @@ public:
 	}
 
 	// 인벤토리
-	void AddItem(std::shared_ptr<cItem> item) { m_Inventory.push_back(item); }
-	std::vector<std::shared_ptr<cItem>>& GetInventory() { return m_Inventory; }
+	void AddItem(std::shared_ptr<CItem> item) { m_Inventory.push_back(item); }
+	std::vector<std::shared_ptr<CItem>>& GetInventory() { return m_Inventory; }
 	bool RemoveItem(int index)
 	{
 		if (index < 0 || index >= (int)m_Inventory.size()) return false;
