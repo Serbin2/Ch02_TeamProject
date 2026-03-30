@@ -1,8 +1,4 @@
 #include "Enemy.h"
-#include "../Character/Player.h"
-#include "../World/GameWorld.h"
-#include "../Graphics/ConsoleGraphic.h"
-#include <cstdlib>
 
 CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -17,14 +13,13 @@ CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 1.0;
 	m_dAttackTimer = 0.0;
-	m_iExpReward = 50;
-	m_bIsDead = false;
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 }
 
 void CEnemy::Tick(double DeltaTime)
 {
-	if (!m_bIsValid) return;
+	if (!m_bIsValid)
+		return;
 
 	if (m_dMoveTimer > 0.0) m_dMoveTimer -= DeltaTime;
 	if (m_dInvincibleTimer > 0.0) m_dInvincibleTimer -= DeltaTime;
@@ -37,7 +32,6 @@ void CEnemy::Move()
 {
 	if (m_dMoveTimer > 0.0)
 		return;
-	int direction = rand() % 4;
 
 	auto pPlayer = CGameWorld::GetInstance()->GetPlayerActor();
 	if (pPlayer == nullptr)
@@ -61,10 +55,6 @@ void CEnemy::Move()
 	{
 		m_cPosition.X = nextX;
 		m_cPosition.Y = nextY;
-	case 0: m_cMoveDirection = { 0, -1 }; break;
-	case 1: m_cMoveDirection = { 0,  1 }; break;
-	case 2: m_cMoveDirection = { -1, 0 }; break;
-	case 3: m_cMoveDirection = { 1,  0 }; break;
 	}
 
 	m_cMoveDirection = { 0, 0 };
@@ -95,29 +85,5 @@ void CEnemy::OnHit(float Damage)
 	{
 		m_bIsValid = false;
 		CGraphic::GetInstance()->AddLog("적이 처치되었습니다.");
-	}
-	if (!m_bIsValid || m_bIsDead) return;
-
-	float finalDamage = Damage - m_fDefense;
-	if (finalDamage < 1.0f) finalDamage = 1.0f;
-
-	m_fHealth -= finalDamage;
-
-	if (m_fHealth <= 0.0f)
-		Die();
-}
-
-void CEnemy::Die()
-{
-	if (m_bIsDead) return;
-
-	m_fHealth = 0.0f;
-	m_bIsDead = true;
-	m_bIsValid = false;
-
-	CPlayer* player = CGameWorld::GetInstance()->GetPlayer();
-	if (player != nullptr)
-	{
-		player->AddExp(this);
 	}
 }

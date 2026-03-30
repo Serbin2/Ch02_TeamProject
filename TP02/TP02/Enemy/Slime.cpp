@@ -1,33 +1,46 @@
 #include "Slime.h"
-#include <cstdlib>
+
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
+	//	무작위 위치에 생성합니다.
 	m_cPosition.X = (rand() % 28) + 1;
 	m_cPosition.Y = (rand() % 28) + 1;
 
-	m_dAnimationTime = (float)rand() / RAND_MAX;
+	//	애니메이션 세팅입니다.
+	m_dAnimationTime = (float)rand() / RAND_MAX;	//	0 ~ 1 사이의 실수 생성
 	m_iShapeA = Pixel::circle;
 	m_iShapeB = Pixel::horizontalLine;
 	m_iShapeHitted = Pixel::star;
 	m_tColor = TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT;
 	m_bShape = true;
 
+	//	기본 정보를 설정합니다.
 	m_sName = "슬라임";
 	m_pShape = m_iShapeA;
 }
 
+
 CSlime::~CSlime()
 {
+
 }
 
 void CSlime::Tick(double DeltaTime)
 {
+	//	기본 처리를 합니다.
 	CEnemy::Tick(DeltaTime);
-	if (!m_bIsValid) return;
+	if (!m_bIsValid)	return;
 
+	if (m_fHealth < 1)
+	{	//	체력이 없으면 삭제
+		m_bIsValid = false;
+		return;
+	}
+
+	//	애니메이션 처리입니다
 	m_dAnimationTime -= DeltaTime;
-	if (m_dAnimationTime > 0.0) return;
+	if (m_dAnimationTime > 0)	return;
 
 	if (m_bShape)
 	{
@@ -42,22 +55,23 @@ void CSlime::Tick(double DeltaTime)
 
 	m_dAnimationTime = 1.0;
 
-<<<<<<< HEAD
 	CheckCollision();
-=======
->>>>>>> PDH02
 }
 
 void CSlime::Move()
 {
-	// 테스트용: 움직이지 않음
+	//	테스트를 위해 움직이지 않음
 }
 
-void CSlime::OnHit(float Damage)
-{
-    CEnemy::OnHit(Damage);
-    if (m_bIsDead) return;
+void CSlime::OnHit(float damage)
+{	
+	//	기본 처리를 합니다.
+	CEnemy::OnHit(damage);
 
-    m_pShape = m_iShapeHitted;
-    m_dAnimationTime = 1.0;
+	//	피격 애니메이션 처리입니다.
+	m_pShape = m_iShapeHitted;
+	m_dAnimationTime = 1.0;	
+
+	//	체력피해를 줍니다 ( CEnemy에 구현되면 삭제 )
+	m_fHealth -= damage;
 }
