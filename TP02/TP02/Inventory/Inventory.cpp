@@ -19,7 +19,7 @@ CInventory::CInventory()
 	//UpdateUI();
 
 #ifdef _DEBUG
-		AddItem(std::make_shared<Potion>(), 3);
+	AddItem(std::make_shared<Potion>(), 3);
 #endif
 }
 
@@ -78,7 +78,7 @@ void CInventory::UseItem(int iItemIdx, std::weak_ptr<class CPlayer> pPlayer)
 	int iSize = static_cast<int>(m_vSlots.size());
 
 	// 잘못된 인덱스 접근
-	if (iItemIdx < 0 ||  iSize <= iItemIdx)
+	if (iItemIdx < 0 || iSize <= iItemIdx)
 	{
 		return;
 	}
