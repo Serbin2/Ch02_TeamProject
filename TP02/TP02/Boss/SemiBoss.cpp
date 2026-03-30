@@ -148,7 +148,7 @@ void CSemiBoss::VerticalLaser()
 	for (int i = 0; i < 30; i++)
 	{
 		if (m_iAttackCount % 2 == i % 2)	continue;
-		auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_FOREGROUND_YELLOW);
+		auto pProjectile = std::make_shared<CProjectile>(Pixel::verticalLine, TEXT_FOREGROUND_RED);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(COORD(i,3));
@@ -171,7 +171,7 @@ void CSemiBoss::Gatling()
 {
 	if (m_dShotDelay > 0)	return;
 
-	auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_FOREGROUND_YELLOW);
+	auto pProjectile = std::make_shared<CProjectile>(Pixel::verticalLine, TEXT_FOREGROUND_RED);
 	auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 	pProjectile->SetOwner(sharedOwner);
 	pProjectile->SetPosition(COORD(m_cPosition.X + 2, 3));

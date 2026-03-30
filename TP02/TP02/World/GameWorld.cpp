@@ -10,6 +10,7 @@
 #include "../Boss/SemiBoss.h"
 #include "../Graphics/Interface.h"
 #include <cstdlib>
+#include "../Enemy/Skeleton/Skeleton.h"
 
 CGameWorld::CGameWorld()
 {
@@ -158,6 +159,10 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 		AddActor(enemy);
 	}
 
+	shared_ptr<CActor> enemy = make_shared<CSkeleton>();
+	enemy->SetPosition(COORD(10,10));
+	AddActor(enemy);
+
 	CGraphic::GetInstance()->AddLog("몬스터를 세마리 생성했습니다.");
 
 	m_dMonsterSpawnTime = m_dMonsterSpawnInitialTime;
@@ -227,13 +232,14 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByTag(ETag tag)
 	return retVec;
 }
 
-vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD LTPos, COORD RBPos)
+vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD LTPos, COORD RBPos, int tag)
 {
 	vector<shared_ptr<CActor>> retVec;
 
 	for (auto& i : m_aActors)
 	{
 		if (!i.first->m_bIsValid)	continue;
+		if ((i.first->m_eTag & tag) == 0)	continue;
 
 		COORD pos = i.first->GetPosition();
 
@@ -288,14 +294,10 @@ shared_ptr<CActor> CGameWorld::RayTrace(COORD startPos, COORD direction, int tag
 			return nullptr;
 		}
 
-		result = FindActorFromPosition(COORD(findingPos.X, findingPos.Y));
+		result = FindActorFromPosition(COORD(findingPos.X, findingPos.Y), tag);
 		if (result == nullptr)	continue;
-		if (result.get()->m_eTag & tag)
-		{
-			return result;
-		}
-		//	아직 유효한 결과를 찾지 못함
-		result = nullptr;
+
+		return result;
 	}
 
 	return nullptr;
@@ -317,14 +319,10 @@ shared_ptr<CActor> CGameWorld::RayTraceWithActorCustom(COORD startPos, COORD dir
 			return nullptr;
 		}
 
-		result = FindActorByActorCustom(COORD(findingPos.X, findingPos.Y));
+		result = FindActorByActorCustom(COORD(findingPos.X, findingPos.Y), tag);
 		if (result == nullptr)	continue;
-		if (result.get()->m_eTag & tag)
-		{
-			return result;
-		}
-		//	아직 유효한 결과를 찾지 못함
-		result = nullptr;
+
+		return result;
 	}
 
 	return nullptr;
