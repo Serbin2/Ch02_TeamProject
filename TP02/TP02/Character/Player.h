@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 
+class CEnemy;
+
 class CPlayer : public CCharacter
 {
 public:
@@ -45,4 +47,14 @@ public:
 		m_iGold -= amount;
 		return true;
 	}
+
+	
+
+	//레벨 EXP
+	void AddExp(float exp);
+
+private: // 레벨 exp
+	double m_dLevel;
+	double m_dExp;
+
 };

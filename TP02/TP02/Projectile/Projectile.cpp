@@ -33,9 +33,8 @@ void CProjectile::Move()
 
 void CProjectile::CheckCollision()
 {
-	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition);
-	if (!pActor || !pActor->HasTag(ETag::character))
-		return;
+	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition, ETag::character);
+	if (!pActor)	pActor = CGameWorld::GetInstance()->FindActorByActorCustom(m_cPosition , ETag::character);
 
 	auto pCharacter = std::dynamic_pointer_cast<CCharacter>(pActor);
 	if (!pCharacter)
@@ -45,7 +44,10 @@ void CProjectile::CheckCollision()
 	if (pOwner && pOwner.get() != pCharacter.get())
 	{
 		pCharacter->OnHit(pOwner->GetAttackPower());
-		CGraphic::GetInstance()->AddLog("투사체가 캐릭터에 충돌했습니다.");
+#ifdef _DEBUG
+		string str = pOwner.get()->GetName() + "의 투사체가 " + pCharacter.get()->GetName() + "에게 충돌했습니다.";
+		CGraphic::GetInstance()->AddLog(str);
+#endif
 		m_bIsValid = false;
 	}
 }

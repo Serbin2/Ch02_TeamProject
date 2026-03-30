@@ -26,8 +26,10 @@
     <ClCompile Include="Character\Sniper\Sniper.cpp" />
     <ClCompile Include="Shop\Shop.cpp" />
     <ClCompile Include="FrontMenu\MainMenu.cpp" />
+    <ClCompile Include="Boss\SemiBoss.cpp" />
     <ClCompile Include="Item\Bomb.cpp" />
     <ClCompile Include="Character\Character.cpp" />
+    <ClCompile Include="Enemy\Skeleton\Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
@@ -60,7 +62,9 @@
     <ClInclude Include="Enemy\Slime.h" />
     <ClInclude Include="Character\Sniper\Sniper.h" />
     <ClInclude Include="Shop\Shop.h" />
+    <ClInclude Include="Boss\SemiBoss.h" />
     <ClInclude Include="Item\Bomb.h" />
+    <ClInclude Include="Enemy\Skeleton\Skeleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />

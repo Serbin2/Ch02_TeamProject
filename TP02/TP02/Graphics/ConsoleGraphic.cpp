@@ -42,6 +42,7 @@ void CGraphic::SetPixelText()
 	m_sPixels[dust]					= "'.";
 	m_sPixels[star]					= "**";
 	m_sPixels[Sniper]				= "Sn";
+	m_sPixels[Skeleton] = "sK";
 }
 
 CGraphic* CGraphic::GetInstance()
