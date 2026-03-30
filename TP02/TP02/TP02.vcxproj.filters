@@ -24,6 +24,7 @@
     <ClCompile Include="Graphics\Effect.cpp" />
     <ClCompile Include="Enemy\Slime.cpp" />
     <ClCompile Include="Character\Sniper\Sniper.cpp" />
+    <ClCompile Include="Shop\Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Graphics\Effect.h" />
     <ClInclude Include="Enemy\Slime.h" />
     <ClInclude Include="Character\Sniper\Sniper.h" />
+    <ClInclude Include="Shop\Shop.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />
@@ -63,5 +65,8 @@
     <Filter Include="Item">
       <UniqueIdentifier>{784ad04b-bd92-4911-a336-a469ead5479e}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TP02.APS" />
   </ItemGroup>
 </Project>

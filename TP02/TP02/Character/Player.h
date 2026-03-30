@@ -1,6 +1,8 @@
 #pragma once
-
 #include "Character.h"
+#include "../Item/Item.h"
+#include <vector>
+#include <memory>
 
 class CPlayer : public CCharacter
 {
@@ -19,5 +21,28 @@ private:
 private:
 	int m_iLevel;
 	int m_iExp;
+	// 골드 & 인벤토리 (상점 시스템용)
+	int m_iGold;
+	std::vector<std::shared_ptr<cItem>> m_Inventory;
 
+public:
+	// 골드
+	int  GetGold() const { return m_iGold; }
+	void AddGold(int amount) { m_iGold += amount; }
+	bool SpendGold(int amount)
+	{
+		if (m_iGold < amount) return false;
+		m_iGold -= amount;
+		return true;
+	}
+
+	// 인벤토리
+	void AddItem(std::shared_ptr<cItem> item) { m_Inventory.push_back(item); }
+	std::vector<std::shared_ptr<cItem>>& GetInventory() { return m_Inventory; }
+	bool RemoveItem(int index)
+	{
+		if (index < 0 || index >= (int)m_Inventory.size()) return false;
+		m_Inventory.erase(m_Inventory.begin() + index);
+		return true;
+	}
 };
