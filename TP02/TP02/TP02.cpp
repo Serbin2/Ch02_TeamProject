@@ -49,24 +49,21 @@ int main()
 	}
 
 	// 사운드 테스트
+	HWND hHwnd = GetConsoleWindow();
+
+	GET_SINGLE(CResourceManager)->Init(hHwnd);
+	GET_SINGLE(CSoundManager)->Init(hHwnd);
+
+	// 로드 
+	GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav");
+	GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav");
+	GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav");
 	{
-		HWND hHwnd = GetConsoleWindow();
-
-		GET_SINGLE(CResourceManager)->Init(hHwnd);
-		GET_SINGLE(CSoundManager)->Init(hHwnd);
-
-		// 로드 
-		GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav");
-		GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav");
-		GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav");
-		{
-			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
-			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
-			//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
-			//pSound->Play(true);
-		}
+		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
+		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
 	}
-
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
+	pSound->Play(true);
 
 
 	UI->AddUI(0, "FPS Count : ");
@@ -88,10 +85,16 @@ int main()
 		{	//	게임 일시 정지
 			Timer.Pause();
 
+			pSound->Stop();
+
 			CMenu inGameMenu;
 			int result = inGameMenu.ShowMenu();
 
-			if (result == 2)
+			if (result == 1)
+			{
+				pSound->Play();
+			}
+			else if (result == 2)
 			{
 				break;
 				// 게임 종료 → 메인메뉴로 복귀

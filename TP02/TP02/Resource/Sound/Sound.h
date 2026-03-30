@@ -16,7 +16,7 @@ public:
 	virtual ~CSound();
 
 	bool LoadWave(fs::path fullPath);
-	void Play(bool loop = false);
+	void Play(bool loop = false, bool resume = true);
 	void Stop(bool reset = false);
 
 private:
