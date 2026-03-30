@@ -2,12 +2,14 @@
 #include "GameWorld.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Character/Player.h"
-#include "../Boss/Boss.h"
 #include "../Character/Sniper/Sniper.h"
+#include "../Projectile/BouncingProjectile.h"
+#include "../Projectile/TripleProjectile.h"
+#include "../Boss/Boss.h"
 #include "../Enemy/Slime.h"
 #include "../Boss/SemiBoss.h"
-#include <cstdlib>
 #include "../Graphics/Interface.h"
+#include <cstdlib>
 #include "../Enemy/Skeleton/Skeleton.h"
 
 CGameWorld::CGameWorld()
@@ -50,15 +52,13 @@ void CGameWorld::Initialize()
 	m_dMonsterSpawnInitialTime = 10.0;	//	10초마다 몬스터 스폰합니다
 	m_dMonsterSpawnTime = 3.0;
 	m_bMonsterSpawn = true;
-	m_iNumberOfMonsterSpawn = 3;	//	3마리씩 스폰합니다.
+	m_iNumberOfMonsterSpawn = 3;		//	3마리씩 스폰합니다.
 
-	//std::shared_ptr<CActor> pBoss = make_shared<CBoss>(Pixel::triangle, TEXT_BACKGROUND_BLACK | TEXT_BACKGROUND_BLUE_INT, FGridSize(2, 2));
-	std::shared_ptr<CActor> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-	//std::shared_ptr<CActor> pPlayer = make_shared<CSniper>();
-	AddActor(pPlayer);
-	//AddActor(pBoss);
-
+	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	//pPlayer->SetProjectile(make_shared<CBouncingProjectile>());
+	pPlayer->SetProjectile(make_shared<CTripleProjectile>());
 	m_pPlayer = pPlayer;
+	AddActor(pPlayer);
 }
 
 void CGameWorld::Update(double deltaTime)

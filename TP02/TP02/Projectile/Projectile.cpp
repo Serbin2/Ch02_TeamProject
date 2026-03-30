@@ -2,6 +2,7 @@
 
 CProjectile::CProjectile(int Shape, int Color) : CActor(Shape, Color)
 {
+	m_fSpeed = 5.0f;
 	m_eTag = ETag::actor | ETag::projectile;
 }
 
@@ -10,25 +11,24 @@ void CProjectile::Tick(double DeltaTime)
 	if (!m_bIsValid)
 		return;
 
-	if (m_dMoveTimer > 0.0)
-		m_dMoveTimer -= DeltaTime;
+	if (m_dMoveTimer > 0.0) m_dMoveTimer -= DeltaTime;
 
-	if ((m_cMoveDirection.X != 0 || m_cMoveDirection.Y != 0) && m_dMoveTimer <= 0.0)
-	{
-		Move();
-		m_dMoveTimer = 1.0 / m_fSpeed;
-	}
-
+	Move();
 	CheckCollision();
 }
 
 void CProjectile::Move()
 {
+	if ((m_cMoveDirection.X == 0 && m_cMoveDirection.Y == 0) || m_dMoveTimer > 0.0)
+		return;
+
 	m_cPosition.X += m_cMoveDirection.X;
 	m_cPosition.Y += m_cMoveDirection.Y;
 
 	if (m_cPosition.X < 0 || m_cPosition.X >= 30 || m_cPosition.Y < 0 || m_cPosition.Y >= 30)
 		m_bIsValid = false;
+
+	m_dMoveTimer = 1.0 / m_fSpeed;
 }
 
 void CProjectile::CheckCollision()

@@ -22,7 +22,7 @@ CInventory::CInventory()
 	AddItem(std::make_shared<Potion>(), 3);
 		AddItem(std::make_shared<Potion>(), 1);
 		AddItem(std::make_shared<CElixir>(), 1);
-		AddItem(std::make_shared<CBombItem>(), 1);
+		AddItem(std::make_shared<CBombItem>(), 10);
 		AddItem(std::make_shared<CInvinciblePotion>(), 1);
 #endif
 }
