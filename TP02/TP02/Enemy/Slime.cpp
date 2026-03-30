@@ -42,10 +42,9 @@ void CSlime::Tick(double DeltaTime)
 
 	m_dAnimationTime = 1.0;
 
-<<<<<<< HEAD
+
 	CheckCollision();
-=======
->>>>>>> PDH02
+
 }
 
 void CSlime::Move()

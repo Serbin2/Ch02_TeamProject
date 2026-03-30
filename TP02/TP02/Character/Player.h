@@ -38,10 +38,7 @@ private:
 	double m_dItemInvincibleTime; // 아이템 무적시간
 	bool m_bIsInvincibleByItem; // 아이템에 의해 무적상태
 
-	// 골드 & 인벤토리 (상점 시스템용)
-	int m_iGold;
-	std::vector<std::shared_ptr<CItem>> m_Inventory;
-
+	
 public:
 	// 골드
 	int  GetGold() const { return m_iGold; }
@@ -53,15 +50,7 @@ public:
 		return true;
 	}
 
-	// 인벤토리
-	void AddItem(std::shared_ptr<CItem> item) { m_Inventory.push_back(item); }
-	std::vector<std::shared_ptr<CItem>>& GetInventory() { return m_Inventory; }
-	bool RemoveItem(int index)
-	{
-		if (index < 0 || index >= (int)m_Inventory.size()) return false;
-		m_Inventory.erase(m_Inventory.begin() + index);
-		return true;
-	}
+	
 
 	//레벨 EXP
 	void AddExp(CEnemy* Enemy);

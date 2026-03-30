@@ -61,10 +61,7 @@ void CEnemy::Move()
 	{
 		m_cPosition.X = nextX;
 		m_cPosition.Y = nextY;
-	case 0: m_cMoveDirection = { 0, -1 }; break;
-	case 1: m_cMoveDirection = { 0,  1 }; break;
-	case 2: m_cMoveDirection = { -1, 0 }; break;
-	case 3: m_cMoveDirection = { 1,  0 }; break;
+	
 	}
 
 	m_cMoveDirection = { 0, 0 };
@@ -98,7 +95,7 @@ void CEnemy::OnHit(float Damage)
 	}
 	if (!m_bIsValid || m_bIsDead) return;
 
-	float finalDamage = Damage - m_fDefense;
+	finalDamage = Damage - m_fDefense;
 	if (finalDamage < 1.0f) finalDamage = 1.0f;
 
 	m_fHealth -= finalDamage;
