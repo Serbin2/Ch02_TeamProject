@@ -33,9 +33,8 @@ void CProjectile::Move()
 
 void CProjectile::CheckCollision()
 {
-	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition);
-	if (!pActor || !pActor->HasTag(ETag::character))
-		return;
+	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition, ETag::character);
+	if (!pActor)	pActor = CGameWorld::GetInstance()->FindActorByActorCustom(m_cPosition , ETag::character);
 
 	auto pCharacter = std::dynamic_pointer_cast<CCharacter>(pActor);
 	if (!pCharacter)

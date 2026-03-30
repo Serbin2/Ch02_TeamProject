@@ -194,11 +194,12 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 	return true;
 }
 
-shared_ptr<CActor> CGameWorld::FindActorFromPosition(COORD pos)
+shared_ptr<CActor> CGameWorld::FindActorFromPosition(COORD pos, int tag)
 {
 	for (auto& i : m_aActors)
 	{
 		if (!i.first->m_bIsValid)	continue;
+		if ((i.first->m_eTag & tag) == 0)	continue;
 
 		if (i.first->m_cPosition.X == pos.X && i.first->m_cPosition.Y == pos.Y)
 		{
@@ -245,11 +246,12 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD LTPos, COORD RBPos
 	return retVec;
 }
 
-shared_ptr<CActor> CGameWorld::FindActorByActorCustom(COORD pos)
+shared_ptr<CActor> CGameWorld::FindActorByActorCustom(COORD pos, int tag)
 {
 	for (auto& i : m_aActors)
 	{
 		if (!i.first->m_bIsValid)	continue;
+		if ((i.first->m_eTag & tag) == 0)	continue;
 
 		if (i.first->ActorCustomCollisionTest(pos))
 		{
@@ -275,10 +277,6 @@ shared_ptr<CActor> CGameWorld::RayTrace(COORD startPos, COORD direction, int tag
 	shared_ptr<CActor> result = nullptr;
 	if (direction.X == 0 && direction.Y == 0)	return nullptr;	//	유효하지 않은 방향
 
-	if (tag == ETag::none)
-	{
-		tag = ~tag;
-	}
 	COORD findingPos = startPos;
 	while (1)
 	{
@@ -308,10 +306,6 @@ shared_ptr<CActor> CGameWorld::RayTraceWithActorCustom(COORD startPos, COORD dir
 	shared_ptr<CActor> result = nullptr;
 	if (direction.X == 0 && direction.Y == 0)	return nullptr;	//	유효하지 않은 방향
 
-	if (tag == ETag::none)
-	{
-		tag = ~tag;
-	}
 	COORD findingPos = startPos;
 	while (1)
 	{

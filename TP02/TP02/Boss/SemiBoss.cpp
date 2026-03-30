@@ -33,6 +33,7 @@ CSemiBoss::CSemiBoss() : CEnemy(0,0)
 	m_fHealth = 1000;
 	CInterface::GetInstance()->AddUI(19, "Boss Health ");
 	CInterface::GetInstance()->SetValue(19, m_fHealth);
+	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
 }
 
 

@@ -63,4 +63,6 @@ enum ETag
 	projectile	=	1	<<	5,
 	effect		=	1	<<	6,
 	environment	=	1	<<	7,
+
+	all			=	( 1	<< 8 ) - 1,
 };
