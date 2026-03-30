@@ -25,6 +25,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 
 	// PJH - 인벤토리 추가
 	m_pInventory = std::make_shared<CInventory>();
+	m_pProjectile = std::make_shared<CProjectile>();
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
@@ -82,11 +83,10 @@ void CPlayer::Attack(COORD Direction)
 	if (m_dAttackTimer > 0.0)
 		return;
 
-	auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_FOREGROUND_YELLOW);
+	auto pProjectile = m_pProjectile->Clone();
 	auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 	pProjectile->SetOwner(sharedOwner);
 	pProjectile->SetPosition(m_cPosition);
-	pProjectile->SetSpeed(5.0f);
 	pProjectile->SetMoveDirection(Direction);
 	CGameWorld::GetInstance()->AddActor(pProjectile);
 	
@@ -102,21 +102,11 @@ void CPlayer::OnHit(float Damage)
 		return;
 
 	float finalDamage = Damage - m_fDefense;
-
-	// PJH -> 체력을 수동으로 변경시 음수값으로 가는 오류 발생 -> SetHealth를 사용하도록 변경함
-	// m_fHealth -= finalDamage > 0 ? finalDamage : 0; // 방어력이 공격력보다 높으면 피해는 0으로 처리
 	if (finalDamage > 0.f)
-	{
 		SetHealth(GetHealth() - finalDamage);
-	}
 	
 	m_dInvincibleTimer = m_fInvincibleDuration;
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
-}
-
-std::shared_ptr<class CInventory> CPlayer::GetInventory() const
-{
-	return m_pInventory;
 }
 
 void CPlayer::SetInvincibleStateByItem(double InvincibleTime)
@@ -124,7 +114,6 @@ void CPlayer::SetInvincibleStateByItem(double InvincibleTime)
 	m_bIsInvincibleByItem = true;
 	m_dItemInvincibleTime = InvincibleTime;
 }
-
 
 void CPlayer::Input()
 {
