@@ -11,7 +11,7 @@ class CBomb : public CActor
 {
 public:
 	CBomb() = default;
-	CBomb(int Shape, int Color);
+	CBomb(int Shape, int Color, const COORD& Pos);
 	~CBomb() = default;
 
 public:
@@ -25,6 +25,8 @@ private:
 
 private:
 	double m_dLifeTime = 2.5;
+
+	std::vector<std::pair<COORD, COORD>> m_vAdge;
 };
 
 class CBombItem : public CItem

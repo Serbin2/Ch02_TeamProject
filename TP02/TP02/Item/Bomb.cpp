@@ -1,11 +1,37 @@
 #include "Bomb.h"
+#include "../Graphics/Effect.h"
 
-
-CBomb::CBomb(int Shape, int Color)
+CBomb::CBomb(int Shape, int Color, const COORD& Pos)
 	: CActor(Pixel::star, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN)
 {
 	m_eTag = ETag::actor; 
 	m_sName = "폭탄";
+
+	m_cPosition =  Pos;
+
+
+	for (int i = 1; i <= 3; ++i)
+	{
+		std::pair<COORD, COORD> Adge;
+
+		Adge.first = { (short)(m_cPosition.X - 1 * i), (short)(m_cPosition.Y - 1 * i) };
+		Adge.second = { (short)(m_cPosition.X + 1 * i), (short)(m_cPosition.Y + 1 * i) };
+
+		m_vAdge.push_back(Adge);
+	}
+
+	shared_ptr<CEffect> FX = make_shared<CEffect>();
+	vector<pair<int, int >> material;
+	material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW | TEXT_BACKGROUND_RED_INT));
+	material.push_back(make_pair(Pixel::square, TEXT_FOREGROUND_RED_INT | TEXT_BACKGROUND_RED));
+	material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW));
+	//material.push_back(make_pair(Pixel::dust, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
+	vector<double> duration;
+	duration.push_back(1.0);
+	duration.push_back(1.0);
+	duration.push_back(1.0);
+	FX->CreateDynamicEffect(3, material, m_vAdge, duration);
+	CGameWorld::GetInstance()->AddActor(FX);
 }
 
 void CBomb::Tick(double DeltaTime)
@@ -99,7 +125,7 @@ CBombItem::CBombItem()
 	m_sName = "폭탄";
 	m_sDesc = "폭탄기준 3의 추가영역에 데미지";
 	m_iPrice = 400;
-	m_iMaxAmount = 3;
+	m_iMaxAmount = INT_MAX;
 }
 
 void CBombItem::UseItem(std::weak_ptr<CPlayer> pPlayer)
@@ -112,7 +138,7 @@ void CBombItem::UseItem(std::weak_ptr<CPlayer> pPlayer)
 	}
 
 	const COORD& SpawnPosition = Player->GetPosition();
-	std::shared_ptr<CActor> Bomb = std::make_shared<CBomb>(Pixel::star, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	std::shared_ptr<CActor> Bomb = std::make_shared<CBomb>(Pixel::star, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN, SpawnPosition);
 	if (!Bomb)
 	{
 		return;
