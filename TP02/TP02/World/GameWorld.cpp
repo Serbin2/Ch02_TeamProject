@@ -5,14 +5,18 @@
 #include "../Boss/Boss.h"
 #include "../Character/Sniper/Sniper.h"
 #include "../Enemy/Slime.h"
+#include "../Boss/SemiBoss.h"
 #include <cstdlib>
+#include "../Graphics/Interface.h"
 
 CGameWorld::CGameWorld()
 {
+	m_dWorldTime = 0;
 	m_dMonsterSpawnInitialTime = 0;
 	m_dMonsterSpawnTime = 0;
 	m_bMonsterSpawn = 0;
 	m_iNumberOfMonsterSpawn = 0;
+	CInterface::GetInstance()->AddUI(29, "Actors ");
 }
 
 CGameWorld::~CGameWorld()
@@ -66,12 +70,14 @@ void CGameWorld::Update(double deltaTime)
 	{
 		if (!it->first->IsValid())
 		{	//	무효한 객체입니다.
-			if (EraseActorFromSort(it->first))
+			if (!EraseActorFromSort(it->first))
 			{
-				CGraphic::GetInstance()->AddLog("Actor Successfuly Erased From Sort Container");
+				//error
+				int a = 1;
 			}
 			it = m_aActors.erase(it);
-			CGraphic::GetInstance()->AddLog("Actor Erased");
+			//CGraphic::GetInstance()->AddLog("Actor Erased");
+			CInterface::GetInstance()->SetValue(29, (int)m_aActors.size());
 		}
 		else
 		{
@@ -95,8 +101,18 @@ void CGameWorld::Render()
 
 void CGameWorld::Tick(double deltaTime)
 {
+	m_dWorldTime += deltaTime;
+
 	//	몬스터 스폰 이벤트
 	MonsterSpawnEvent(deltaTime);
+
+	static bool bossCreated = false;
+	if (m_dWorldTime > 3 && !bossCreated)
+	{	//	시간으로 보스 생성
+		bossCreated = true;
+		shared_ptr<CSemiBoss> boss = make_shared<CSemiBoss>();
+		AddActor(boss);
+	}
 }
 
 void CGameWorld::MonsterSpawnEvent(double deltaTime)
@@ -155,7 +171,7 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 	if (m_aActors[actor] > 1)
 	{	//	이미 추가되어 있던 액터임
 		m_aActors[actor]--;
-		CGraphic::GetInstance()->AddLog("Error : Already Added Actor");
+		//CGraphic::GetInstance()->AddLog("Error : Already Added Actor");
 		return false;
 	}
 
@@ -173,15 +189,17 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 		m_aSort[1][actor]++;
 	}
 
-	CGraphic::GetInstance()->AddLog("Actor Successfuly Added");
+	//CGraphic::GetInstance()->AddLog("Actor Successfuly Added");
+	CInterface::GetInstance()->SetValue(29, (int)m_aActors.size());
 	return true;
 }
 
-shared_ptr<CActor> CGameWorld::FindActorFromPosition(COORD pos)
+shared_ptr<CActor> CGameWorld::FindActorFromPosition(COORD pos, int tag)
 {
 	for (auto& i : m_aActors)
 	{
 		if (!i.first->m_bIsValid)	continue;
+		if ((i.first->m_eTag & tag) == 0)	continue;
 
 		if (i.first->m_cPosition.X == pos.X && i.first->m_cPosition.Y == pos.Y)
 		{
@@ -228,11 +246,12 @@ vector<shared_ptr<CActor>> CGameWorld::FindActorsByRect(COORD LTPos, COORD RBPos
 	return retVec;
 }
 
-shared_ptr<CActor> CGameWorld::FindActorByActorCustom(COORD pos)
+shared_ptr<CActor> CGameWorld::FindActorByActorCustom(COORD pos, int tag)
 {
 	for (auto& i : m_aActors)
 	{
 		if (!i.first->m_bIsValid)	continue;
+		if ((i.first->m_eTag & tag) == 0)	continue;
 
 		if (i.first->ActorCustomCollisionTest(pos))
 		{
@@ -258,10 +277,6 @@ shared_ptr<CActor> CGameWorld::RayTrace(COORD startPos, COORD direction, int tag
 	shared_ptr<CActor> result = nullptr;
 	if (direction.X == 0 && direction.Y == 0)	return nullptr;	//	유효하지 않은 방향
 
-	if (tag == ETag::none)
-	{
-		tag = ~tag;
-	}
 	COORD findingPos = startPos;
 	while (1)
 	{
@@ -291,10 +306,6 @@ shared_ptr<CActor> CGameWorld::RayTraceWithActorCustom(COORD startPos, COORD dir
 	shared_ptr<CActor> result = nullptr;
 	if (direction.X == 0 && direction.Y == 0)	return nullptr;	//	유효하지 않은 방향
 
-	if (tag == ETag::none)
-	{
-		tag = ~tag;
-	}
 	COORD findingPos = startPos;
 	while (1)
 	{
