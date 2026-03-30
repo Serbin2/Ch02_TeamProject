@@ -11,6 +11,7 @@
 #include "../Graphics/Interface.h"
 #include <cstdlib>
 #include "../Enemy/Skeleton/Skeleton.h"
+#include "../Enemy/Golem/Golem.h"
 
 CGameWorld::CGameWorld()
 {
@@ -125,7 +126,7 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 	for (int i = 0; i < m_iNumberOfMonsterSpawn; i++)
 	{
 		//	몬스터 생성
-		shared_ptr<CActor> enemy = make_shared<CEnemy>(Pixel::triangle, TEXT_FOREGROUND_RED);
+		shared_ptr<CActor> enemy = make_shared<CSlime>();
 		COORD spawnPos = { 0, 0 };
 
 		// 0: 위, 1: 아래, 2: 왼쪽, 3: 오른쪽
@@ -162,6 +163,10 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 	shared_ptr<CActor> enemy = make_shared<CSkeleton>();
 	enemy->SetPosition(COORD(10,10));
 	AddActor(enemy);
+
+	shared_ptr<CActor> Golem = make_shared<CGolem>();
+	Golem->SetPosition(COORD(20, 20));
+	AddActor(Golem);
 
 	CGraphic::GetInstance()->AddLog("몬스터를 세마리 생성했습니다.");
 

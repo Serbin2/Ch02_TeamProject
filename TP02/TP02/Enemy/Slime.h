@@ -9,7 +9,6 @@ public:
 	~CSlime();
 
 	virtual void Tick(double DeltaTime) override;
-	virtual void Move() override;
 	virtual void OnHit(float damage)	override;
 
 

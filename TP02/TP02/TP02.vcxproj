@@ -130,6 +130,7 @@
     <ClCompile Include="Character\Character.cpp" />
     <ClCompile Include="Character\Sniper\Sniper.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="Enemy\Golem\Golem.cpp" />
     <ClCompile Include="Enemy\Skeleton\Skeleton.cpp" />
     <ClCompile Include="Enemy\Slime.cpp" />
     <ClCompile Include="FrontMenu\MainMenu.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Character\Player.h" />
     <ClInclude Include="Character\Sniper\Sniper.h" />
     <ClInclude Include="Enemy\Enemy.h" />
+    <ClInclude Include="Enemy\Golem\Golem.h" />
     <ClInclude Include="Enemy\Skeleton\Skeleton.h" />
     <ClInclude Include="Enemy\Slime.h" />
     <ClInclude Include="FrontMenu\MainMenu.h" />

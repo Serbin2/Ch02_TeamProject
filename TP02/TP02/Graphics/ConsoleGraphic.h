@@ -19,6 +19,8 @@ enum Pixel
 	star,
 	Sniper,
 	Skeleton,
+	Golem,
+	Gunman,
 
 
 	PixelMax,

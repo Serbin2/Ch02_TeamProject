@@ -30,6 +30,9 @@
     <ClCompile Include="Item\Bomb.cpp" />
     <ClCompile Include="Character\Character.cpp" />
     <ClCompile Include="Enemy\Skeleton\Skeleton.cpp" />
+    <ClCompile Include="Projectile\BouncingProjectile.cpp" />
+    <ClCompile Include="Projectile\TripleProjectile.cpp" />
+    <ClCompile Include="Enemy\Golem\Golem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
@@ -65,6 +68,9 @@
     <ClInclude Include="Boss\SemiBoss.h" />
     <ClInclude Include="Item\Bomb.h" />
     <ClInclude Include="Enemy\Skeleton\Skeleton.h" />
+    <ClInclude Include="Projectile\BouncingProjectile.h" />
+    <ClInclude Include="Projectile\TripleProjectile.h" />
+    <ClInclude Include="Enemy\Golem\Golem.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />

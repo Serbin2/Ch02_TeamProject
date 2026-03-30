@@ -18,5 +18,5 @@ public:
 
 protected:
 	bool m_bIsDead;
-	int m_iExpReward;
+	float m_iExpReward;
 };

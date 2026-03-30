@@ -54,13 +54,6 @@ void CSlime::Tick(double DeltaTime)
 	}
 
 	m_dAnimationTime = 1.0;
-
-	CheckCollision();
-}
-
-void CSlime::Move()
-{
-	//	테스트를 위해 움직이지 않음
 }
 
 void CSlime::OnHit(float damage)
@@ -71,7 +64,4 @@ void CSlime::OnHit(float damage)
 	//	피격 애니메이션 처리입니다.
 	m_pShape = m_iShapeHitted;
 	m_dAnimationTime = 1.0;	
-
-	//	체력피해를 줍니다 ( CEnemy에 구현되면 삭제 )
-	m_fHealth -= damage;
 }

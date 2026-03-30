@@ -1,9 +1,12 @@
 #include "SemiBoss.h"
 #include "../Graphics/Interface.h"
 #include "../Projectile/Projectile.h"
+#include "../Character/Player.h"
 
 #define ATTACK_DELAY	5.0
 #define SHOT_DELAY 1.0
+
+#define BOSS_HEALTH_UI	19
 
 CSemiBoss::CSemiBoss() : CEnemy(0,0)
 {
@@ -31,8 +34,8 @@ CSemiBoss::CSemiBoss() : CEnemy(0,0)
 	m_sName = "[빅헤드]";
 
 	m_fHealth = 1000;
-	CInterface::GetInstance()->AddUI(19, "Boss Health ");
-	CInterface::GetInstance()->SetValue(19, m_fHealth);
+	CInterface::GetInstance()->AddUI(BOSS_HEALTH_UI, "Boss Health ");
+	CInterface::GetInstance()->SetValue(BOSS_HEALTH_UI, m_fHealth);
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
 }
 
@@ -105,7 +108,8 @@ void CSemiBoss::OnHit(float damage)
 {
 	m_fHealth -= damage;
 
-	CInterface::GetInstance()->SetValue(19, m_fHealth);
+	CInterface::GetInstance()->SetValue(BOSS_HEALTH_UI, m_fHealth);
+	if (m_fHealth <= 0) OnDeath();
 }
 
 bool CSemiBoss::ActorCustomCollisionTest(COORD pos)
@@ -188,4 +192,14 @@ void CSemiBoss::Gatling()
 		m_dAttackDelay = ATTACK_DELAY;
 		m_iAttackCount = 0;
 	}
+}
+
+void CSemiBoss::OnDeath()
+{
+	//	공격 강화권 지급하기
+
+	dynamic_pointer_cast<CPlayer>(CGameWorld::GetInstance()->GetPlayerActor())->AddExp(200);
+
+	m_bIsValid = false;
+	CInterface::GetInstance()->RemoveUI(BOSS_HEALTH_UI);
 }

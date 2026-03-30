@@ -62,8 +62,8 @@ int main()
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
 	}
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
-	pSound->Play(true);
+	//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
+	//pSound->Play(true);
 
 
 	UI->AddUI(0, "FPS Count : ");
@@ -85,14 +85,14 @@ int main()
 		{	//	게임 일시 정지
 			Timer.Pause();
 
-			pSound->Stop();
+			//pSound->Stop();
 
 			CMenu inGameMenu;
 			int result = inGameMenu.ShowMenu();
 
 			if (result == 1)
 			{
-				pSound->Play();
+				//pSound->Play();
 			}
 			else if (result == 2)
 			{
