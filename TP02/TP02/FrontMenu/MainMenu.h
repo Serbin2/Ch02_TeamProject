@@ -5,7 +5,8 @@ class CMainMenu {
 private:
 	enum eScene { MENU, START, CREDIT, EXIT };
 	eScene scene = MENU;
-	int iCount = 0;
+
+	int iCount= 0;
 	int in = 0;
 
 	const char* cTitle;

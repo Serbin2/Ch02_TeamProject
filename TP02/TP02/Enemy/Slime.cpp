@@ -54,6 +54,8 @@ void CSlime::Tick(double DeltaTime)
 	}
 
 	m_dAnimationTime = 1.0;
+
+	CheckCollision();
 }
 
 void CSlime::Move()
