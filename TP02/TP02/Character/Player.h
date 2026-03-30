@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 
+class CEnemy;
+
 class CPlayer : public CCharacter
 {
 public:
@@ -49,7 +51,7 @@ public:
 	
 
 	//레벨 EXP
-	void AddExp(CEnemy* Enemy);
+	void AddExp(float exp);
 
 private: // 레벨 exp
 	double m_dLevel;
