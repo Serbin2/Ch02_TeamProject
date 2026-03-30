@@ -1,4 +1,8 @@
 #include "Enemy.h"
+#include "../Character/Player.h"
+#include "../World/GameWorld.h"
+#include "../Graphics/ConsoleGraphic.h"
+
 
 CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -13,6 +17,8 @@ CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 1.0;
 	m_dAttackTimer = 0.0;
+	m_iExpReward = 50;
+	m_bIsDead = false;
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 }
 
@@ -85,14 +91,15 @@ void CEnemy::OnHit(float Damage)
 	{
 		m_bIsValid = false;
 		CGraphic::GetInstance()->AddLog("적이 처치되었습니다.");
-	}
-	if (!m_bIsValid || m_bIsDead) return;
-
-	finalDamage = Damage - m_fDefense;
-	if (finalDamage < 1.0f) finalDamage = 1.0f;
-
-	m_fHealth -= finalDamage;
-
-	if (m_fHealth <= 0.0f)
 		Die();
+	}
+}
+
+void CEnemy::Die()
+{
+	auto pPlayer = CGameWorld::GetInstance()->GetPlayerActor();
+	if (pPlayer == nullptr || !pPlayer->IsValid())	return;
+	
+	dynamic_pointer_cast<CPlayer>(pPlayer)->AddExp(m_iExpReward);
+	
 }

@@ -3,6 +3,8 @@
 #include "../Projectile/Projectile.h"
 #include "../Inventory/Inventory.h"
 #include "../Graphics/Interface.h"
+#include "../Graphics/ConsoleGraphic.h"
+#include "../Enemy/Enemy.h"
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -21,6 +23,8 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iLevel = 1;
 	m_iExp = 0;
 	m_iGold = 500;
+	m_dLevel = 1.0;
+	m_dExp = 0.0;
 	m_eTag = ETag::player | ETag::character | ETag::actor;
 	m_sName = "[아이작]";
 
@@ -31,6 +35,8 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
 	CInterface::GetInstance()->AddUI(4, "x ");
 	CInterface::GetInstance()->AddUI(5, "y ");
+	CInterface::GetInstance()->AddUI(3, "Lv : ");
+	CInterface::GetInstance()->SetValue(3, (float)m_dLevel);
 }
 
 void CPlayer::Tick(double DeltaTime)
@@ -158,4 +164,21 @@ void CPlayer::Input()
 		if (pInput->IsKeyDown('4')) m_pInventory->UseItem(3, pSelf);
 		if (pInput->IsKeyDown('5')) m_pInventory->UseItem(4, pSelf);
 	}
+}
+
+void CPlayer::AddExp(float exp)
+{
+	m_dExp += exp;
+
+	while (m_dExp >= m_dLevel * 20)
+	{
+		m_dExp -= m_dLevel * 20;
+		m_dLevel++;
+
+		m_fHealth += 20.0f;
+		m_fAttackPower += 5.0f;
+		m_fDefense += 2.0f;
+	}
+
+	CInterface::GetInstance()->SetValue(3, (float)m_dLevel);
 }
