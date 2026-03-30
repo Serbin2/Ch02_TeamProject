@@ -17,6 +17,8 @@ public:
 public:
 	std::shared_ptr<class CInventory> GetInventory() const;
 
+	void SetInvincibleStateByItem(double InvincibleTime);
+
 private:
 	void Input();
 
@@ -29,6 +31,9 @@ private:
 	// 골드 (상점 시스템용)
 	int m_iGold = 500;
 
+	// PJH
+	double m_dItemInvincibleTime; // 아이템 무적시간
+	bool m_bIsInvincibleByItem; // 아이템에 의해 무적상태
 
 public:
 	// 골드
