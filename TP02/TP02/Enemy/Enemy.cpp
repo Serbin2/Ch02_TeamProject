@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "../Character/Player.h"
-#include "../Character/Character.h"
 #include <cstdlib>
 
 CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
@@ -66,6 +65,8 @@ void CEnemy::OnHit(float Damage)
 
 	if (m_fHealth <= 0.0f)
 	{
+		if (player != nullptr)
+			CGraphic::GetInstance()->AddLog("exp 획득.");
 		Die();
 	}
 }
@@ -87,7 +88,6 @@ void CEnemy::DropReward()
 {
 	if (player == nullptr) return;
 
-	player->AddExp(m_iExpReward);
 	int dropChance = rand() % 100;
 
 	if (dropChance < 50)

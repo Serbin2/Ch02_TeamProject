@@ -2,6 +2,8 @@
 #include "../Input/Input.h"
 #include "../Projectile/Projectile.h"
 #include "../Graphics/Interface.h"
+#include "../Graphics/ConsoleGraphic.h"
+
 
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
@@ -110,15 +112,17 @@ void CPlayer::AddExp(int exp)
 	m_iExp += exp;
 
 	//level up
-	while (m_iExp >= m_iLevel * 100)
+	while (m_iExp >= m_iLevel * 20)
 	{
-		m_iExp -= m_iLevel * 100;
+		m_iExp -= m_iLevel * 20;
 		m_iLevel++;
 
 		m_fHealth += 20.0f;
 		m_fAttackPower += 5.0f;
 		m_fDefense += 2.0f;
 	}
+	
 
-	CInterface::GetInstance()->SetValue(2, m_fHealth);
 }
+
+

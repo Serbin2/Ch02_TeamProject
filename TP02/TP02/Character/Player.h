@@ -30,7 +30,6 @@ private:
 private: // 레벨 exp
 	int m_iLevel;
 	int m_iExp;
-	int m_iMaxExp;
 
 	
 

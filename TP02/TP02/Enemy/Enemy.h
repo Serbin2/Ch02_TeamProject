@@ -5,9 +5,9 @@ class CPlayer;
 
 class CEnemy : public CCharacter
 {
-private:
-	int m_iExpReward;
+protected:
 	CPlayer* player = nullptr;
+	int m_iExpReward;
 
 public:
 	CEnemy(int Shape, int Color);
@@ -18,8 +18,8 @@ public:
 	virtual void Attack(COORD Direction) override;
 	virtual void OnHit(float Damage) override;
 
-	void Die();
-	void DropReward();
-	void SetPlayer(CPlayer* InPlayer);
+	virtual void Die();
+	virtual void DropReward();
+	virtual void SetPlayer(CPlayer* InPlayer);
 
 };
