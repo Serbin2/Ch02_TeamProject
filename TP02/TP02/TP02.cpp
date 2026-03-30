@@ -121,6 +121,22 @@ int main()
 			pGraphic->ReDraw();
 			Timer.Resume();
 		}
+
+		// TAB키 → 바로 상점 진입 (일시정지)
+		if (pInput->IsKeyDown(VK_TAB))
+		{
+			Timer.Pause();
+			CShop shop;
+			shared_ptr<CActor> actor = CGameWorld::GetInstance()->GetPlayerActor();
+			CPlayer* player = static_cast<CPlayer*>(actor.get());
+			if (player != nullptr)
+			{
+				shop.Enter(player);
+			}
+			pGraphic->ReDraw();
+			Timer.Resume();
+		}
+
 #ifdef _DEBUG	//	이펙트 테스트용 
 		if (pInput->IsKeyDown('O'))
 		{	//	이펙트 테스트

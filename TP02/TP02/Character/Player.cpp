@@ -15,6 +15,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_dAttackTimer = 0.0;
 	m_iLevel = 1;
 	m_iExp = 0;
+	m_iGold = 500;
 	m_eTag = ETag::player | ETag::character | ETag::actor;
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");

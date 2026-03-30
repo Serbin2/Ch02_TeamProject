@@ -76,7 +76,7 @@ void CShop::ShowShopUI(CPlayer* pPlayer) // 구매 메뉴 어떤 물건을 살�
 	std::cout << pad << "================================\n";
 	std::cout << pad << "           상    점             \n";
 	std::cout << pad << "================================\n";
-	std::cout << pad << "  보유 골드 : " << pPlayer->GetGold() << " G\n";
+	std::cout << pad << "  보유 골드 : " << pPlayer->GetGold() << " Gold\n";
 	std::cout << pad << "================================\n";
 	std::cout << pad << "  [판매 목록]\n";
 	for (int i = 0; i < (int)m_ShopItems.size(); i++)
