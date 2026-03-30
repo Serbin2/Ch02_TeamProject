@@ -66,6 +66,7 @@ private:
 	//	월드 자체의 업데이트 입니다.
 	//	각종 이벤트는 여기서 실행하세요.
 	void Tick(double deltaTime);
+	double m_dWorldTime;	//	월드 진행 시간입니다.
 
 	void MonsterSpawnEvent(double deltaTime);
 	bool EraseActorFromSort(shared_ptr<CActor> actor);
