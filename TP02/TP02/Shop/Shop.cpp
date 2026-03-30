@@ -48,8 +48,10 @@ CShop::CShop()
 void CShop::InitShopItems()
 {
 	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (소)", "체력을 30 hp 회복한다.", 50, 1, 30));
-	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (중)", "체력을 80 hp 회복한다.", 120, 1, 80));
-	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (대)", "체력을 200 hp 회복한다.", 300, 1, 200));
+	m_ShopItems.push_back(std::make_shared<CElixir>());
+	m_ShopItems.push_back(std::make_shared<CInvinciblePotion>());
+	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (중)", "체력을 80 hp 회복한다.", 120, 1, 80));
+	//m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (대)", "체력을 200 hp 회복한다.", 300, 1, 200));
 }
 
 // 상점 입장

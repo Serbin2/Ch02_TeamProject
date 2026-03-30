@@ -14,7 +14,9 @@ protected:
 	int m_iMaxAmount;			// 아이템 최대 소지 개수
 
 public:
-	CItem(const std::string& sName = "Default", const std::string& sDesc = "default", int iPrice = 0, int iMaxAmount = 0);
+	CItem() = default;
+
+	CItem(const std::string& sName, const std::string& sDesc, int iPrice, int iMaxAmount);
 
 
 	virtual ~CItem() = default;
@@ -32,13 +34,6 @@ public:
 
 	//만약을 위한 setter (가격 변경)
 	void SetPrice(int itemPrice);
-
-	// 개수 처리
-	// void GetItem(int amount = 1) { m_iMaxAmount += amount; } // 아이템획득
-	// void ConsumeItem(int amount = 1) { //아이템 사용
-	// 	if (m_iMaxAmount >= amount) m_iMaxAmount -= amount;
-	// }
-	// 
 	
 	// 아이템 사용시 효과
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) = 0;
@@ -73,4 +68,25 @@ public:
 		float NewHealth = Player->GetHealth() + m_iHeal;
 		Player->SetHealth(NewHealth);
 	}
+};
+
+// 최대 체력으로 설정하는 포션 
+class CElixir : public CItem
+{
+public:
+	CElixir();
+
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+};
+
+// 무적으로 만들어주는 포션 
+class CInvinciblePotion : public CItem
+{
+public:
+	CInvinciblePotion();
+
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+
+private:
+	double m_dInvinsibleTime;
 };
