@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boss\Boss.cpp" />
+    <ClCompile Include="Boss\SemiBoss.cpp" />
     <ClCompile Include="Character\Sniper\Sniper.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Enemy\Slime.cpp" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
+    <ClInclude Include="Boss\SemiBoss.h" />
     <ClInclude Include="Character\Actor.h" />
     <ClInclude Include="Character\Character.h" />
     <ClInclude Include="Character\Player.h" />
