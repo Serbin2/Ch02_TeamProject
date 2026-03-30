@@ -86,4 +86,13 @@ void CEnemy::OnHit(float Damage)
 		m_bIsValid = false;
 		CGraphic::GetInstance()->AddLog("적이 처치되었습니다.");
 	}
+	if (!m_bIsValid || m_bIsDead) return;
+
+	finalDamage = Damage - m_fDefense;
+	if (finalDamage < 1.0f) finalDamage = 1.0f;
+
+	m_fHealth -= finalDamage;
+
+	if (m_fHealth <= 0.0f)
+		Die();
 }
