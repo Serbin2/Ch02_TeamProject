@@ -3,6 +3,7 @@
 #include "../Projectile/Projectile.h"
 #include "../Graphics/Interface.h"
 
+
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
 	m_cPosition = { 15, 15 };
@@ -14,7 +15,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_dAttackCooldown = 0.5;
 	m_dAttackTimer = 0.0;
 	m_iLevel = 1;
-	m_iExp = 0;
+	m_iExp = 0; // 레벨과 exp 는 int
 	m_eTag = ETag::player | ETag::character | ETag::actor;
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");
@@ -98,4 +99,26 @@ void CPlayer::Input()
 	else if (pInput->IsKeyDown(VK_DOWN))  Attack({ 0,  1 }); // [↓]
 	else if (pInput->IsKeyDown(VK_LEFT))  Attack({ -1, 0 }); // [←]
 	else if (pInput->IsKeyDown(VK_RIGHT)) Attack({ 1,  0 }); // [→]
+}
+
+//exp & levels
+
+void CPlayer::AddExp(int exp)
+{
+	if (exp <= 0) return;
+
+	m_iExp += exp;
+
+	//level up
+	while (m_iExp >= m_iLevel * 100)
+	{
+		m_iExp -= m_iLevel * 100;
+		m_iLevel++;
+
+		m_fHealth += 20.0f;
+		m_fAttackPower += 5.0f;
+		m_fDefense += 2.0f;
+	}
+
+	CInterface::GetInstance()->SetValue(2, m_fHealth);
 }

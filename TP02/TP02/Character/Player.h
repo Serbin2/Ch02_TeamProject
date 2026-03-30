@@ -4,9 +4,12 @@
 #include <vector>
 #include <memory>
 
+class CEnemy;
+
 class CPlayer : public CCharacter
 {
 public:
+
 	CPlayer(int Shape, int Color);
 	virtual ~CPlayer() = default;
 
@@ -19,11 +22,17 @@ private:
 	void Input();
 
 private:
-	int m_iLevel;
-	int m_iExp;
+
 	// 골드 & 인벤토리 (상점 시스템용)
 	int m_iGold;
 	std::vector<std::shared_ptr<CItem>> m_Inventory;
+
+private: // 레벨 exp
+	int m_iLevel;
+	int m_iExp;
+	int m_iMaxExp;
+
+	
 
 public:
 	// 골드
@@ -45,4 +54,8 @@ public:
 		m_Inventory.erase(m_Inventory.begin() + index);
 		return true;
 	}
+
+	//레벨 EXP
+	void AddExp(int exp); // level 과 exp 는 int
+
 };

@@ -1,4 +1,6 @@
 #include "Enemy.h"
+#include "../Character/Player.h"
+#include "../Character/Character.h"
 #include <cstdlib>
 
 CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
@@ -11,7 +13,9 @@ CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 1.0;
 	m_dAttackTimer = 0.0;
+	m_iExpReward = 50;
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
+
 }
 
 void CEnemy::Tick(double DeltaTime)
@@ -51,4 +55,44 @@ void CEnemy::Attack(COORD Direction)
 void CEnemy::OnHit(float Damage)
 {
 	// TODO: 피해 계산, 체력 감소, 사망 처리, 피격 효과 등 구현
+	if (!m_bIsValid) return;
+
+	float fFinalDamage = Damage - m_fDefense; // 최종 데미지=데미지-방어력;
+
+	if (fFinalDamage < 1.0f)
+		fFinalDamage = 1.0f;
+
+	m_fHealth -= fFinalDamage;
+
+	if (m_fHealth <= 0.0f)
+	{
+		Die();
+	}
+}
+
+void CEnemy::Die()
+{
+	if (!m_bIsValid) return;
+	m_fHealth = 0.0f;
+	m_bIsValid = false;
+	DropReward();
+}
+
+void CEnemy::SetPlayer(CPlayer* InPlayer)
+{
+	player = InPlayer;
+}
+
+void CEnemy::DropReward()
+{
+	if (player == nullptr) return;
+
+	player->AddExp(m_iExpReward);
+	int dropChance = rand() % 100;
+
+	if (dropChance < 50)
+	{
+		// 50% 확률 드랍
+		// TODO: 아이템 생성 후 월드에 배치
+	}
 }
