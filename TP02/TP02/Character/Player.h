@@ -45,4 +45,14 @@ public:
 		m_iGold -= amount;
 		return true;
 	}
+
+	
+
+	//레벨 EXP
+	void AddExp(CEnemy* Enemy);
+
+private: // 레벨 exp
+	double m_dLevel;
+	double m_dExp;
+
 };
