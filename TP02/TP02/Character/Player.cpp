@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../Input/Input.h"
 #include "../Projectile/Projectile.h"
+#include "../Inventory/Inventory.h"
 #include "../Graphics/Interface.h"
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
@@ -19,6 +20,9 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iLevel = 1;
 	m_iExp = 0;
 	m_eTag = ETag::player | ETag::character | ETag::actor;
+
+	// PJH - 인벤토리 추가
+	m_pInventory = std::make_shared<CInventory>();
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
@@ -88,6 +92,11 @@ void CPlayer::OnHit(float Damage)
 	CInterface::GetInstance()->SetValue(2, m_fHealth);
 }
 
+std::shared_ptr<class CInventory> CPlayer::GetInventory() const
+{
+	return m_pInventory;
+}
+
 void CPlayer::Input()
 {
 	CInput* pInput = CInput::GetInstance();
@@ -108,4 +117,15 @@ void CPlayer::Input()
 	else if (pInput->IsKeyDown(VK_DOWN))  Attack({ 0,  1 }); // [↓]
 	else if (pInput->IsKeyDown(VK_LEFT))  Attack({ -1, 0 }); // [←]
 	else if (pInput->IsKeyDown(VK_RIGHT)) Attack({ 1,  0 }); // [→]
+
+	// PJH - 아이템 키 추가
+	std::shared_ptr<CPlayer> pSelf = std::dynamic_pointer_cast<CPlayer>(shared_from_this());
+	if (m_pInventory && pSelf)
+	{
+		if (pInput->IsKeyDown('1')) m_pInventory->UseItem(0, pSelf);
+		if (pInput->IsKeyDown('2')) m_pInventory->UseItem(1, pSelf);
+		if (pInput->IsKeyDown('3')) m_pInventory->UseItem(2, pSelf);
+		if (pInput->IsKeyDown('4')) m_pInventory->UseItem(3, pSelf);
+		if (pInput->IsKeyDown('5')) m_pInventory->UseItem(4, pSelf);
+	}
 }

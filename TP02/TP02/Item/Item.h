@@ -2,32 +2,75 @@
 #include <string>
 #include <iostream>
 
-#include "../Character/Character.h"
+#include "../Character/Player.h"
 
-
-class CItem
+// 아이템 인터페이스 클래스 
+class CItem abstract
 {
-protected:
-	std::string sName;
-	std::string sDesc;
-	int iPrice;
-	int iCount;
+protected: 
+	std::string m_sName;		// 이름
+	std::string m_sDesc;		// 설명
+	int m_iPrice;				// 가격
+	int m_iMaxAmount;			// 아이템 최대 소지 개수
 
 public:
-	CItem(std::string itemName = "Default",
-		std::string itemDesc = "default",
-		int itemPrice = 0,
-		int itemCount = 0);
-	virtual ~CItem();
+	CItem(const std::string& sName = "Default", const std::string& sDesc = "default", int iPrice = 0, int iMaxAmount = 0);
 
-	std::string sGetName() const;
-	std::string sGetDesc() const;
-	int GetPrice() const;
-	int GetCount() const;
 
+	virtual ~CItem() = default;
+
+	bool operator==(const CItem& Other)
+	{
+		return Other.m_sName == m_sName;
+	}
+
+	//getter
+	const std::string& GetName() const { return m_sName; }
+	const std::string& GetDesc() const { return m_sDesc; }
+	int GetPrice() const { return m_iPrice; }
+	int GetMaxAmount() const { return m_iMaxAmount; }
+
+	//만약을 위한 setter (가격 변경)
 	void SetPrice(int itemPrice);
-	void GetItem(int amount = 1);
-	void ConsumeItem(int amount = 1);
 
-	virtual void UseItem();
+	// 개수 처리
+	// void GetItem(int amount = 1) { m_iMaxAmount += amount; } // 아이템획득
+	// void ConsumeItem(int amount = 1) { //아이템 사용
+	// 	if (m_iMaxAmount >= amount) m_iMaxAmount -= amount;
+	// }
+	// 
+	
+	// 아이템 사용시 효과
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) = 0;
+};
+
+//예시 체력 회복포션
+class Potion : public CItem
+{
+private:
+	int m_iHeal;
+
+public:
+	Potion(const std::string & sName = "체력 포션", const std::string & sDesc = "체력을 50 hp 회복한다.",
+		int iPrice = 100, int iMaxAmount = 10, int iHeal = 50)
+		: CItem(sName, sDesc, iPrice, iMaxAmount)
+		, m_iHeal(iHeal)
+	{
+
+	}
+
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer)
+	{
+		// 유효성 확인
+		std::shared_ptr<CPlayer> Player = pPlayer.lock();
+		if (!Player)
+		{
+			return;
+		}	
+
+		CGraphic::GetInstance()->AddLog("사용! 체력을 " + std::to_string(m_iHeal) + "hp 회복했습니다.");
+
+		float NewHealth = Player->GetHealth() + m_iHeal;
+		Player->SetHealth(NewHealth);
+	}
 };
