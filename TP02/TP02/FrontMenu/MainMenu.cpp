@@ -58,6 +58,12 @@ void CMainMenu::vScene() {
 }
 int CMainMenu::vRun() 
 {
+	//	커서 투명화
+	CONSOLE_CURSOR_INFO CurInfo;
+	CurInfo.bVisible = 0;
+	CurInfo.dwSize = 1;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &CurInfo);
+
 	while (scene != START) {
 		system("cls");
 

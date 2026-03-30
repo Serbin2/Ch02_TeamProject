@@ -18,6 +18,26 @@ CTimer::~CTimer()
 
 }
 
+CTimer* CTimer::m_pInstance = nullptr;
+
+CTimer* CTimer::GetInstance()
+{
+	if (m_pInstance == nullptr)
+	{
+		m_pInstance = new CTimer();
+	}
+
+	return m_pInstance;
+}
+
+void CTimer::Release()
+{
+	if (m_pInstance == nullptr)	return;
+
+	delete m_pInstance;
+	m_pInstance = nullptr;
+}
+
 void CTimer::Start()
 {
 	m_dPrev = steady_clock::now();

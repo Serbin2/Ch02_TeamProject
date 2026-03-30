@@ -161,6 +161,9 @@ void CGraphic::FlushingBuffer()
 
 void CGraphic::ReDraw()
 {
+	// 버퍼 비우기
+	FlushingBuffer();
+
 	//	화면 정리 및 레이아웃 그리기
 	DrawShape();
 

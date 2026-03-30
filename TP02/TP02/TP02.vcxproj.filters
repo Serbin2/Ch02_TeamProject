@@ -33,6 +33,7 @@
     <ClCompile Include="Projectile\BouncingProjectile.cpp" />
     <ClCompile Include="Projectile\TripleProjectile.cpp" />
     <ClCompile Include="Enemy\Golem\Golem.cpp" />
+    <ClCompile Include="InGameMenu\Reward.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="Projectile\BouncingProjectile.h" />
     <ClInclude Include="Projectile\TripleProjectile.h" />
     <ClInclude Include="Enemy\Golem\Golem.h" />
+    <ClInclude Include="InGameMenu\Reward.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />

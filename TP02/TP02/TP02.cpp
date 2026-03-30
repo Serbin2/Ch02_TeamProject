@@ -95,20 +95,20 @@ int main()
 
 int Loop()
 {
-	CTimer Timer;
-	Timer.Start();
+	CTimer* Timer = CTimer::GetInstance();
+	Timer->Start();
 	CGraphic* pGraphic = CGraphic::GetInstance();
 	CInput* pInput = CInput::GetInstance();
 	CInterface* UI = CInterface::GetInstance();
 	CGameWorld* World = CGameWorld::GetInstance();
 	while (1)
 	{
-		double DeltaTime = Timer.Update();
+		double DeltaTime = Timer->Update();
 		pInput->Update();
 
 		if ((pInput->IsKeyDown(VK_ESCAPE)) || pInput->IsKeyDown('G'))
 		{	//	게임 일시 정지
-			Timer.Pause();
+			Timer->Pause();
 
 			//pSound->Stop();
 
@@ -136,18 +136,17 @@ int Loop()
 				}
 
 				pGraphic->ReDraw();
-				Timer.Resume();
+				Timer->Resume();
 			}
 
-			pGraphic->FlushingBuffer();
 			pGraphic->ReDraw();
-			Timer.Resume();
+			Timer->Resume();
 		}
 
 		// TAB키 → 바로 상점 진입 (일시정지)
 		if (pInput->IsKeyDown(VK_TAB))
 		{
-			Timer.Pause();
+			Timer->Pause();
 			CShop shop;
 			shared_ptr<CActor> actor = CGameWorld::GetInstance()->GetPlayerActor();
 			CPlayer* player = static_cast<CPlayer*>(actor.get());
@@ -155,9 +154,8 @@ int Loop()
 			{
 				shop.Enter(player);
 			}
-			pGraphic->FlushingBuffer();
 			pGraphic->ReDraw();
-			Timer.Resume();
+			Timer->Resume();
 		}
 
 		World->Update(DeltaTime);

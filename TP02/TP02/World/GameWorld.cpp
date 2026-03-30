@@ -12,6 +12,8 @@
 #include <cstdlib>
 #include "../Enemy/Skeleton/Skeleton.h"
 #include "../Enemy/Golem/Golem.h"
+#include "../Time/Timer.h"
+#include "../InGameMenu/Reward.h"
 
 CGameWorld::CGameWorld()
 {
@@ -124,6 +126,12 @@ void CGameWorld::Tick(double deltaTime)
 		bossCreated = true;
 		shared_ptr<CSemiBoss> boss = make_shared<CSemiBoss>();
 		AddActor(boss);
+		
+		CTimer::GetInstance()->Pause();
+		CReward rew;
+		rew.GetReward();
+		CGraphic::GetInstance()->ReDraw();
+		CTimer::GetInstance()->Resume();
 	}
 }
 
