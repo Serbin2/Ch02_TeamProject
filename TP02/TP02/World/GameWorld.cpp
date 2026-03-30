@@ -329,3 +329,8 @@ shared_ptr<CActor> CGameWorld::RayTraceWithActorCustom(COORD startPos, COORD dir
 
 	return nullptr;
 }
+//플레이어 가져오기
+CPlayer* CGameWorld::GetPlayer() const
+{
+	return dynamic_cast<CPlayer*>(m_pPlayer.get());
+}
