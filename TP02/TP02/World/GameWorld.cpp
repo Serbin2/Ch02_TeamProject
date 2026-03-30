@@ -20,7 +20,6 @@ CGameWorld::CGameWorld()
 	m_dMonsterSpawnTime = 0;
 	m_bMonsterSpawn = 0;
 	m_iNumberOfMonsterSpawn = 0;
-	CInterface::GetInstance()->AddUI(29, "Actors ");
 }
 
 CGameWorld::~CGameWorld()
@@ -44,12 +43,23 @@ void CGameWorld::Release()
 {
 	if (m_pInstance == nullptr)	return;
 
+	for (auto it = m_pInstance->m_aActors.begin(); it != m_pInstance->m_aActors.end();)
+	{
+		if (!m_pInstance->EraseActorFromSort(it->first))
+		{
+			//error
+			int a = 1;
+		}
+		it = m_pInstance->m_aActors.erase(it);
+	}
+
 	delete m_pInstance;
 	m_pInstance = nullptr;
 }
 
 void CGameWorld::Initialize()
 {
+	m_dWorldTime = 0;
 	m_dMonsterSpawnInitialTime = 10.0;	//	10초마다 몬스터 스폰합니다
 	m_dMonsterSpawnTime = 3.0;
 	m_bMonsterSpawn = true;

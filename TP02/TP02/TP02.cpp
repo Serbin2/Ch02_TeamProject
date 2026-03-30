@@ -20,33 +20,16 @@
 #include "Manager/SoundManager/SoundManager.h"
 #include "Resource/Sound/Sound.h"
 
+//	게임 메인 루프
+int Loop();
+
 int main()
 {
 	SetConsoleOutputCP(CP_UTF8);
-	std::cout << "윈도우 10 이상의 콘솔창은 코드에서의 콘솔 창 크기 강제 조절이 동작하지 않을 수 있습니다.\n";
-	std::cout << "게임을 시작하기 전에 콘솔 창 크기를 적절하게 조절 한 후 진행하시기 바랍니다.\n";
-	std::cout << "아무 키를 눌러 계속합니다.\n";
-	char in = _getch();
-
-	CMainMenu menu;
-	menu.vRun();
-
 
 	///////////////////////////////////////////////
 	//	여기서부터 게임 로직을 작성합니다
 	///////////////////////////////////////////////
-	CGraphic* pGraphic = CGraphic::GetInstance();
-	CInput* pInput = CInput::GetInstance();
-	CTimer Timer;
-	CInterface* UI = CInterface::GetInstance();
-	CGameWorld* World = CGameWorld::GetInstance();
-
-	if (!pGraphic || !pInput) return 0;
-
-	if (pInput == nullptr)
-	{	//	입력이 없습니다
-		return 0;
-	}
 
 	// 사운드 테스트
 	HWND hHwnd = GetConsoleWindow();
@@ -65,20 +48,62 @@ int main()
 	//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
 	//pSound->Play(true);
 
+	bool bInitialized = false;
+	int result = MAIN_MENU;
+	while (1)
+	{
+		switch (result)
+		{
+		case MAIN_MENU:
+		{
+			CMainMenu menu;
+			result = menu.vRun();
+		}
+		break;
+		case GOTO_GAME:
+			if (!bInitialized)
+			{
+				CGraphic::GetInstance()->Initialize();
+				CGameWorld::GetInstance()->Initialize();
+				bInitialized = true;
+			}
+			result = Loop();
+			if (result != STORE_MENU)
+			{
+				CGraphic::Release();
+				CInput::Release();
+				CInterface::Release();
+				CGameWorld::Release();
+				bInitialized = false;
+			}
+			break;
+		}
 
-	UI->AddUI(0, "FPS Count : ");
-	UI->AddUI(1, "FPS : ");
-	pGraphic->Initialize();
-	World->Initialize();
+		if (result == EXIT_GAME)
+		{
+			break;
+		}
+	}
+
+	CGraphic::Release();
+	CInput::Release();
+	CInterface::Release();
+	CGameWorld::Release();
+	return 0;
+}
+
+
+int Loop()
+{
+	CTimer Timer;
 	Timer.Start();
-
-	//	이펙트 테스트용
-	int testPosition = 10;
+	CGraphic* pGraphic = CGraphic::GetInstance();
+	CInput* pInput = CInput::GetInstance();
+	CInterface* UI = CInterface::GetInstance();
+	CGameWorld* World = CGameWorld::GetInstance();
 	while (1)
 	{
 		double DeltaTime = Timer.Update();
-		UI->SetValue(0, Timer.GetFpsCount());
-		UI->SetValue(1, Timer.GetFPS());
 		pInput->Update();
 
 		if ((pInput->IsKeyDown(VK_ESCAPE)) || pInput->IsKeyDown('G'))
@@ -96,13 +121,7 @@ int main()
 			}
 			else if (result == 2)
 			{
-				break;
-				// 게임 종료 → 메인메뉴로 복귀
-				CGraphic::Release();
-				CInput::Release();
-				CMainMenu frontMenu;
-				frontMenu.vRun();
-				return 0;
+				return MAIN_MENU;
 			}
 			else if (result == 3)
 			{
@@ -136,45 +155,10 @@ int main()
 			{
 				shop.Enter(player);
 			}
+			pGraphic->FlushingBuffer();
 			pGraphic->ReDraw();
 			Timer.Resume();
 		}
-
-#ifdef _DEBUG	//	이펙트 테스트용 
-		if (pInput->IsKeyDown('O'))
-		{	//	이펙트 테스트
-			shared_ptr<CEffect> FX = make_shared<CEffect>();
-			COORD LT;
-			LT.X = 10;
-			LT.Y = testPosition;
-			COORD RB = { LT.X + 1, LT.Y + 2 };
-			FX->CreateStaticEffect(Pixel::star, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW, LT, RB, 3.0);
-			CGameWorld::GetInstance()->AddActor(FX);
-			testPosition += 2;
-		}
-
-		if (pInput->IsKeyDown('P'))
-		{
-			shared_ptr<CEffect> FX = make_shared<CEffect>();
-			vector<pair<int, int >> material;
-			vector<pair<COORD, COORD>> shape;
-			material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW | TEXT_BACKGROUND_RED_INT));
-			material.push_back(make_pair(Pixel::square, TEXT_FOREGROUND_RED_INT | TEXT_BACKGROUND_RED));
-			material.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_RED | TEXT_BACKGROUND_YELLOW));
-			material.push_back(make_pair(Pixel::dust, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
-			shape.push_back(make_pair(COORD(22, 22), COORD(23, 23)));
-			shape.push_back(make_pair(COORD(20, 20), COORD(25, 25)));
-			shape.push_back(make_pair(COORD(21, 21), COORD(24, 24)));
-			shape.push_back(make_pair(COORD(22, 22), COORD(23, 23)));
-			vector<double> duration;
-			duration.push_back(0.1);
-			duration.push_back(0.5);
-			duration.push_back(1.0);
-			duration.push_back(1.0);
-			FX->CreateDynamicEffect(4, material, shape, duration);
-			CGameWorld::GetInstance()->AddActor(FX);
-		}
-#endif
 
 		World->Update(DeltaTime);
 
@@ -188,10 +172,4 @@ int main()
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
 		pGraphic->EndDraw();
 	}
-
-	CGraphic::Release();
-	CInput::Release();
-	CInterface::Release();
-	CGameWorld::Release();
-	return 0;
 }

@@ -80,6 +80,7 @@ void CGraphic::Initialize()
 	}
 
 	//	게임 레이아웃을 그려둡니다
+	FlushingBuffer();
 	DrawShape();
 }
 

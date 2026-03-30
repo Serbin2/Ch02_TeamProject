@@ -1,5 +1,6 @@
 // MainMenu.cpp
 #include "MainMenu.h"
+#include "../Standard.h"
 #include <conio.h>
 #include <cstdlib>
 
@@ -55,15 +56,17 @@ void CMainMenu::vScene() {
 	}
 
 }
-void CMainMenu::vRun() {
+int CMainMenu::vRun() 
+{
 	while (scene != START) {
 		system("cls");
 
 		if (scene == MENU) vChoice();
 		else if (scene == CREDIT) vCredit();
-		else if (scene == EXIT) exit(0);
+		else if (scene == EXIT) return EXIT_GAME;
 
 		vScene();
 	}
 
+	return GOTO_GAME;
 }
