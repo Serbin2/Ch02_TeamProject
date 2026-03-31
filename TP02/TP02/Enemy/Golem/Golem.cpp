@@ -1,8 +1,10 @@
 #include "Golem.h"
 #include "../../Graphics/Effect.h"
 
-#include "../../Resource/Sound/Sound.h"
-#include "../../Manager/ResourceManager/ResourceManager.h"
+#include "../../Manager/SoundManager/SoundManager.h"
+
+#include "../../Inventory/Inventory.h"
+#include "../../Character/Player.h"
 
 #define GOLEM_MOVE	5.0
 
@@ -26,8 +28,7 @@ CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_
 	m_aDuration.push_back(0.6);
 	m_sName = "\"고철더미\"";
 
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Golem");
-	pSound->Play(false);
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Golem");
 }
 
 CGolem::~CGolem()
@@ -70,3 +71,4 @@ void CGolem::Attack()
 	FX->AddTag(ETag::environment);
 	CGameWorld::GetInstance()->AddActor(FX);
 }
+

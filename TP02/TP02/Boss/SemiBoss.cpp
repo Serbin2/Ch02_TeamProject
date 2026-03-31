@@ -2,6 +2,7 @@
 #include "../Graphics/Interface.h"
 #include "../Projectile/Projectile.h"
 #include "../Character/Player.h"
+#include "../Manager/SoundManager/SoundManager.h"
 
 #define ATTACK_DELAY	5.0
 #define SHOT_DELAY 1.0
@@ -74,6 +75,7 @@ void CSemiBoss::Move()
 		{
 			m_eState = Await;
 			m_dAccel = 0.0;
+			GET_SINGLE(CSoundManager)->PlaySFX(L"Boss");
 			break;
 		}
 		m_cPosition.X--;
@@ -83,6 +85,7 @@ void CSemiBoss::Move()
 		{
 			m_eState = Await;
 			m_dAccel = 0.0;
+			GET_SINGLE(CSoundManager)->PlaySFX(L"Boss");
 			break;
 		}
 		m_cPosition.X++;

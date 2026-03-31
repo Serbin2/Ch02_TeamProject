@@ -1,11 +1,16 @@
 #include "../SoundManager/SoundManager.h"
 #include "../ResourceManager/ResourceManager.h"
-#include "../../Resource/Sound/Sound.h"
 
 CSoundManager::~CSoundManager()
 {
 	if (m_SoundDevice)
 		m_SoundDevice->Release();
+
+	if (m_pBGM)
+	{
+		m_pBGM->Stop(true);
+		m_pBGM = nullptr;	
+	}
 }
 
 void CSoundManager::Init(HWND hHwnd)
@@ -23,7 +28,7 @@ void CSoundManager::Init(HWND hHwnd)
 	}
 }
 
-void CSoundManager::Play(const std::wstring& wsKey, bool bLoop /*= false*/)
+void CSoundManager::PlaySFX(const std::wstring& wsKey)
 {
 	auto pSound = GET_SINGLE(CResourceManager)->GetSound(wsKey);
 	if (pSound == nullptr)
@@ -31,5 +36,42 @@ void CSoundManager::Play(const std::wstring& wsKey, bool bLoop /*= false*/)
 		return;
 	}
 
-	pSound->Play(bLoop);
+	pSound->Play(false);
+}
+
+void CSoundManager::PlayBGM(const std::wstring& wsKey)
+{
+	if (m_pBGM)
+	{
+		m_pBGM->Stop(true);
+		m_pBGM = nullptr;	
+	}
+
+	m_pBGM = GET_SINGLE(CResourceManager)->GetSound(wsKey);
+	if (m_pBGM == nullptr)
+	{
+		return;
+	}
+
+	m_pBGM->Play(true);
+}
+
+void CSoundManager::RePlayBGM()
+{
+	if (!m_pBGM)
+	{
+		return;
+	}
+
+	m_pBGM->Play(true);
+}
+
+void CSoundManager::StopBGM()
+{
+	if (!m_pBGM)
+	{
+		return;
+	}
+
+	m_pBGM->Stop();
 }

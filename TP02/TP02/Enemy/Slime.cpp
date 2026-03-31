@@ -1,6 +1,6 @@
 #include "Slime.h"
-#include "../Resource/Sound/Sound.h"
-#include "../Manager/ResourceManager/ResourceManager.h"
+#include "../Manager/SoundManager/SoundManager.h"
+
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
@@ -23,8 +23,7 @@ CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGRO
 	m_fAttackPower = 10.0f;
 	m_fDefense = 3.0f;
 
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Slime");
-	pSound->Play(false);
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Slime");
 }
 
 
@@ -64,11 +63,12 @@ void CSlime::Tick(double DeltaTime)
 }
 
 void CSlime::OnHit(float damage)
-{	
-	//	기본 처리를 합니다.
+{
 	CEnemy::OnHit(damage);
 
-	//	피격 애니메이션 처리입니다.
+	if (m_fHealth <= 0.0f) DropItem();
+
 	m_pShape = m_iShapeHitted;
-	m_dAnimationTime = 1.0;	
+	m_dAnimationTime = 1.0;
 }
+
