@@ -6,6 +6,7 @@
 #include "../Utils/Utils.h"
 #include "../Graphics/Effect.h"
 #include "../Manager/SoundManager/SoundManager.h"
+#include "../Time/Timer.h"
 
 CBoss::CBoss() : CEnemy(0, 0)
 {
@@ -23,12 +24,14 @@ CBoss::CBoss() : CEnemy(0, 0)
 	CInterface::GetInstance()->AddUI(25, "HP : ");
 	CInterface::GetInstance()->SetValue(24, " ");
 	CInterface::GetInstance()->SetValue(25, m_fHealth);
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Boss");
 }
 
 CBoss::~CBoss()
 {
 	CInterface::GetInstance()->RemoveUI(24);
 	CInterface::GetInstance()->RemoveUI(25);
+	GET_SINGLE(CSoundManager)->PlaySFX(L"FBossDead");
 };
 
 void CBoss::Tick(double DeltaTime)
@@ -97,6 +100,11 @@ void CBoss::OnHit(float Damage)
 	if (IsDead())
 	{
 		// [TODO-PJH] : 플레이어에게 몬스터가 소유한 아이템 or 경험치 정보 전달 
+		GET_SINGLE(CSoundManager)->PlaySFX(L"FBossLastHit");
+		CTimer::GetInstance()->Pause();
+		Sleep(2000);
+		CTimer::GetInstance()->Resume();
+		m_bIsValid = false;
 		return;
 	}
 	CInterface::GetInstance()->SetValue(25, m_fHealth);

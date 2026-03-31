@@ -4,9 +4,9 @@ CSplitProjectile::CSplitProjectile() : CProjectile(Pixel::circle, TEXT_FOREGROUN
 
 void CSplitProjectile::CheckCollision()
 {
-	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition);
-	if (!pActor || !pActor->HasTag(ETag::character))
-		return;
+	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition, ETag::monster);
+	if (!pActor) pActor = CGameWorld::GetInstance()->FindActorByActorCustom(m_cPosition, ETag::monster);
+	if (!pActor)	return;
 
 	auto pCharacter = std::dynamic_pointer_cast<CCharacter>(pActor);
 	if (!pCharacter)

@@ -181,7 +181,7 @@ bool CGameWorld::Tick(double deltaTime)
 	}
 
 
-	if (m_dWorldTime > 145.0 && !m_bSemibossWarned)
+	if (m_dWorldTime > 85.0 && !m_bSemibossWarned)
 	{
 		m_bSemibossWarned = true;
 		CTimer::GetInstance()->Pause();
@@ -192,7 +192,7 @@ bool CGameWorld::Tick(double deltaTime)
 		CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
 	}
 
-	if (m_dWorldTime > 150.0 && !m_bSemibossCreated)				////////////////////////////	중간보스 생성
+	if (m_dWorldTime > 90.0 && !m_bSemibossCreated)				////////////////////////////	중간보스 생성
 	{	//	시간으로 보스 생성
 		
 		m_bSemibossCreated = true;
@@ -201,7 +201,7 @@ bool CGameWorld::Tick(double deltaTime)
 		m_pSemiBoss = sboss;
 	}
 
-	if (m_dWorldTime > 295.0 && !m_bBossWarned)
+	if (m_dWorldTime > 175.0 && !m_bBossWarned)
 	{
 		m_bBossWarned = true;
 		CTimer::GetInstance()->Pause();
@@ -212,7 +212,7 @@ bool CGameWorld::Tick(double deltaTime)
 		CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
 	}
 
-	if (m_dWorldTime > 300.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
+	if (m_dWorldTime > 18.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
 		m_bBossCreated = true;
 		shared_ptr<CBoss> boss = make_shared<CBoss>();

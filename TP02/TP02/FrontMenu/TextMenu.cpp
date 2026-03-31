@@ -59,7 +59,11 @@ void CTextMenu::Intro()
 		Sleep(80);
 	}
 	//	TODO 여기에 인트로 사운트 추가
-
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Fall");
+	while (_kbhit())
+	{
+		_getch();
+	}
 	_getch();
 }
 
@@ -95,6 +99,10 @@ void CTextMenu::Outro()
 		Sleep(80);
 	}
 	//	TODO 여기에 아웃트로 사운트 추가
-
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Leave");
+	while (_kbhit())
+	{
+		_getch();
+	}
 	_getch();
 }

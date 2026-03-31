@@ -26,12 +26,12 @@ int CReward::GetReward()
 	std::cout << "레벨업레벨업레벨업레벨업레벨업레벨업레벨업레벨업레벨업";
 	}
 
-	SetConsoleCursorPosition(m_hOP, COORD(15, 12));
+	SetConsoleCursorPosition(m_hOP, COORD(14, 12));
 	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_BLACK);
 	std::cout << ">>>>>>>>>> 무기 업그레이드 시스템 <<<<<<<<<<";
-	SetConsoleCursorPosition(m_hOP, COORD(15, 14));
+	SetConsoleCursorPosition(m_hOP, COORD(14, 14));
 	std::cout << ">>> 1. 트리플 샷            2. 바운스 샷 <<<";
-	SetConsoleCursorPosition(m_hOP, COORD(15, 15));
+	SetConsoleCursorPosition(m_hOP, COORD(14, 15));
 	std::cout << ">>> 3. 유도 미사일  4. 폭발탄  5. 파편탄 <<<";
 
 	auto pPlayerActor = CGameWorld::GetInstance()->GetPlayerActor();
@@ -91,11 +91,11 @@ int CDead::Dead()
 	std::cout << "사망사망사망사망사망사망사망사망사망사망사망사망사망사망사망";
 	}
 
-	SetConsoleCursorPosition(m_hOP, COORD(10, 12));
+	SetConsoleCursorPosition(m_hOP, COORD(18, 12));
 	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_BLACK);
-	std::cout << "        >>>>>>>>   사망했습니다! <<<<<<<<<<<<";
-	SetConsoleCursorPosition(m_hOP, COORD(10, 14));
-	std::cout << "              >>>> 로비로 나가기 <<<<";
+	std::cout << ">>>>>>>>   사망했습니다! <<<<<<<<<<<<";
+	SetConsoleCursorPosition(m_hOP, COORD(25, 14));
+	std::cout << ">>>> 로비로 나가기 <<<<";
 
 	while (_kbhit())
 	{ // 버퍼에 입력이 있는 동안
@@ -125,14 +125,16 @@ int CWarning::Warning()
 	std::cout << "경고경고경고경고경고경고경고경고경고경고경고경고경고경고경고";
 	}
 
-	SetConsoleCursorPosition(m_hOP, COORD(10, 12));
+	SetConsoleCursorPosition(m_hOP, COORD(14, 12));
 	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_YELLOW);
-	std::cout << "    >>>>>>>>  강력한 울림이 느껴집니다!  <<<<<<<<<<<<";
-	SetConsoleCursorPosition(m_hOP, COORD(10, 14));
-	std::cout << "    >>>>>> 나는 다가오는 위험에 준비가 되었다! <<<<<<";
-	SetConsoleCursorPosition(m_hOP, COORD(10, 18));
-	std::cout << "       >>>>>>>> 아무 키나 눌러서 계속하기 <<<<<<<<";
+	std::cout << ">>>>>>>>  강력한 울림이 느껴집니다!  <<<<<<<<<<<<";
+	SetConsoleCursorPosition(m_hOP, COORD(14, 14));
+	std::cout << ">>>>>> 나는 다가오는 위험에 준비가 되었다! <<<<<<";
+	SetConsoleCursorPosition(m_hOP, COORD(17, 18));
+	std::cout << ">>>>>>>> 아무 키나 눌러서 계속하기 <<<<<<<<";
 	
+	Sleep(1500);
+
 	while (_kbhit())
 	{ // 버퍼에 입력이 있는 동안
 		in = _getch();      // 문자를 가져와 버퍼에서 제거

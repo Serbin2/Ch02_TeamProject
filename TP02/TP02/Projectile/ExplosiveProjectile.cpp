@@ -35,6 +35,7 @@ void CExplosiveProjectile::CheckCollision()
 				if (splashPos.X >= 0 && splashPos.X < 30 && splashPos.Y >= 0 && splashPos.Y < 30)
 				{
 					auto pSplashActor = pGameWorld->FindActorFromPosition(splashPos);
+					if (pSplashActor == nullptr) pSplashActor = pGameWorld->FindActorByActorCustom(splashPos);
 					if (pSplashActor == nullptr || !pSplashActor->HasTag(ETag::character))
 						continue;
 

@@ -41,8 +41,6 @@ int main(){
 
 	LoadSound();
 
-	GET_SINGLE(CSoundManager)->GetInstance()->PlayBGM(L"Main");
-
 	bool bInitialized = false;
 	int result = MAIN_MENU;
 	while (1)
@@ -51,6 +49,7 @@ int main(){
 		{
 		case MAIN_MENU:
 		{
+			GET_SINGLE(CSoundManager)->GetInstance()->PlayBGM(L"Main");
 			CMainMenu menu;
 			result = menu.vRun();
 		}
@@ -179,7 +178,13 @@ int Loop()
 		result = World->Update(DeltaTime);
 		if (result == MAIN_MENU)
 		{
+			GET_SINGLE(CSoundManager)->StopBGM();
 			return MAIN_MENU;
+		}
+		if (result == GAME_CLEARED)
+		{
+			GET_SINGLE(CSoundManager)->StopBGM();
+			return GAME_CLEARED;
 		}
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
@@ -200,7 +205,7 @@ void LoadSound()
 		// BGM
 		GET_SINGLE(CResourceManager)->LoadSound(L"Game", L"BGM01.wav", ESoundType::BGM);
 		GET_SINGLE(CResourceManager)->LoadSound(L"Main", L"Main.wav", ESoundType::BGM);
-		GET_SINGLE(CResourceManager)->LoadSound(L"Boss", L"Boss.wav", ESoundType::BGM);
+		GET_SINGLE(CResourceManager)->LoadSound(L"BossBGM", L"BossBGM.wav", ESoundType::BGM);
 
 		// SFX
 		// 기타
@@ -210,6 +215,8 @@ void LoadSound()
 		GET_SINGLE(CResourceManager)->LoadSound(L"GunChange", L"GunChange.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"String", L"Key.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"LASER", L"LASER.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Fall", L"Fall.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Leave", L"Leave.wav", ESoundType::SFX);
 
 		// 몬스터
 		GET_SINGLE(CResourceManager)->LoadSound(L"Boss", L"Boss.wav", ESoundType::SFX);
@@ -221,5 +228,8 @@ void LoadSound()
 		GET_SINGLE(CResourceManager)->LoadSound(L"SkeletonDead", L"SkeletonDead.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"SlimeDead", L"SlimeDead.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"GolemDead", L"GolemDead.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"BossDead", L"BossDead.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"FBossDead", L"FBossDead.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"FBossLastHit", L"FBossLastHit.wav", ESoundType::SFX);
 	}
 }
