@@ -212,7 +212,7 @@ bool CGameWorld::Tick(double deltaTime)
 		CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
 	}
 
-	if (m_dWorldTime > 18.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
+	if (m_dWorldTime > 180.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
 		m_bBossCreated = true;
 		shared_ptr<CBoss> boss = make_shared<CBoss>();

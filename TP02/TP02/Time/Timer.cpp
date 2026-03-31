@@ -5,7 +5,7 @@
 CTimer::CTimer()
 {
 	m_bPaused = false;
-	m_iTargetFPS = 0;
+	m_iTargetFPS = 120;
 	m_dFrameDuration = duration<double>(1.0 / m_iTargetFPS);
 
 	m_dFpsTimer = 0.0f;
