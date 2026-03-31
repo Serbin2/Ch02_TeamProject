@@ -35,7 +35,9 @@ CGolem::~CGolem()
 
 void CGolem::Tick(double deltaTime)
 {
+	if (!m_bIsValid)	return;
 	m_dMoveTimer -= deltaTime;
+	if (m_dInvincibleTimer > 0.0) m_dInvincibleTimer -= deltaTime;
 	bool attack = m_dMoveTimer <= 0.0;
 	CEnemy::Move();
 

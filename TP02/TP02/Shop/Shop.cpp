@@ -3,6 +3,8 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include <cstdlib>   // rand(), srand()
+#include <ctime>     // time()
 #include "../Inventory/Inventory.h"
 #include "../Graphics/Interface.h"
 #include "../Graphics/ConsoleGraphic.h"
@@ -40,7 +42,7 @@ static std::string GetPad(int contentWidth)
 	int consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
 
 	int left = (consoleWidth - contentWidth) / 2;
-	if (left < 0) left = 0;   
+	if (left < 0) left = 0;
 
 	return std::string(left, ' ');
 }
@@ -216,26 +218,56 @@ static void BoxRowDesc(const std::string& pad,
 
 //  PrintDialogue — 상점 주인 대사 출력
 //
-//  화면을 지운 뒤 타이핑 효과(글자당 80ms)로 대사를 출력하고, 2초 후 자동으로 반환
-//  플레이어가 읽는 동안 다른 입력을 받지 않으므로 Sleep(1500) 뒤 다음 루프로 진행
+//  대사 길이에 따라 박스 너비를 동적으로 계산해서
+//  긴 대사가 들어와도 항상 박스 안에 꽉 맞게 가운데 정렬됨
+//
+//  박스 구조:
+//   +--[ 상점 주인 ]----...----+   ← 헤더
+//   | 대사 내용                |   ← 본문
+//   +--------------------------+   ← 하단선
+//
+//  너비 계산:
+//   " | " (3칸) + 대사(VisWidth) + " |" (2칸) = 본문 최소 너비
+//   헤더 " +--[ 상점 주인 ]" = 17칸 고정이므로 그보다 좁아지지 않게 클램프
 
 static void PrintDialogue(const std::string& text)
 {
 	system("cls");
 
-	std::string pad = GetPad(46); // 대사 박스 너비 46에 맞춰 계산
-	PrintTopPadding(4);           // 세로 중앙 정렬용 상단 여백
+	// 대사의 실제 콘솔 출력 너비 계산 (한글 2칸, 영문 1칸)
+	int textWidth = VisWidth(text);
+
+	// 박스 내부 너비 = 대사 양쪽 여백( " " 각 1칸) + 대사 너비
+	// 최소 너비 40 보장 (헤더 "+--[ 상점 주인 ]---...---+" 가 찌그러지지 않게)
+	int innerWidth = textWidth + 2;
+	if (innerWidth < 40) innerWidth = 40;
+
+	// 전체 박스 너비 = 양쪽 '+' 포함
+	int boxWidth = innerWidth + 2;
+
+	// 가운데 정렬용 왼쪽 패딩 (박스 전체 너비 기준)
+	std::string pad = GetPad(boxWidth);
+
+	PrintTopPadding(4); // 세로 중앙 정렬용 상단 여백
+
+	// 헤더: "+--[ 상점 주인 ]---...---+"
+	// "+--[ 상점 주인 ]" = 17칸 고정, 나머지를 '-' 로 채움
+	int dashCount = innerWidth - 15; // "[ 상점 주인 ]" 부분(15칸) 제외한 나머지
+	if (dashCount < 2) dashCount = 2;
 
 	ResetColor();
-	std::cout << pad << " +--[ ";
+	std::cout << pad << "+--[ ";
 	SetColor(TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_BLACK);
 	std::cout << "상점 주인";
 	ResetColor();
-	std::cout << " ]------------------------+\n";
-	std::cout << pad << " | ";
+	std::cout << " ]";
+	for (int i = 0; i < dashCount; i++) std::cout << "-";
+	std::cout << "+\n";
+
+	// 본문: "| 대사 |"
+	std::cout << pad << "| ";
 
 	// 타이핑 효과: 한글은 3바이트를 한 단위로 출력해야 글씨 안깨짐
-
 	SetColor(TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 	int i = 0;
 	while (i < (int)text.size())
@@ -255,9 +287,17 @@ static void PrintDialogue(const std::string& text)
 		Sleep(80);
 	}
 
-	std::cout << "\n";
+	// 대사 뒤 남은 공백 채우기 (박스 오른쪽 벽 맞춤)
+	int trailing = innerWidth - textWidth - 1;
+	if (trailing > 0) std::cout << std::string(trailing, ' ');
+
+	std::cout << " |\n";
+
+	// 하단선: "+---...---+"
 	ResetColor();
-	std::cout << pad << " +------------------------------------------+\n";
+	std::cout << pad << "+";
+	for (int j = 0; j < innerWidth; j++) std::cout << "-";
+	std::cout << "+\n";
 
 	Sleep(1500); // 플레이어가 대사를 읽을 시간
 	ResetColor();
@@ -265,8 +305,11 @@ static void PrintDialogue(const std::string& text)
 
 
 //  CShop 생성자
+//  rand() 시드를 time(0) 으로 초기화해서 매 실행마다 다른 랜덤값이 나오게 함
+
 CShop::CShop()
 {
+	srand((unsigned int)time(0)); // 랜덤 시드 초기화 (입장 대사 랜덤 선택에 사용)
 	InitShopItems();
 }
 
@@ -275,7 +318,6 @@ CShop::CShop()
 //
 // 구매 시 원본을 직접 주지 않고 복사본을 만들어 인벤토리에 넣음
 // 원본은 여기서 딱 한 번만 생성하면됨
-//
 
 void CShop::InitShopItems()
 {
@@ -299,7 +341,15 @@ void CShop::InitShopItems()
 
 void CShop::Enter(CPlayer* pPlayer)
 {
-	PrintDialogue("어서오세요! 뭘 찾으세요?");
+	// 입장 대사 목록 — 대사를 추가/수정하려면 이 배열만 편집하면 됨
+	// 대사를 늘리면 아래 rand() % 숫자도 같이 바꿔야 함 (현재 3개 → % 3)
+	const std::string enterLines[] =
+	{
+		"여기는 아이템 없인 못 버틴다. 알지?",
+		"놈들 속에서 살아남으려면, 몸부터 지켜라.",
+		"손상된 상태 감지... 회복 포션이 필요해 보이는군.",
+	};
+	PrintDialogue(enterLines[rand() % 3]);
 
 	while (true)
 	{
@@ -325,7 +375,7 @@ void CShop::Enter(CPlayer* pPlayer)
 		else if (key == '0') break;
 	}
 
-	PrintDialogue("또 오세요~ 기다리고 있을게요!");
+	PrintDialogue("무적도 영원하진 않다. 착각하지 마라.");
 
 	// 상점 종료 후 원래 게임 화면 복원
 	ResetColor();
@@ -348,7 +398,7 @@ void CShop::Enter(CPlayer* pPlayer)
 //   | 2. ...                       |
 //   +----+
 //
-// 판매가는 구매가의 60%로 고정 -> 조건
+// 판매가는 구매가의 60%로 고정
 
 void CShop::ShowShopUI(CPlayer* pPlayer)
 {
@@ -455,7 +505,7 @@ void CShop::SellMenu(CPlayer* pPlayer)
 			"", TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 		HLine(pad);
 		Sleep(500);
-		PrintDialogue("팔 물건이 없으신 것 같은데요?");
+		PrintDialogue("뭘 팔려고 한거야? 공기라도 팔 셈이냐");
 		return;
 	}
 
@@ -517,8 +567,8 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 
 	if (!pPlayer->SpendGold(price))
 	{
-		PrintDialogue("골드가 부족하시네요! 필요한 금액은 "
-			+ std::to_string(price) + "G 입니다.");
+		PrintDialogue("이봐, 골드가 부족한데... "
+			+ std::to_string(price) + "G 정도는 가져와야지.");
 		return;
 	}
 
@@ -530,7 +580,7 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 		pPlayer->GetInventory()->AddItem(newPotion, 1);
 	}
 
-	PrintDialogue("[" + m_ShopItems[index]->GetName() + "] 좋은 선택이에요! ");
+	PrintDialogue("[" + m_ShopItems[index]->GetName() + "] 선택 확인... 아직 죽을 운명은 아닌가 보군.");
 }
 
 
@@ -546,7 +596,7 @@ void CShop::SellItem(CPlayer* pPlayer, int index)
 
 	if (index < 0 || index >= (int)inv->GetSize() || !inv->GetItem(index))
 	{
-		PrintDialogue("그런 물건은 없는데요..?");
+		PrintDialogue("그런 물건은 없다..");
 		return;
 	}
 
@@ -556,5 +606,5 @@ void CShop::SellItem(CPlayer* pPlayer, int index)
 	inv->RemoveItem(index, 1);   // 인벤토리에서 1개 제거
 	pPlayer->AddGold(sellPrice); // 판매 대금 지급
 
-	PrintDialogue("[" + name + "] " + std::to_string(sellPrice) + "G에 잘 샀습니다. 고마워요!");
+	PrintDialogue("[" + name + "] " + std::to_string(sellPrice) + "G에 샀다. 좋다... 더 많은 걸 가져와라.");
 }

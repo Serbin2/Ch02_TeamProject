@@ -80,9 +80,6 @@ void CPlayer::Move()
 	{
 		m_cPosition.X = nextX;
 		m_cPosition.Y = nextY;
-
-		CInterface::GetInstance()->SetValue(4, m_cPosition.X);
-		CInterface::GetInstance()->SetValue(5, m_cPosition.Y);
 	}
 
 	m_cMoveDirection = { 0, 0 }; // 이동 후 방향 초기화
