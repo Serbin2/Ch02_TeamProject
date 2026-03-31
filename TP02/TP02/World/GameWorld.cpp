@@ -28,6 +28,8 @@ CGameWorld::CGameWorld()
 	m_pBoss = nullptr;
 	m_bSemibossCreated = false;
 	m_bBossCreated = false;
+	m_bSemibossWarned = false;
+	m_bBossWarned = false;
 }
 
 CGameWorld::~CGameWorld()
@@ -83,6 +85,8 @@ void CGameWorld::Initialize()
 	m_pPlayer = nullptr;
 	m_bSemibossCreated = false;
 	m_bBossCreated = false;
+	m_bSemibossWarned = false;
+	m_bBossWarned = false;
 
 	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::Gunman, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	m_pPlayer = pPlayer;
@@ -173,30 +177,40 @@ bool CGameWorld::Tick(double deltaTime)
 		}
 	}
 
-	if (m_dWorldTime > 300.0 && !m_bSemibossCreated)				////////////////////////////	중간보스 생성
-	{	//	시간으로 보스 생성
+
+	if (m_dWorldTime > 295.0 && !m_bSemibossWarned)
+	{
+		m_bSemibossWarned = true;
 		CTimer::GetInstance()->Pause();
 		CWarning warn;
 		int reward = warn.Warning();
 		CGraphic::GetInstance()->ReDraw();
 		CTimer::GetInstance()->Resume();
 		CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
+	}
 
+	if (m_dWorldTime > 300.0 && !m_bSemibossCreated)				////////////////////////////	중간보스 생성
+	{	//	시간으로 보스 생성
+		
 		m_bSemibossCreated = true;
 		shared_ptr<CSemiBoss> sboss = make_shared<CSemiBoss>();
 		AddActor(sboss);
 		m_pSemiBoss = sboss;
 	}
 
-	if (m_dWorldTime > 600.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
-	{	//	시간으로 보스 생성
+	if (m_dWorldTime > 595.0 && !m_bBossWarned)
+	{
+		m_bBossWarned = true;
 		CTimer::GetInstance()->Pause();
 		CWarning warn;
 		int reward = warn.Warning();
 		CGraphic::GetInstance()->ReDraw();
 		CTimer::GetInstance()->Resume();
 		CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
+	}
 
+	if (m_dWorldTime > 600.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
+	{	//	시간으로 보스 생성
 		m_bBossCreated = true;
 		shared_ptr<CBoss> boss = make_shared<CBoss>(Pixel::square, TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED, FGridSize(2,2) );
 		AddActor(boss);

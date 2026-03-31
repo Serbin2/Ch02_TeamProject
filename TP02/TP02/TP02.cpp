@@ -89,7 +89,7 @@ int main()
 			}
 			break;
 		case GAME_CLEARED:
-
+			//	게임 종료 화면 추가해야함
 
 			result = MAIN_MENU;
 			break;
