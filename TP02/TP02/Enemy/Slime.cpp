@@ -17,6 +17,7 @@ CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGRO
 
 	//	기본 정보를 설정합니다.
 	m_sName = "슬라임";
+	m_eTag = ETag::actor | ETag::character | ETag::monster;
 	m_pShape = m_iShapeA;
 }
 

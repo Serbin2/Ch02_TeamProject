@@ -8,6 +8,7 @@ CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_
 	m_fSpeed = 0.5f;
 	m_fAttackPower = 80.f;
 	m_dMoveTimer = (float)rand() / RAND_MAX + 1.0f;
+	m_eTag = ETag::actor | ETag::character | ETag::monster;
 
 	//	체력 설정 해야함
 

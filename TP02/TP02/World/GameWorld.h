@@ -67,14 +67,17 @@ private:
 	//	각종 이벤트는 여기서 실행하세요.
 	void Tick(double deltaTime);
 	double m_dWorldTime;	//	월드 진행 시간입니다.
+	int m_iWorldLevel;
 
-	void MonsterSpawnEvent(double deltaTime);
+	void MonsterSpawnEvent();
 	bool EraseActorFromSort(shared_ptr<CActor> actor);
 
 	double m_dMonsterSpawnInitialTime;
 	double m_dMonsterSpawnTime;
 	bool m_bMonsterSpawn;
-	int m_iNumberOfMonsterSpawn;
+	int m_iSpawnSlime;
+	int m_iSpawnSkeleton;
+	int m_iSpawnGolem;
 
 	//	플레이어 액터는 특별 관리
 	shared_ptr<CActor> m_pPlayer;

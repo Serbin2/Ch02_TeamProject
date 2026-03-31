@@ -21,7 +21,10 @@ CGameWorld::CGameWorld()
 	m_dMonsterSpawnInitialTime = 0;
 	m_dMonsterSpawnTime = 0;
 	m_bMonsterSpawn = 0;
-	m_iNumberOfMonsterSpawn = 0;
+	m_iWorldLevel = 0;
+	m_iSpawnSlime = 0;
+	m_iSpawnSkeleton = 0;
+	m_iSpawnGolem = 0;
 }
 
 CGameWorld::~CGameWorld()
@@ -65,9 +68,11 @@ void CGameWorld::Initialize()
 	m_dMonsterSpawnInitialTime = 10.0;	//	10초마다 몬스터 스폰합니다
 	m_dMonsterSpawnTime = 3.0;
 	m_bMonsterSpawn = true;
-	m_iNumberOfMonsterSpawn = 3;		//	3마리씩 스폰합니다.
+	m_iSpawnSlime = 0;
+	m_iSpawnSkeleton = 0;
+	m_iSpawnGolem = 0;
 
-	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::square, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
+	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::Gunman, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	//pPlayer->SetProjectile(make_shared<CBouncingProjectile>());
 	pPlayer->SetProjectile(make_shared<CTripleProjectile>());
 	m_pPlayer = pPlayer;
@@ -117,31 +122,42 @@ void CGameWorld::Tick(double deltaTime)
 {
 	m_dWorldTime += deltaTime;
 
-	//	몬스터 스폰 이벤트
-	MonsterSpawnEvent(deltaTime);
-
 	static bool bossCreated = false;
-	if (m_dWorldTime > 3 && !bossCreated)
+	static bool SemiBossCreated = false;
+	if (m_dWorldTime > 5.0 && !SemiBossCreated)				////////////////////////////	중간보스 생성
+	{	//	시간으로 보스 생성
+		SemiBossCreated = true;
+		shared_ptr<CSemiBoss> sboss = make_shared<CSemiBoss>();
+		AddActor(sboss);
+		
+		//CTimer::GetInstance()->Pause();
+		//CReward rew;
+		//rew.GetReward();
+		//CGraphic::GetInstance()->ReDraw();
+		//CTimer::GetInstance()->Resume();
+	}
+
+	if (m_dWorldTime > 10.0 && !bossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
 		bossCreated = true;
-		shared_ptr<CSemiBoss> boss = make_shared<CSemiBoss>();
+		shared_ptr<CBoss> boss = make_shared<CBoss>(Pixel::square, TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED, FGridSize(2,2) );
 		AddActor(boss);
-		
-		CTimer::GetInstance()->Pause();
-		CReward rew;
-		rew.GetReward();
-		CGraphic::GetInstance()->ReDraw();
-		CTimer::GetInstance()->Resume();
+	}
+
+	if (FindActorsByTag(ETag::monster).size() == 0)
+	{	//	적이 하나도 없으면
+		m_iWorldLevel++;
+		//	월드 레벨에 맞춰 몬스터 생성
+		m_iSpawnSlime = min(5, m_iWorldLevel);	//	최대 5마리
+		m_iSpawnSkeleton = min(4, m_iWorldLevel / 5);	//	5레벨부터 5레벨마다 추가
+		m_iSpawnGolem = min(4, m_iWorldLevel / 10);	//	10레벨부터 10레벨마다 추가
+		MonsterSpawnEvent();
 	}
 }
 
-void CGameWorld::MonsterSpawnEvent(double deltaTime)
+void CGameWorld::MonsterSpawnEvent()
 {
-	m_dMonsterSpawnTime -= deltaTime;
-
-	if (m_dMonsterSpawnTime > 0)	return;
-
-	for (int i = 0; i < m_iNumberOfMonsterSpawn; i++)
+	for (int i = 0; i < m_iSpawnSlime; i++)
 	{
 		//	몬스터 생성
 		shared_ptr<CActor> enemy = make_shared<CSlime>();
@@ -178,17 +194,19 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 		AddActor(enemy);
 	}
 
-	shared_ptr<CActor> enemy = make_shared<CSkeleton>();
-	enemy->SetPosition(COORD(10,10));
-	AddActor(enemy);
+	if (m_iSpawnSkeleton > 0)
+	{
+		shared_ptr<CActor> enemy = make_shared<CSkeleton>();
+		enemy->SetPosition(COORD(10, 10));
+		AddActor(enemy);
+	}
 
-	shared_ptr<CActor> Golem = make_shared<CGolem>();
-	Golem->SetPosition(COORD(20, 20));
-	AddActor(Golem);
-
-	CGraphic::GetInstance()->AddLog("몬스터를 세마리 생성했습니다.");
-
-	m_dMonsterSpawnTime = m_dMonsterSpawnInitialTime;
+	if (m_iSpawnGolem > 0)
+	{
+		shared_ptr<CActor> Golem = make_shared<CGolem>();
+		Golem->SetPosition(COORD(20, 20));
+		AddActor(Golem);
+	}
 }
 
 bool CGameWorld::AddActor(shared_ptr<CActor> actor)
