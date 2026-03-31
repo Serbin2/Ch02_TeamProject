@@ -121,7 +121,7 @@ public:
 	// 체력 상태 확인 
 	bool IsDead() const
 	{
-		return 0 == m_fCurrentHealth;
+		return 0 == m_fHealth;
 	}
 	 
 	// [TODO-PJH] : 스탯관련은 러프하게 작성 -> 선재님 만드는거 기준으로 변경 필요
@@ -133,8 +133,6 @@ public:
 protected:
 	EBossState m_CurrentState = EBossState::Attack;
 
-	float m_fCurrentHealth;				// 체력
-	float m_fMaxHealth;					// 체력
 
 	float m_fCurrentGroggy;				// 현재 그로기 
 	float m_fMaxGroggy;					// 맥스 그로기 

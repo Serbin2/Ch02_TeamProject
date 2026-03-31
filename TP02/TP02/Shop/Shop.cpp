@@ -325,6 +325,8 @@ void CShop::InitShopItems()
 	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (소)", ":체력을 30 hp 회복한다.", 50, 1, 30));
 	m_ShopItems.push_back(std::make_shared<CElixir>());
 	m_ShopItems.push_back(std::make_shared<CInvinciblePotion>());
+	m_ShopItems.push_back(std::make_shared<CSpeedPotion>());
+	m_ShopItems.push_back(std::make_shared<CMaxHealthPotion>());
 }
 
 

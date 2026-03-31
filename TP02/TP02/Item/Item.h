@@ -90,3 +90,28 @@ public:
 private:
 	double m_dInvinsibleTime;
 };
+
+// 스피드 포션 0.1 씩 증가 
+class CSpeedPotion : public CItem
+{
+public:
+	CSpeedPotion();
+
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+
+private:
+	// 최대체력 증가량
+	float m_fSpeedAmount;
+};
+
+// 최대 체력 증가 포션 
+class CMaxHealthPotion : public CItem
+{
+public:
+	CMaxHealthPotion();
+
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+
+private:
+	float m_fMaxHealthAmount;
+};

@@ -18,7 +18,8 @@ CBoss::CBoss() : CEnemy(0, 0)
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
 
 
-	m_fHealth = 1000;
+	m_fHealth = 1000.f;
+	m_fMaxHealth = 1000.f;
 
 	m_sName = "[수집가 스크랩스]";
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
@@ -95,7 +96,7 @@ void CBoss::Render()
 
 void CBoss::OnHit(float Damage)
 {
-	m_fCurrentHealth = MathUtil::Clamp<float>(m_fCurrentHealth - Damage,  0.f, m_fCurrentHealth);
+	m_fHealth = MathUtil::Clamp<float>(m_fHealth - Damage,  0.f,  m_fMaxHealth);
 	if (IsDead())
 	{
 		// [TODO-PJH] : 플레이어에게 몬스터가 소유한 아이템 or 경험치 정보 전달 
@@ -105,6 +106,8 @@ void CBoss::OnHit(float Damage)
 	// 그로기 증가
 	float AddGroggyAmount = Damage / 2.f;
 	m_fAccGroggy += AddGroggyAmount;
+
+	CInterface::GetInstance()->SetValue(25, std::to_string(m_fHealth));
 }
 
 void CBoss::SelectAttackPattern()
