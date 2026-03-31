@@ -6,6 +6,7 @@
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Enemy/Enemy.h"
 #include <format>
+#include "../Manager/SoundManager/SoundManager.h"
 
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
@@ -172,6 +173,7 @@ void CPlayer::AddExp(int exp)
 		m_fAttackPower += 5.0f;
 		m_fDefense += 2.0f;
 		CGraphic::GetInstance()->AddLog("레벨 업!");
+		GET_SINGLE(CSoundManager)->PlaySFX(L"LevelUp");
 	}
 
 	CInterface::GetInstance()->SetValue(4, m_fAttackPower);

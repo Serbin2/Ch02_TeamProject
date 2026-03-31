@@ -3,8 +3,7 @@
 #include "../../Projectile/Projectile.h"
 
 
-#include "../../Resource/Sound/Sound.h"
-#include "../../Manager/ResourceManager/ResourceManager.h"
+#include "../../Manager/SoundManager/SoundManager.h"
 
 #define MOVING_TIME 5.0		//	5초동안 움직이기
 #define SHOT_DELAY 2.0		//	2초 후에 발사하기
@@ -17,14 +16,14 @@ CSkeleton::CSkeleton() : CEnemy(Pixel::Skeleton, TEXT_FOREGROUND_BLACK | TEXT_BA
 	m_dStateTime = 0;
 	m_sName = "경비로봇";
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Skeleton");
-	pSound->Play(false);
 	//	체력 설정 해야함
 	//	경험치 설정 해야함
 	//	공격력 설정 해야함
 	m_fAttackPower = 20.0f;
 	m_fDefense = 3.0f;
 	m_fHealth = 150.0f;
+
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Skeleton");
 }
 
 CSkeleton::~CSkeleton()

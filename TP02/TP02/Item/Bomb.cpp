@@ -1,6 +1,8 @@
 #include "Bomb.h"
 #include "../Graphics/Effect.h"
 
+#include "../Manager/SoundManager/SoundManager.h"
+
 CBomb::CBomb(int Shape, int Color, const COORD& Pos)
 	: CActor(Pixel::star, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN)
 {
@@ -117,6 +119,9 @@ void CBomb::Burst()
 
 		pCharacter->OnHit(100.f);
 	}
+
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Boom");
+
 }
 
 CBombItem::CBombItem()

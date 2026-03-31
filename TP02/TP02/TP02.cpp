@@ -13,14 +13,13 @@
 #include "Shop/Shop.h"
 #include "Character/Player.h"
 
-
-// [2026-03-25, 박재현] 권한 테스트 2
 #include "Manager/ResourceManager/ResourceManager.h"
 #include "Manager/SoundManager/SoundManager.h"
 #include "Resource/Sound/Sound.h"
 
 //	게임 메인 루프
 int Loop();
+void LoadSound();
 
 int main(){
 #ifdef _DEBUG
@@ -36,31 +35,12 @@ int main(){
 
 	// 사운드 테스트
 	HWND hHwnd = GetConsoleWindow();
-
 	GET_SINGLE(CResourceManager)->Init(hHwnd);
 	GET_SINGLE(CSoundManager)->Init(hHwnd);
 
-	// 로드 
-	{
-		GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav", ESoundType::BGM);
-		GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav", ESoundType::BGM);
-		GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav", ESoundType::BGM);
-		GET_SINGLE(CResourceManager)->LoadSound(L"BGM4", L"BGM01.wav", ESoundType::BGM);
-		GET_SINGLE(CResourceManager)->LoadSound(L"Select", L"Select.wav", ESoundType::SFX);
-		GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
-		GET_SINGLE(CResourceManager)->LoadSound(L"Slime", L"Slime.wav", ESoundType::SFX);
-		GET_SINGLE(CResourceManager)->LoadSound(L"Golem", L"Golem.wav", ESoundType::SFX);
-	}
-	{
-		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
-		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
-	}
-	//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
-	//pSound->Play(true);
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM4");
-	pSound->Play(true);
+	LoadSound();
 
-
+	GET_SINGLE(CSoundManager)->GetInstance()->PlayBGM(L"Main");
 
 	bool bInitialized = false;
 	int result = MAIN_MENU;
@@ -81,6 +61,7 @@ int main(){
 				CGameWorld::GetInstance()->Initialize();
 				bInitialized = true;
 			}
+			GET_SINGLE(CSoundManager)->GetInstance()->PlayBGM(L"Game");
 			result = Loop();
 			if (result != STORE_MENU)
 			{
@@ -92,6 +73,7 @@ int main(){
 				bInitialized = false;
 			}
 			break;
+
 		case GAME_CLEARED:
 
 
@@ -111,9 +93,7 @@ int main(){
 	CGameWorld::Release();
 	CTimer::Release();
 	GET_SINGLE(CResourceManager)->Clear();
-	pSound = nullptr;
 
-	GET_SINGLE(CResourceManager)->Clear();
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();	//	메모리 누수 감지
 #endif
@@ -138,18 +118,20 @@ int Loop()
 		if ((pInput->IsKeyDown(VK_ESCAPE)) || pInput->IsKeyDown('G'))
 		{	//	게임 일시 정지
 			Timer->Pause();
+			GET_SINGLE(CSoundManager)->StopBGM();
+			GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 
-			//pSound->Stop();
 
 			CMenu inGameMenu;
 			int result = inGameMenu.ShowMenu();
 
 			if (result == 1)
 			{
-				//pSound->Play();
+				GET_SINGLE(CSoundManager)->RePlayBGM();
 			}
 			else if (result == 2)
 			{
+				GET_SINGLE(CSoundManager)->PlayBGM(L"Main");
 				return MAIN_MENU;
 			}
 			else if (result == 3)
@@ -163,7 +145,7 @@ int Loop()
 				{
 					shop.Enter(player);
 				}
-
+				GET_SINGLE(CSoundManager)->RePlayBGM();
 				pGraphic->ReDraw();
 				Timer->Resume();
 			}
@@ -176,6 +158,8 @@ int Loop()
 		if (pInput->IsKeyDown(VK_TAB))
 		{
 			Timer->Pause();
+			GET_SINGLE(CSoundManager)->StopBGM();
+			GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 			CShop shop;
 			shared_ptr<CActor> actor = CGameWorld::GetInstance()->GetPlayerActor();
 			CPlayer* player = static_cast<CPlayer*>(actor.get());
@@ -183,6 +167,7 @@ int Loop()
 			{
 				shop.Enter(player);
 			}
+			GET_SINGLE(CSoundManager)->RePlayBGM();
 			pGraphic->ReDraw();
 			Timer->Resume();
 		}
@@ -201,5 +186,30 @@ int Loop()
 		//	그리기 종료
 		//	액터의 Render를 이 함수 이후에는 실행하지 마세요
 		pGraphic->EndDraw();
+	}
+}
+
+void LoadSound()
+{
+	// 로드 
+	{
+		// BGM
+		GET_SINGLE(CResourceManager)->LoadSound(L"Game", L"BGM01.wav", ESoundType::BGM);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Main", L"Main.wav", ESoundType::BGM);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Boss", L"Boss.wav", ESoundType::BGM);
+
+		// SFX
+		// 기타
+		GET_SINGLE(CResourceManager)->LoadSound(L"Boom", L"Boom.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Select", L"Select.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"LevelUp", L"LevelUp.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"GunChange", L"GunChange.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"String", L"Key.wav", ESoundType::SFX);
+
+		// 몬스터
+		GET_SINGLE(CResourceManager)->LoadSound(L"Boss", L"Boss.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Slime", L"Slime.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Golem", L"Golem.wav", ESoundType::SFX);
 	}
 }

@@ -16,7 +16,7 @@ CInventory::CInventory()
 	CInterface::GetInstance()->AddUI(13, "4.");
 	CInterface::GetInstance()->AddUI(14, "5.");
 
-	//UpdateUI();
+	UpdateUI();
 
 	AddItem(std::make_shared<Potion>(), 3);
 	AddItem(std::make_shared<Potion>(), 1);
