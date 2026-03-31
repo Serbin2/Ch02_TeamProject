@@ -7,3 +7,10 @@ public:
 
 	int GetReward();
 };
+
+class CDead
+{
+public :
+
+	int Dead();
+};
