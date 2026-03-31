@@ -1,6 +1,7 @@
 #include "Slime.h"
 #include "../Manager/SoundManager/SoundManager.h"
 
+
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
 	//	무작위 위치에 생성합니다.
@@ -62,11 +63,12 @@ void CSlime::Tick(double DeltaTime)
 }
 
 void CSlime::OnHit(float damage)
-{	
-	//	기본 처리를 합니다.
+{
 	CEnemy::OnHit(damage);
 
-	//	피격 애니메이션 처리입니다.
+	if (m_fHealth <= 0.0f) DropItem();
+
 	m_pShape = m_iShapeHitted;
-	m_dAnimationTime = 1.0;	
+	m_dAnimationTime = 1.0;
 }
+

@@ -14,9 +14,6 @@ CBoss::CBoss() : CEnemy(0, 0)
 	m_tColor = TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED;
 
 	m_cPosition = { 15, 15 };
-	m_sName = "[빅 풋]";
-	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
-
 
 	m_fHealth = 1000.f;
 	m_fMaxHealth = 1000.f;
@@ -39,7 +36,8 @@ void CBoss::Tick(double DeltaTime)
 {
 	m_fAccStateActionDelay += DeltaTime;
 	m_iAccWaveAttackTriggerCooldown += DeltaTime;
-	
+	if (m_dInvincibleTimer > 0.0) m_dInvincibleTimer -= DeltaTime;
+
 	// 웨이브 어택을 위해서 사용
 	if (m_bIsActiveWaveAttack )
 	{

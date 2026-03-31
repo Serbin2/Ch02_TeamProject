@@ -3,6 +3,9 @@
 
 #include "../../Manager/SoundManager/SoundManager.h"
 
+#include "../../Inventory/Inventory.h"
+#include "../../Character/Player.h"
+
 #define GOLEM_MOVE	5.0
 
 CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_GRAY)
@@ -68,3 +71,4 @@ void CGolem::Attack()
 	FX->AddTag(ETag::environment);
 	CGameWorld::GetInstance()->AddActor(FX);
 }
+

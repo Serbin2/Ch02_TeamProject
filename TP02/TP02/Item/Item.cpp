@@ -102,3 +102,19 @@ void CMaxHealthPotion::UseItem(std::weak_ptr<CPlayer> pPlayer)
 	float NewMaxHealth = Player->GetMaxHealth() + m_fMaxHealthAmount;
 	Player->SetMaxHealth(NewMaxHealth);
 }
+
+/// 아이템 드롭
+CScrap::CScrap()
+{
+	m_sName = "고철";
+	m_sDesc = "쓸모는 애매한데 왠지 버리면 손해 같아서 들고 가게 된다.";
+	m_iPrice = 50; // 30gold 
+	m_iMaxAmount = 99;
+}
+
+void CScrap::UseItem(std::weak_ptr<CPlayer> pPlayer)
+{
+	CGraphic::GetInstance()->AddLog("상점 판매용.");
+	return;
+}
+

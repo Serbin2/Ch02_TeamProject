@@ -37,6 +37,8 @@ public:
 	
 	// 아이템 사용시 효과
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) = 0;
+
+	virtual std::shared_ptr<CItem> Clone() const = 0;
 };
 
 //예시 체력 회복포션
@@ -68,6 +70,11 @@ public:
 		float NewHealth = Player->GetHealth() + m_iHeal;
 		Player->SetHealth(NewHealth);
 	}
+
+	virtual std::shared_ptr<CItem> Clone() const override
+	{
+		return std::make_shared<Potion>(*this);
+	}
 };
 
 // 최대 체력으로 설정하는 포션 
@@ -77,6 +84,11 @@ public:
 	CElixir();
 
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+
+	virtual std::shared_ptr<CItem> Clone() const override
+	{
+		return std::make_shared<CElixir>(*this);
+	}
 };
 
 // 무적으로 만들어주는 포션 
@@ -86,6 +98,11 @@ public:
 	CInvinciblePotion();
 
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+	
+	virtual std::shared_ptr<CItem> Clone() const override
+	{
+		return std::make_shared<CInvinciblePotion>(*this);
+	}
 
 private:
 	double m_dInvinsibleTime;
@@ -98,6 +115,11 @@ public:
 	CSpeedPotion();
 
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+
+	virtual std::shared_ptr<CItem> Clone() const override
+	{
+		return std::make_shared<CSpeedPotion>(*this);
+	}
 
 private:
 	// 최대체력 증가량
@@ -112,6 +134,26 @@ public:
 
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
 
+	virtual std::shared_ptr<CItem> Clone() const override
+	{
+		return std::make_shared<CMaxHealthPotion>(*this);
+	}
+
 private:
 	float m_fMaxHealthAmount;
 };
+
+//드롭 아이템들
+class CScrap : public CItem
+{
+public:
+	CScrap();
+
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+
+	virtual std::shared_ptr<CItem> Clone() const override
+	{
+		return std::make_shared<CScrap>(*this);
+	}
+};
+

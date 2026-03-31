@@ -299,7 +299,7 @@ static void PrintDialogue(const std::string& text)
 	for (int j = 0; j < innerWidth; j++) std::cout << "-";
 	std::cout << "+\n";
 
-	Sleep(1500); // 플레이어가 대사를 읽을 시간
+	Sleep(900); // 플레이어가 대사를 읽을 시간
 	ResetColor();
 }
 
@@ -365,12 +365,16 @@ void CShop::Enter(CPlayer* pPlayer)
 		std::cout << "\n";
 		std::cout << pad << "  선택 : ";
 
+		while (_kbhit())
+		{
+			_getch();	//	버퍼 비우기
+		}
 		char key = _getch(); // 엔터 없이 즉시 입력 받기 (conio.h)
 		if (key != '1' && key != '2' && key != '0') continue; // 유효하지 않은 키 무시
 		GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 
 		std::cout << key << "\n";
-		Sleep(1500); // 키 에코 후 잠깐 대기 (UI 전환 전 기다림)
+		Sleep(900); // 키 에코 후 잠깐 대기 (UI 전환 전 기다림)
 
 		if (key == '1') BuyMenu(pPlayer);
 		else if (key == '2') SellMenu(pPlayer);
@@ -454,10 +458,14 @@ void CShop::BuyMenu(CPlayer* pPlayer)
 	std::cout << "\n";
 	std::cout << pad << "  선택 : ";
 
+	while (_kbhit())
+	{
+		_getch();	//	버퍼 비우기
+	}
 	char key = _getch();
 	GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 	std::cout << key << "\n";
-	Sleep(1500);
+	Sleep(900);
 
 	if (key == '0') return; // 취소
 
@@ -506,8 +514,8 @@ void CShop::SellMenu(CPlayer* pPlayer)
 			TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK,
 			"", TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 		HLine(pad);
-		Sleep(500);
-		PrintDialogue("뭘 팔려고 한거야? 공기라도 팔 셈이냐");
+		Sleep(300);
+		PrintDialogue("뭘 팔겠다는거야? 공기라도 팔 셈이냐");
 		return;
 	}
 
@@ -544,10 +552,14 @@ void CShop::SellMenu(CPlayer* pPlayer)
 	std::cout << "\n";
 	std::cout << pad << "  선택 : ";
 
+	while (_kbhit())
+	{
+		_getch();	//	버퍼 비우기
+	}
 	char key = _getch();
 	GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 	std::cout << key << "\n";
-	Sleep(1500);
+	Sleep(900);
 
 	if (key == '0') return; // 취소
 
@@ -569,18 +581,22 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 
 	if (!pPlayer->SpendGold(price))
 	{
-		PrintDialogue("이봐, 골드가 부족한데... "
-			+ std::to_string(price) + "G 정도는 가져와야지.");
+		PrintDialogue("이봐 골드가 부족한데... "
+			+ std::to_string(price) + "G 정도는 가지고 와야지.");
 		return;
 	}
 
 	// Potion 계열이면 복사 생성자로 새 인스턴스를 만들어 인벤토리에 추가
-	Potion* original = dynamic_cast<Potion*>(m_ShopItems[index].get());
-	if (original)
-	{
-		auto newPotion = std::make_shared<Potion>(*original); // 복사
-		pPlayer->GetInventory()->AddItem(newPotion, 1);
-	}
+
+	auto newItem = m_ShopItems[index]->Clone();
+	pPlayer->GetInventory()->AddItem(newItem, 1);
+
+	//CItem* original = dynamic_cast<CItem*>(m_ShopItems[index].get());
+	//if (original)
+	//{
+	//	auto newPotion = std::make_shared<CItem>(*original); // 복사
+	//	pPlayer->GetInventory()->AddItem(newPotion, 1);
+	//}
 
 	PrintDialogue("[" + m_ShopItems[index]->GetName() + "] 선택 확인... 아직 죽을 운명은 아닌가 보군.");
 }
@@ -598,7 +614,7 @@ void CShop::SellItem(CPlayer* pPlayer, int index)
 
 	if (index < 0 || index >= (int)inv->GetSize() || !inv->GetItem(index))
 	{
-		PrintDialogue("그런 물건은 없다..");
+		PrintDialogue("그런 물건은 없다.");
 		return;
 	}
 

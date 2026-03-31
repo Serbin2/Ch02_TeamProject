@@ -89,8 +89,12 @@ void CInventory::UseItem(int iItemIdx, std::weak_ptr<class CPlayer> pPlayer)
 	//CGraphic::GetInstance()->AddLog(to_string(iItemIdx) + " 번 슬롯 키 입력");
 
 	FInventorySlot& Slot = m_vSlots.at(iItemIdx);
-	if (Slot.m_iOwningAmount >= 1)
+	if (Slot.m_pItem && Slot.m_iOwningAmount >= 1)
 	{
+		if (std::dynamic_pointer_cast<CScrap>(Slot.m_pItem))
+		{
+			return; // 고철은 사용 불가
+		}
 		Slot.m_pItem->UseItem(pPlayer);
 		RemoveItem(iItemIdx, 1);
 	}

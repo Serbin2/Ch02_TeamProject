@@ -221,9 +221,9 @@ bool CGameWorld::Tick(double deltaTime)
 	{	//	적이 하나도 없으면
 		m_iWorldLevel++;
 		//	월드 레벨에 맞춰 몬스터 생성
-		m_iSpawnSlime = min(6, m_iWorldLevel);	//	최대 6마리
-		m_iSpawnSkeleton = min(4, m_iWorldLevel / 3);	//	3레벨부터 3레벨마다 추가 최대 4마리
-		m_iSpawnGolem = min(3, m_iWorldLevel / 7);	//	7레벨부터 7레벨마다 추가 최대 3마리
+		m_iSpawnSlime = m_iWorldLevel / 2;	//	최대 6마리
+		m_iSpawnSkeleton = m_iWorldLevel / 3;	//	3레벨부터 3레벨마다 추가 최대 4마리
+		m_iSpawnGolem = m_iWorldLevel / 5;	//	5레벨부터 5레벨마다 추가 최대 3마리
 		MonsterSpawnEvent();
 	}
 	return true;
@@ -370,7 +370,7 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 	}
 
 	//CGraphic::GetInstance()->AddLog("Actor Successfuly Added");
-	CInterface::GetInstance()->SetValue(29, (int)m_aActors.size());
+	//CInterface::GetInstance()->SetValue(29, (int)m_aActors.size());
 	return true;
 }
 
