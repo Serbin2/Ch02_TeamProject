@@ -501,7 +501,7 @@ void CShop::SellMenu(CPlayer* pPlayer)
 			"", TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 		HLine(pad);
 		Sleep(500);
-		PrintDialogue("팔 물건이 없으신 것 같은데요?");
+		PrintDialogue("뭘 팔려고 한거야? 공기라도 팔 셈이냐");
 		return;
 	}
 
@@ -562,8 +562,8 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 
 	if (!pPlayer->SpendGold(price))
 	{
-		PrintDialogue("골드가 부족하시네요! 필요한 금액은 "
-			+ std::to_string(price) + "G 입니다.");
+		PrintDialogue("이봐, 골드가 부족한데... "
+			+ std::to_string(price) + "G 정도는 가져와야지.");
 		return;
 	}
 
@@ -591,7 +591,7 @@ void CShop::SellItem(CPlayer* pPlayer, int index)
 
 	if (index < 0 || index >= (int)inv->GetSize() || !inv->GetItem(index))
 	{
-		PrintDialogue("그런 물건은 없는데요..?");
+		PrintDialogue("그런 물건은 없다..");
 		return;
 	}
 
