@@ -3,6 +3,12 @@
 
 int CReward::GetReward()
 {	//	임시 보상선택 창
+	int in;
+	while (_kbhit())
+	{ // 버퍼에 입력이 있는 동안
+		in = _getch();      // 문자를 가져와 버퍼에서 제거
+	}
+
 	HANDLE m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_CYAN);
 
@@ -21,7 +27,6 @@ int CReward::GetReward()
 	std::cout << ">>>> 1. 세갈래 총알   2. 튕기는 총알 <<<<";
 	while (1)
 	{
-		int in;
 		while (_kbhit())
 		{ // 버퍼에 입력이 있는 동안
 			in = _getch();      // 문자를 가져와 버퍼에서 제거
@@ -41,6 +46,12 @@ int CReward::GetReward()
 
 int CDead::Dead()
 {
+	int in;
+	while (_kbhit())
+	{ // 버퍼에 입력이 있는 동안
+		in = _getch();      // 문자를 가져와 버퍼에서 제거
+	}
+
 	HANDLE m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_CYAN);
 
@@ -58,7 +69,41 @@ int CDead::Dead()
 	SetConsoleCursorPosition(m_hOP, COORD(20, 14));
 	std::cout << ">>>> 로비로 나가기 <<<<";
 
+	while (_kbhit())
+	{ // 버퍼에 입력이 있는 동안
+		in = _getch();      // 문자를 가져와 버퍼에서 제거
+	}
+	in = _getch() - '0';
+
+	return 0;
+}
+
+int CWarning::Warning()
+{
 	int in;
+	while (_kbhit())
+	{ // 버퍼에 입력이 있는 동안
+		in = _getch();      // 문자를 가져와 버퍼에서 제거
+	}
+
+	HANDLE m_hOP = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_CYAN);
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (i == 1)	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_BLACK);
+		if (i == 9)	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_CYAN);
+		SetConsoleCursorPosition(m_hOP, COORD(10, 10 + i));
+		std::cout << "사망사망사망사망사망사망사망사망사망사망사망사망사망사망사망";
+	}
+
+	SetConsoleCursorPosition(m_hOP, COORD(18, 12));
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_BLACK);
+	std::cout << ">>>>>>>>   사망했습니다! <<<<<<<<<<<<";
+	SetConsoleCursorPosition(m_hOP, COORD(20, 14));
+	std::cout << ">>>> 로비로 나가기 <<<<";
+
+	
 	while (_kbhit())
 	{ // 버퍼에 입력이 있는 동안
 		in = _getch();      // 문자를 가져와 버퍼에서 제거

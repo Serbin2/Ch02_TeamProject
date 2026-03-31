@@ -89,6 +89,11 @@ int main()
 				bInitialized = false;
 			}
 			break;
+		case GAME_CLEARED:
+
+
+			result = MAIN_MENU;
+			break;
 		}
 
 		if (result == EXIT_GAME)
