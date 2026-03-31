@@ -1,6 +1,7 @@
 #include "Boss.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
+#include "../Graphics/Interface.h"
 
 #include "../Projectile/BossProjectile.h"
 #include "../Utils/Utils.h"
@@ -19,10 +20,18 @@ CBoss::CBoss() : CEnemy(0, 0)
 
 	m_fHealth = 1000;
 
+	m_sName = "[수집가 스크랩스]";
+	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
+	CInterface::GetInstance()->AddUI(24, m_sName);
+	CInterface::GetInstance()->AddUI(25, "HP : ");
+	CInterface::GetInstance()->SetValue(24, " ");
+	CInterface::GetInstance()->SetValue(25, m_fHealth);
 }
 
 CBoss::~CBoss()
 {
+	CInterface::GetInstance()->RemoveUI(24);
+	CInterface::GetInstance()->RemoveUI(25);
 };
 
 void CBoss::Tick(double DeltaTime)
@@ -92,7 +101,7 @@ void CBoss::OnHit(float Damage)
 		// [TODO-PJH] : 플레이어에게 몬스터가 소유한 아이템 or 경험치 정보 전달 
 		return;
 	}
-
+	CInterface::GetInstance()->SetValue(25, m_fHealth);
 	// 그로기 증가
 	float AddGroggyAmount = Damage / 2.f;
 	m_fAccGroggy += AddGroggyAmount;

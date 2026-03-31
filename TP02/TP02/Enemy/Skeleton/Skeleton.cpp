@@ -15,7 +15,7 @@ CSkeleton::CSkeleton() : CEnemy(Pixel::Skeleton, TEXT_FOREGROUND_BLACK | TEXT_BA
 {
 	m_iState = WaitForMove;
 	m_dStateTime = 0;
-	m_sName = "[스켈레톤]";
+	m_sName = "경비로봇";
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Skeleton");
 	pSound->Play(false);
