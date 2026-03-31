@@ -1,7 +1,8 @@
 #include "Slime.h"
 #include "../Resource/Sound/Sound.h"
 #include "../Manager/ResourceManager/ResourceManager.h"
-#include "../Item/Item.h"
+#include "../Inventory/Inventory.h"
+#include "../Character/Player.h"
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
@@ -65,29 +66,25 @@ void CSlime::Tick(double DeltaTime)
 }
 
 void CSlime::OnHit(float damage)
-{	
-	//	기본 처리를 합니다.
+{
 	CEnemy::OnHit(damage);
 
-	//	피격 애니메이션 처리입니다.
+	if (m_fHealth <= 0.0f) DropItem();
+
 	m_pShape = m_iShapeHitted;
-	m_dAnimationTime = 1.0;	
+	m_dAnimationTime = 1.0;
 }
 
 void CSlime::DropItem()
 {
+	auto pActor = CGameWorld::GetInstance()->GetPlayerActor();
+	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pActor);
+	if (!pPlayer) return;
+
 	int roll = rand() % 100;
+	if (roll >= 10) return; // 10% 확률
 
-	std::shared_ptr<CActor> droppedItem = nullptr;
-
-	if (roll < 20)
-	{
-		droppedItem = std::make_shared<CSlimeJelly>();
-	}
-
-	if (droppedItem != nullptr)
-	{
-		droppedItem->SetPosition(m_cPosition);
-		CGameWorld::GetInstance()->AddActor(droppedItem);
-	}
+	auto pItem = std::make_shared<CSlimeJelly>();
+	pPlayer->GetInventory()->AddItem(pItem, 1);
+	CGraphic::GetInstance()->AddLog("고철 덩어리 획득!");
 }

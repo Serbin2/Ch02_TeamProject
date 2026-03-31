@@ -4,6 +4,9 @@
 #include "../../Resource/Sound/Sound.h"
 #include "../../Manager/ResourceManager/ResourceManager.h"
 
+#include "../../Inventory/Inventory.h"
+#include "../../Character/Player.h"
+
 #define GOLEM_MOVE	5.0
 
 CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_GRAY)
@@ -67,4 +70,15 @@ void CGolem::Attack()
 	FX->RemoveTag(ETag::effect);
 	FX->AddTag(ETag::environment);
 	CGameWorld::GetInstance()->AddActor(FX);
+}
+
+void CGolem::DropItem()
+{
+	auto pActor = CGameWorld::GetInstance()->GetPlayerActor();
+	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pActor);
+	if (!pPlayer) return;
+
+	auto pItem = std::make_shared<CSlimeJelly>();
+	pPlayer->GetInventory()->AddItem(pItem, 1);
+	CGraphic::GetInstance()->AddLog("고철 코어 획득!");
 }

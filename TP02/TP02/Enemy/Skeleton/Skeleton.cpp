@@ -2,6 +2,8 @@
 #include "Skeleton.h"
 #include "../../Projectile/Projectile.h"
 
+#include "../../Inventory/Inventory.h"
+#include "../../Character/Player.h"
 
 #include "../../Resource/Sound/Sound.h"
 #include "../../Manager/ResourceManager/ResourceManager.h"
@@ -89,4 +91,17 @@ void CSkeleton::Shot()
 	pProjectile->SetSpeed(5.0f);
 	pProjectile->SetMoveDirection(dir);
 	CGameWorld::GetInstance()->AddActor(pProjectile);
+}
+void CSkeleton::DropItem()
+{
+	auto pActor = CGameWorld::GetInstance()->GetPlayerActor();
+	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pActor);
+	if (!pPlayer) return;
+
+	int roll = rand() % 100;
+	if (roll >= 10) return; // 5% 확률
+
+	auto pItem = std::make_shared<CBonePiece>();
+	pPlayer->GetInventory()->AddItem(pItem, 1);
+	CGraphic::GetInstance()->AddLog("보안칩 획득!");
 }
