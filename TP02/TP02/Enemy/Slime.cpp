@@ -1,6 +1,7 @@
 #include "Slime.h"
 #include "../Resource/Sound/Sound.h"
 #include "../Manager/ResourceManager/ResourceManager.h"
+#include "../Item/Item.h"
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
@@ -69,4 +70,22 @@ void CSlime::OnHit(float damage)
 	//	피격 애니메이션 처리입니다.
 	m_pShape = m_iShapeHitted;
 	m_dAnimationTime = 1.0;	
+}
+
+void CSlime::DropItem()
+{
+	int roll = rand() % 100;
+
+	std::shared_ptr<CActor> droppedItem = nullptr;
+
+	if (roll < 20)
+	{
+		droppedItem = std::make_shared<CSlimeJelly>();
+	}
+
+	if (droppedItem != nullptr)
+	{
+		droppedItem->SetPosition(m_cPosition);
+		CGameWorld::GetInstance()->AddActor(droppedItem);
+	}
 }

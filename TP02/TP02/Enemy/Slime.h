@@ -10,6 +10,7 @@ public:
 
 	virtual void Tick(double DeltaTime) override;
 	virtual void OnHit(float damage)	override;
+	virtual void DropItem();
 
 
 protected:

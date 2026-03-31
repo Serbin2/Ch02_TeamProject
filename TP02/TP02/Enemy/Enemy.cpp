@@ -101,5 +101,6 @@ void CEnemy::Die()
 	if (pPlayer == nullptr || !pPlayer->IsValid())	return;
 	
 	dynamic_pointer_cast<CPlayer>(pPlayer)->AddExp(m_iExpReward);
+
 	
 }
