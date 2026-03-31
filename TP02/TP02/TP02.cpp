@@ -12,6 +12,7 @@
 #include "Item/Item.h"
 #include "Shop/Shop.h"
 #include "Character/Player.h"
+#include "FrontMenu/TextMenu.h"
 
 #include "Manager/ResourceManager/ResourceManager.h"
 #include "Manager/SoundManager/SoundManager.h"
@@ -57,6 +58,8 @@ int main(){
 		case GOTO_GAME:
 			if (!bInitialized)
 			{
+				CTextMenu textMenu;
+				textMenu.Intro();
 				CGraphic::GetInstance()->Initialize();
 				CGameWorld::GetInstance()->Initialize();
 				bInitialized = true;
@@ -76,7 +79,8 @@ int main(){
 
 		case GAME_CLEARED:
 			//	게임 종료 화면 추가해야함
-
+			CTextMenu textMenu;
+			textMenu.Outro();
 			result = MAIN_MENU;
 			break;
 		}

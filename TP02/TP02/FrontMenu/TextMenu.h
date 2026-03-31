@@ -6,4 +6,5 @@ class CTextMenu
 public:
 
 	void Intro();
+	void Outro();
 };

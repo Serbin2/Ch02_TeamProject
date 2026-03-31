@@ -171,6 +171,9 @@ bool CGameWorld::Tick(double deltaTime)
 	{	//	플레이어 사망확인
 		if (dynamic_pointer_cast<CPlayer>(m_pPlayer).get()->GetHealth() <= 0.0)
 		{	//	사망했습니다!
+			CTimer::GetInstance()->Pause();
+			Sleep(2000);	//	2초간 멈춤 연출
+			CTimer::GetInstance()->Resume();
 			CDead dead;
 			dead.Dead();
 			return false;
