@@ -167,10 +167,10 @@ bool CGameWorld::Tick(double deltaTime)
 		m_pSemiBoss = sboss;
 	}
 
-	if (m_dWorldTime > 600.0 && !bossCreated)				////////////////////////////	최종보스 생성
+	if (m_dWorldTime > 5.0 && !bossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
 		bossCreated = true;
-		shared_ptr<CBoss> boss = make_shared<CBoss>(Pixel::square, TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED, FGridSize(2,2) );
+		shared_ptr<CBoss> boss = make_shared<CBoss>();
 		AddActor(boss);
 	}
 
