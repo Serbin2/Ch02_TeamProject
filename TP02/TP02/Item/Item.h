@@ -90,3 +90,13 @@ public:
 private:
 	double m_dInvinsibleTime;
 };
+
+//드롭 아이템들
+class CScrap : public CItem
+{
+public:
+	CScrap();
+
+	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+};
+
