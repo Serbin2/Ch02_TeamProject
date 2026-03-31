@@ -2,16 +2,12 @@
 #include <windows.h>
 #include <conio.h>
 #include <iostream>
+#include "../Manager/SoundManager/SoundManager.h"
 
 
-#include "../Resource/Sound/Sound.h"
-#include "../Manager/ResourceManager/ResourceManager.h"
 
 int CMenu::ShowMenu()  // void -> int 로 변경
 {
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Select");
-	pSound->Play(false);
-
 	SetConsoleTitle(L"게임 메뉴");
 	while (true)
 	{
@@ -56,6 +52,7 @@ int CMenu::ShowMenu()  // void -> int 로 변경
 		{
 			if (GetAsyncKeyState('1') & 0x8000)
 			{
+				GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 				std::cout << "\n" << pad << "선택: 1 - 게임 재개\n";
 				Sleep(500);
 				while (GetAsyncKeyState('1') & 0x8000) Sleep(10);
@@ -63,6 +60,7 @@ int CMenu::ShowMenu()  // void -> int 로 변경
 			}
 			if (GetAsyncKeyState('2') & 0x8000)
 			{
+				GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 				std::cout << "\n" << pad << "선택: 2 - 게임 종료\n";
 				Sleep(500);
 				while (GetAsyncKeyState('2') & 0x8000) Sleep(10);
@@ -70,6 +68,7 @@ int CMenu::ShowMenu()  // void -> int 로 변경
 			}
 			if (GetAsyncKeyState('3') & 0x8000)
 			{
+				GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 				std::cout << "\n" << pad << "선택: 3 - 상점\n";
 				Sleep(500);
 				while (GetAsyncKeyState('3') & 0x8000) Sleep(10);

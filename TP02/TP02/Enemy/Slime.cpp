@@ -1,6 +1,5 @@
 #include "Slime.h"
-#include "../Resource/Sound/Sound.h"
-#include "../Manager/ResourceManager/ResourceManager.h"
+#include "../Manager/SoundManager/SoundManager.h"
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
@@ -23,8 +22,7 @@ CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGRO
 	m_fAttackPower = 10.0f;
 	m_fDefense = 3.0f;
 
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Slime");
-	pSound->Play(false);
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Slime");
 }
 
 
