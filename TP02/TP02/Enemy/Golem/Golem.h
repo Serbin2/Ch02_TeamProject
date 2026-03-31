@@ -9,7 +9,6 @@ public:
 	~CGolem();
 
 	virtual void Tick(double deltaTime) override;
-	virtual void DropItem();
 
 
 protected:

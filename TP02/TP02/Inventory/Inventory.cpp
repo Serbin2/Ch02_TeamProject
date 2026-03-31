@@ -90,6 +90,10 @@ void CInventory::UseItem(int iItemIdx, std::weak_ptr<class CPlayer> pPlayer)
 	FInventorySlot& Slot = m_vSlots.at(iItemIdx);
 	if (Slot.m_iOwningAmount >= 1)
 	{
+		if (std::dynamic_pointer_cast<CScrap>(Slot.m_pItem))
+		{
+			return; // 고철은 사용 불가
+		}
 		Slot.m_pItem->UseItem(pPlayer);
 		RemoveItem(iItemIdx, 1);
 	}

@@ -72,13 +72,3 @@ void CGolem::Attack()
 	CGameWorld::GetInstance()->AddActor(FX);
 }
 
-void CGolem::DropItem()
-{
-	auto pActor = CGameWorld::GetInstance()->GetPlayerActor();
-	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pActor);
-	if (!pPlayer) return;
-
-	auto pItem = std::make_shared<CSlimeJelly>();
-	pPlayer->GetInventory()->AddItem(pItem, 1);
-	CGraphic::GetInstance()->AddLog("고철 코어 획득!");
-}

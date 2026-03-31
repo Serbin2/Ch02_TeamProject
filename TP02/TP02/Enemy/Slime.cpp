@@ -1,8 +1,7 @@
 #include "Slime.h"
 #include "../Resource/Sound/Sound.h"
 #include "../Manager/ResourceManager/ResourceManager.h"
-#include "../Inventory/Inventory.h"
-#include "../Character/Player.h"
+
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
@@ -75,16 +74,3 @@ void CSlime::OnHit(float damage)
 	m_dAnimationTime = 1.0;
 }
 
-void CSlime::DropItem()
-{
-	auto pActor = CGameWorld::GetInstance()->GetPlayerActor();
-	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pActor);
-	if (!pPlayer) return;
-
-	int roll = rand() % 100;
-	if (roll >= 10) return; // 10% 확률
-
-	auto pItem = std::make_shared<CSlimeJelly>();
-	pPlayer->GetInventory()->AddItem(pItem, 1);
-	CGraphic::GetInstance()->AddLog("고철 덩어리 획득!");
-}

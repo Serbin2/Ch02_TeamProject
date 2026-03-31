@@ -11,7 +11,6 @@ public:
 	virtual void Tick(double deltaTime) override;
 	virtual void Move() override;
 
-	virtual void DropItem();
 
 
 protected:

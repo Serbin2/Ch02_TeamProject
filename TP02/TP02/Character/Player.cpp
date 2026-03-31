@@ -163,20 +163,19 @@ void CPlayer::AddExp(int exp)
 {
 	m_iExp += exp;
 
-	while (m_iExp >= m_iLevel * 20)
+	while (m_iExp >= m_iLevel * 50)
 	{
-		m_iExp -= m_iLevel * 20;
+		m_iExp -= m_iLevel * 50;
 		m_iLevel++;
 
-		m_fHealth += 20.0f;
-		m_fAttackPower += 5.0f;
-		m_fDefense += 2.0f;
+		//m_fAttackPower += 5.0f;
+		//m_fDefense += 2.0f;
 		CGraphic::GetInstance()->AddLog("레벨 업!");
 	}
 
-	CInterface::GetInstance()->SetValue(4, m_fAttackPower);
-	CInterface::GetInstance()->SetValue(5, m_fDefense);
-	string sHP = format("{:.1f}", m_fHealth) + " / " + format("{:.1f}", m_fMaxHealth);
-	CInterface::GetInstance()->SetValue(2, sHP);
+	//CInterface::GetInstance()->SetValue(4, m_fAttackPower);
+	//CInterface::GetInstance()->SetValue(5, m_fDefense);
+	//string sHP = format("{:.1f}", m_fHealth) + " / " + format("{:.1f}", m_fMaxHealth);
+	//CInterface::GetInstance()->SetValue(2, sHP);
 	CInterface::GetInstance()->SetValue(3, (float)m_iLevel);
 }

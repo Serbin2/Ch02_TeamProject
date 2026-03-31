@@ -92,26 +92,11 @@ private:
 };
 
 //드롭 아이템들
-class CSlimeJelly : public CItem
+class CScrap : public CItem
 {
 public:
-	CSlimeJelly();
+	CScrap();
 
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
 };
 
-class CBonePiece : public CItem
-{
-public:
-	CBonePiece();
-
-	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
-};
-
-class CStoneFragment : public CItem
-{
-public:
-	CStoneFragment();
-
-	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
-};

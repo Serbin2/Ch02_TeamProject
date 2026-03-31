@@ -1,6 +1,9 @@
 #include "Enemy.h"
 #include "../Character/Player.h"
 #include "../World/GameWorld.h"
+#include "../Inventory/Inventory.h"
+#include "../Item/Item.h"
+
 #include "../Graphics/ConsoleGraphic.h"
 #include <format>
 
@@ -20,6 +23,7 @@ CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
 	m_dAttackTimer = 0.0;
 	m_iExpReward = 50;
 	m_bIsDead = false;
+	m_bItemDropped = false;
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 }
 
@@ -97,12 +101,32 @@ void CEnemy::OnHit(float Damage)
 	}
 }
 
+void CEnemy::DropItem()
+{
+	if (m_bItemDropped) return;
+
+	auto pActor = CGameWorld::GetInstance()->GetPlayerActor();
+	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pActor);
+	if (!pPlayer) return;
+
+	int roll = rand() % 100;
+	if (roll >= 20) return; // 20% 확률
+
+	auto pItem = std::make_shared<CScrap>();
+	pPlayer->GetInventory()->AddItem(pItem, 1);
+	CGraphic::GetInstance()->AddLog("고철 덩어리 획득!");
+
+	m_bItemDropped = true;
+}
+
 void CEnemy::Die()
 {
 	auto pPlayer = CGameWorld::GetInstance()->GetPlayerActor();
 	if (pPlayer == nullptr || !pPlayer->IsValid())	return;
 	
+	DropItem();
 	dynamic_pointer_cast<CPlayer>(pPlayer)->AddExp(m_iExpReward);
 
 	
 }
+
