@@ -532,7 +532,6 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 //  SellItem — 실제 판매 처리
 //
 //  1. 아이템 이름과 판매가를 미리 저장
-//     (RemoveItem 호출 뒤에는 포인터가 무효화될 수 있으므로 먼저 읽어야 함)
 //  2. RemoveItem 으로 인벤토리에서 1개를 제거
 //  3. AddGold 로 판매가만큼 골드를 지급
 
