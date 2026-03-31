@@ -33,7 +33,7 @@ CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_
 
 CGolem::~CGolem()
 {
-
+	GET_SINGLE(CSoundManager)->PlaySFX(L"GolemDead");
 }
 
 void CGolem::Tick(double deltaTime)

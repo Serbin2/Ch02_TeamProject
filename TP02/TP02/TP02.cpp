@@ -205,11 +205,17 @@ void LoadSound()
 		GET_SINGLE(CResourceManager)->LoadSound(L"LevelUp", L"LevelUp.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"GunChange", L"GunChange.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"String", L"Key.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"LASER", L"LASER.wav", ESoundType::SFX);
 
 		// 몬스터
 		GET_SINGLE(CResourceManager)->LoadSound(L"Boss", L"Boss.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"Slime", L"Slime.wav", ESoundType::SFX);
 		GET_SINGLE(CResourceManager)->LoadSound(L"Golem", L"Golem.wav", ESoundType::SFX);
+
+		// 몬스터 사망
+		GET_SINGLE(CResourceManager)->LoadSound(L"SkeletonDead", L"SkeletonDead.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"SlimeDead", L"SlimeDead.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"GolemDead", L"GolemDead.wav", ESoundType::SFX);
 	}
 }

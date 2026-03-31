@@ -160,7 +160,7 @@ protected:
 	// 라인어택 관리 
 	//int m_iWaveAt0tackTriggerCooldown = 1.5f;
 	//int m_iAccWaveAttackTriggerCooldown = 0.2f;
-	double m_iLineAttackTriggerCooldown = 0.3;
+	double m_iLineAttackTriggerCooldown = 0.6;
 	double m_iAccLineAttack = 0.0f;
 	bool m_bIsActiveLineAttack = false;
 	float m_fLineAttackDamage = 30.f;

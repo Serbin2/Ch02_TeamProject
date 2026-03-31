@@ -28,7 +28,7 @@ CSkeleton::CSkeleton() : CEnemy(Pixel::Skeleton, TEXT_FOREGROUND_BLACK | TEXT_BA
 
 CSkeleton::~CSkeleton()
 {
-
+	GET_SINGLE(CSoundManager)->PlaySFX(L"SkeletonDead");
 }
 
 void CSkeleton::Tick(double deltaTime)
