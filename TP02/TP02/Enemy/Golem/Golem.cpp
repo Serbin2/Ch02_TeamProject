@@ -14,6 +14,9 @@ CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 
 	//	체력 설정 해야함
+	m_fAttackPower = 10.0f;
+	m_fDefense = 3.0f;
+	m_fHealth = 250.0f;
 
 	m_aMaterial.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
 	m_aMaterial.push_back(make_pair(Pixel::dust, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));

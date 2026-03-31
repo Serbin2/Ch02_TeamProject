@@ -20,6 +20,8 @@ CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGRO
 	m_sName = "[슬라임]";
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 	m_pShape = m_iShapeA;
+	m_fAttackPower = 10.0f;
+	m_fDefense = 3.0f;
 
 	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Slime");
 	pSound->Play(false);

@@ -33,8 +33,13 @@ void CProjectile::Move()
 
 void CProjectile::CheckCollision()
 {
-	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition, ETag::character);
-	if (!pActor)	pActor = CGameWorld::GetInstance()->FindActorByActorCustom(m_cPosition , ETag::character);
+	int findingTag = ETag::player;
+	if (m_pOwner.lock() == CGameWorld::GetInstance()->GetPlayerActor())
+	{
+		findingTag = ETag::monster;
+	}
+	auto pActor = CGameWorld::GetInstance()->FindActorFromPosition(m_cPosition, findingTag);
+	if (!pActor)	pActor = CGameWorld::GetInstance()->FindActorByActorCustom(m_cPosition , findingTag);
 
 	auto pCharacter = std::dynamic_pointer_cast<CCharacter>(pActor);
 	if (!pCharacter)

@@ -22,6 +22,9 @@ CSkeleton::CSkeleton() : CEnemy(Pixel::Skeleton, TEXT_FOREGROUND_BLACK | TEXT_BA
 	//	체력 설정 해야함
 	//	경험치 설정 해야함
 	//	공격력 설정 해야함
+	m_fAttackPower = 20.0f;
+	m_fDefense = 3.0f;
+	m_fHealth = 150.0f;
 }
 
 CSkeleton::~CSkeleton()

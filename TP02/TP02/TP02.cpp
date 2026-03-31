@@ -25,7 +25,7 @@ int Loop();
 
 int main()
 {
-	//_CrtSetBreakAlloc(160);	//	메모리 누수 위치 확인용
+	//_CrtSetBreakAlloc(383);	//	메모리 누수 위치 확인용
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	SetConsoleOutputCP(CP_UTF8);
 
@@ -83,6 +83,7 @@ int main()
 				CInput::Release();
 				CInterface::Release();
 				CGameWorld::Release();
+				CTimer::Release();
 				bInitialized = false;
 			}
 			break;
@@ -98,6 +99,7 @@ int main()
 	CInput::Release();
 	CInterface::Release();
 	CGameWorld::Release();
+	CTimer::Release();
 
 	_CrtDumpMemoryLeaks();	//	메모리 누수 감지
 	return 0;
@@ -114,6 +116,7 @@ int Loop()
 	CGameWorld* World = CGameWorld::GetInstance();
 	while (1)
 	{
+		int result = GOTO_GAME;
 		double DeltaTime = Timer->Update();
 		pInput->Update();
 
@@ -169,8 +172,11 @@ int Loop()
 			Timer->Resume();
 		}
 
-		World->Update(DeltaTime);
-
+		result = World->Update(DeltaTime);
+		if (result == MAIN_MENU)
+		{
+			return MAIN_MENU;
+		}
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
