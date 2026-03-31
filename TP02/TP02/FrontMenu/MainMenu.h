@@ -18,5 +18,5 @@ private:
 
 public:
 	CMainMenu();
-	void vRun();
+	int vRun();
 };

@@ -1,5 +1,6 @@
 // MainMenu.cpp
 #include "MainMenu.h"
+#include "../Standard.h"
 #include <conio.h>
 #include <cstdlib>
 
@@ -55,15 +56,23 @@ void CMainMenu::vScene() {
 	}
 
 }
-void CMainMenu::vRun() {
+int CMainMenu::vRun() 
+{
+	//	커서 투명화
+	CONSOLE_CURSOR_INFO CurInfo;
+	CurInfo.bVisible = 0;
+	CurInfo.dwSize = 1;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &CurInfo);
+
 	while (scene != START) {
 		system("cls");
 
 		if (scene == MENU) vChoice();
 		else if (scene == CREDIT) vCredit();
-		else if (scene == EXIT) exit(0);
+		else if (scene == EXIT) return EXIT_GAME;
 
 		vScene();
 	}
 
+	return GOTO_GAME;
 }

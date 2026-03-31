@@ -36,9 +36,12 @@ protected:
 	void VerticalLaser();
 	void Gatling();
 
+	void OnDeath();
+
 	int m_ePattern;
 	double m_dAttackDelay;	//	공격 패턴 전환 딜레이
 	double m_dShotDelay;	//	공격 발사 딜레이
+	double m_dAccel;		//	가속
 	int m_iAttackCount;
 	bool m_bPatternOn;
 

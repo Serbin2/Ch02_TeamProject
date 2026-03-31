@@ -11,6 +11,9 @@
 #include "../Graphics/Interface.h"
 #include <cstdlib>
 #include "../Enemy/Skeleton/Skeleton.h"
+#include "../Enemy/Golem/Golem.h"
+#include "../Time/Timer.h"
+#include "../InGameMenu/Reward.h"
 
 CGameWorld::CGameWorld()
 {
@@ -19,7 +22,6 @@ CGameWorld::CGameWorld()
 	m_dMonsterSpawnTime = 0;
 	m_bMonsterSpawn = 0;
 	m_iNumberOfMonsterSpawn = 0;
-	CInterface::GetInstance()->AddUI(29, "Actors ");
 }
 
 CGameWorld::~CGameWorld()
@@ -43,12 +45,23 @@ void CGameWorld::Release()
 {
 	if (m_pInstance == nullptr)	return;
 
+	for (auto it = m_pInstance->m_aActors.begin(); it != m_pInstance->m_aActors.end();)
+	{
+		if (!m_pInstance->EraseActorFromSort(it->first))
+		{
+			//error
+			int a = 1;
+		}
+		it = m_pInstance->m_aActors.erase(it);
+	}
+
 	delete m_pInstance;
 	m_pInstance = nullptr;
 }
 
 void CGameWorld::Initialize()
 {
+	m_dWorldTime = 0;
 	m_dMonsterSpawnInitialTime = 10.0;	//	10초마다 몬스터 스폰합니다
 	m_dMonsterSpawnTime = 3.0;
 	m_bMonsterSpawn = true;
@@ -113,6 +126,12 @@ void CGameWorld::Tick(double deltaTime)
 		bossCreated = true;
 		shared_ptr<CSemiBoss> boss = make_shared<CSemiBoss>();
 		AddActor(boss);
+		
+		CTimer::GetInstance()->Pause();
+		CReward rew;
+		rew.GetReward();
+		CGraphic::GetInstance()->ReDraw();
+		CTimer::GetInstance()->Resume();
 	}
 }
 
@@ -125,7 +144,7 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 	for (int i = 0; i < m_iNumberOfMonsterSpawn; i++)
 	{
 		//	몬스터 생성
-		shared_ptr<CActor> enemy = make_shared<CEnemy>(Pixel::triangle, TEXT_FOREGROUND_RED);
+		shared_ptr<CActor> enemy = make_shared<CSlime>();
 		COORD spawnPos = { 0, 0 };
 
 		// 0: 위, 1: 아래, 2: 왼쪽, 3: 오른쪽
@@ -162,6 +181,10 @@ void CGameWorld::MonsterSpawnEvent(double deltaTime)
 	shared_ptr<CActor> enemy = make_shared<CSkeleton>();
 	enemy->SetPosition(COORD(10,10));
 	AddActor(enemy);
+
+	shared_ptr<CActor> Golem = make_shared<CGolem>();
+	Golem->SetPosition(COORD(20, 20));
+	AddActor(Golem);
 
 	CGraphic::GetInstance()->AddLog("몬스터를 세마리 생성했습니다.");
 

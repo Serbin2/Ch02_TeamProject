@@ -6,9 +6,13 @@ using namespace std::chrono;
 
 class CTimer
 {
-public:
+private:
 	CTimer();
 	~CTimer();
+
+public:
+	static CTimer* GetInstance();
+	static void Release();
 
 	void Start();
 	void Pause();
@@ -22,6 +26,8 @@ public:
 
 private:
 	
+	static CTimer* m_pInstance;
+
 	void LimitFrame(duration<double> target);
 
 	steady_clock::time_point m_dPrev;

@@ -130,6 +130,7 @@
     <ClCompile Include="Character\Character.cpp" />
     <ClCompile Include="Character\Sniper\Sniper.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="Enemy\Golem\Golem.cpp" />
     <ClCompile Include="Enemy\Skeleton\Skeleton.cpp" />
     <ClCompile Include="Enemy\Slime.cpp" />
     <ClCompile Include="FrontMenu\MainMenu.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Graphics\Effect.cpp" />
     <ClCompile Include="Graphics\Interface.cpp" />
     <ClCompile Include="InGameMenu\Menu.cpp" />
+    <ClCompile Include="InGameMenu\Reward.cpp" />
     <ClCompile Include="Inventory\Inventory.cpp" />
     <ClCompile Include="Item\Bomb.cpp" />
     <ClCompile Include="Item\Item.cpp" />
@@ -168,12 +170,14 @@
     <ClInclude Include="Character\Player.h" />
     <ClInclude Include="Character\Sniper\Sniper.h" />
     <ClInclude Include="Enemy\Enemy.h" />
+    <ClInclude Include="Enemy\Golem\Golem.h" />
     <ClInclude Include="Enemy\Skeleton\Skeleton.h" />
     <ClInclude Include="Enemy\Slime.h" />
     <ClInclude Include="FrontMenu\MainMenu.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
     <ClInclude Include="Graphics\Effect.h" />
     <ClInclude Include="InGameMenu\Menu.h" />
+    <ClInclude Include="InGameMenu\Reward.h" />
     <ClInclude Include="Inventory\Inventory.h" />
     <ClInclude Include="Item\Bomb.h" />
     <ClInclude Include="Item\Item.h" />

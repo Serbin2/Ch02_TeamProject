@@ -1,9 +1,12 @@
 #include "SemiBoss.h"
 #include "../Graphics/Interface.h"
 #include "../Projectile/Projectile.h"
+#include "../Character/Player.h"
 
 #define ATTACK_DELAY	5.0
 #define SHOT_DELAY 1.0
+
+#define BOSS_HEALTH_UI	19
 
 CSemiBoss::CSemiBoss() : CEnemy(0,0)
 {
@@ -27,12 +30,13 @@ CSemiBoss::CSemiBoss() : CEnemy(0,0)
 	m_dShotDelay = SHOT_DELAY;
 	m_iAttackCount = 0;
 	m_bPatternOn = false;
+	m_dAccel = 0.0;
 
 	m_sName = "[빅헤드]";
 
 	m_fHealth = 1000;
-	CInterface::GetInstance()->AddUI(19, "Boss Health ");
-	CInterface::GetInstance()->SetValue(19, m_fHealth);
+	CInterface::GetInstance()->AddUI(BOSS_HEALTH_UI, "Boss Health ");
+	CInterface::GetInstance()->SetValue(BOSS_HEALTH_UI, m_fHealth);
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
 }
 
@@ -51,6 +55,8 @@ void CSemiBoss::Tick(double DeltaTime)
 	Attack();
 
 	m_dMoveTimer -= DeltaTime;
+	m_dAccel += DeltaTime / 4.0;
+	if (m_dAccel > 0.95)	m_dAccel = 0.95;
 	if (m_dMoveTimer > 0)	return;
 
 	Move();
@@ -58,13 +64,13 @@ void CSemiBoss::Tick(double DeltaTime)
 
 void CSemiBoss::Move()
 {
-	m_dMoveTimer = 1.0;
 	switch (m_eState)
 	{
 	case MovingLeft:
 		if (m_cPosition.X == 0)
 		{
 			m_eState = Await;
+			m_dAccel = 0.0;
 			break;
 		}
 		m_cPosition.X--;
@@ -73,6 +79,7 @@ void CSemiBoss::Move()
 		if (m_cPosition.X == 25)
 		{
 			m_eState = Await;
+			m_dAccel = 0.0;
 			break;
 		}
 		m_cPosition.X++;
@@ -86,8 +93,10 @@ void CSemiBoss::Move()
 		{
 			m_eState = MovingLeft;
 		}
+		m_dAccel = 0.0;
 		break;
 	}
+	m_dMoveTimer = 1.0 - m_dAccel;
 }
 
 void CSemiBoss::Render()
@@ -105,7 +114,8 @@ void CSemiBoss::OnHit(float damage)
 {
 	m_fHealth -= damage;
 
-	CInterface::GetInstance()->SetValue(19, m_fHealth);
+	CInterface::GetInstance()->SetValue(BOSS_HEALTH_UI, m_fHealth);
+	if (m_fHealth <= 0) OnDeath();
 }
 
 bool CSemiBoss::ActorCustomCollisionTest(COORD pos)
@@ -188,4 +198,14 @@ void CSemiBoss::Gatling()
 		m_dAttackDelay = ATTACK_DELAY;
 		m_iAttackCount = 0;
 	}
+}
+
+void CSemiBoss::OnDeath()
+{
+	//	공격 강화권 지급하기
+
+	dynamic_pointer_cast<CPlayer>(CGameWorld::GetInstance()->GetPlayerActor())->AddExp(200);
+
+	m_bIsValid = false;
+	CInterface::GetInstance()->RemoveUI(BOSS_HEALTH_UI);
 }

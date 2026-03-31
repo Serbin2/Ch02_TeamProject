@@ -43,6 +43,8 @@ void CGraphic::SetPixelText()
 	m_sPixels[star]					= "**";
 	m_sPixels[Sniper]				= "Sn";
 	m_sPixels[Skeleton] = "sK";
+	m_sPixels[Golem] = "GD";
+	m_sPixels[Gunman] = "tP";
 }
 
 CGraphic* CGraphic::GetInstance()
@@ -78,6 +80,7 @@ void CGraphic::Initialize()
 	}
 
 	//	게임 레이아웃을 그려둡니다
+	FlushingBuffer();
 	DrawShape();
 }
 
@@ -158,6 +161,9 @@ void CGraphic::FlushingBuffer()
 
 void CGraphic::ReDraw()
 {
+	// 버퍼 비우기
+	FlushingBuffer();
+
 	//	화면 정리 및 레이아웃 그리기
 	DrawShape();
 
