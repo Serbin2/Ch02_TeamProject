@@ -74,7 +74,6 @@ void CGameWorld::Initialize()
 	m_iSpawnSkeleton = 0;
 	m_iSpawnGolem = 0;
 	m_pSemiBoss = nullptr;
-	m_pPlayer = nullptr;
 
 	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::Gunman, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	m_pPlayer = pPlayer;
