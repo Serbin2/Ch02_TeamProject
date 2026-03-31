@@ -30,6 +30,7 @@ static int VisWidth(const std::string& s)
 void CTextMenu::Intro()
 {
 	HANDLE hOP = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hOP, TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 	SetConsoleCursorPosition(hOP, COORD(0, 0));
 	system("cls");
 	
@@ -70,6 +71,7 @@ void CTextMenu::Intro()
 void CTextMenu::Outro()
 {
 	HANDLE hOP = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hOP, TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 	SetConsoleCursorPosition(hOP, COORD(0, 0));
 	system("cls");
 
