@@ -2,11 +2,10 @@
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
 #include "../Graphics/Interface.h"
-
 #include "../Projectile/BossProjectile.h"
 #include "../Utils/Utils.h"
-
 #include "../Graphics/Effect.h"
+#include "../Manager/SoundManager/SoundManager.h"
 
 CBoss::CBoss() : CEnemy(0, 0)
 {
@@ -460,6 +459,7 @@ void CBoss::LineAttack()
 	// 3️⃣ 다음 라인으로 이동 (다음 Tick에서 실행됨)
 	m_cLineStart.X += m_cLineDir.X;
 	m_cLineStart.Y += m_cLineDir.Y;
+	GET_SINGLE(CSoundManager)->PlaySFX(L"LASER");
 }
 
 

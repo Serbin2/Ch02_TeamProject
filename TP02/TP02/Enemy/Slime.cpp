@@ -29,7 +29,7 @@ CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGRO
 
 CSlime::~CSlime()
 {
-
+	GET_SINGLE(CSoundManager)->PlaySFX(L"SlimeDead");
 }
 
 void CSlime::Tick(double DeltaTime)
