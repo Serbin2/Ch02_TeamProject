@@ -2,9 +2,6 @@
 #include "GameWorld.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Character/Player.h"
-#include "../Character/Sniper/Sniper.h"
-#include "../Projectile/BouncingProjectile.h"
-#include "../Projectile/TripleProjectile.h"
 #include "../Boss/Boss.h"
 #include "../Enemy/Slime.h"
 #include "../Boss/SemiBoss.h"
@@ -77,11 +74,8 @@ void CGameWorld::Initialize()
 	m_iSpawnSkeleton = 0;
 	m_iSpawnGolem = 0;
 	m_pSemiBoss = nullptr;
-	m_pPlayer = nullptr;
 
 	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::Gunman, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
-	//pPlayer->SetProjectile(make_shared<CBouncingProjectile>());
-	pPlayer->SetProjectile(make_shared<CTripleProjectile>());
 	m_pPlayer = pPlayer;
 	AddActor(pPlayer);
 }
