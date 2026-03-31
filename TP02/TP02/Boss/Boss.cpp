@@ -15,6 +15,10 @@ CBoss::CBoss() : CEnemy(0, 0)
 	m_cPosition = { 15, 15 };
 	m_sName = "[빅 풋]";
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
+
+
+	m_fHealth = 1000;
+
 }
 
 CBoss::~CBoss()
