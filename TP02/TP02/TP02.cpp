@@ -10,7 +10,6 @@
 #include "FrontMenu/MainMenu.h"
 #include "World/GameWorld.h"
 #include "Item/Item.h"
-#include "Graphics/Effect.h"
 #include "Shop/Shop.h"
 #include "Character/Player.h"
 
@@ -23,8 +22,7 @@
 //	게임 메인 루프
 int Loop();
 
-int main()
-{
+int main(){
 #ifdef _DEBUG
 	//_CrtSetBreakAlloc(177);	//	메모리 누수 위치 확인용
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -88,6 +86,11 @@ int main()
 				CTimer::Release();
 				bInitialized = false;
 			}
+			break;
+		case GAME_CLEARED:
+
+
+			result = MAIN_MENU;
 			break;
 		}
 

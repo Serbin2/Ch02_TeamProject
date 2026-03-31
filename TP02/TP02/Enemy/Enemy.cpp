@@ -2,6 +2,7 @@
 #include "../Character/Player.h"
 #include "../World/GameWorld.h"
 #include "../Graphics/ConsoleGraphic.h"
+#include <format>
 
 
 CEnemy::CEnemy(int Shape, int Color) : CCharacter(Shape, Color)
@@ -90,7 +91,8 @@ void CEnemy::OnHit(float Damage)
 	if (m_fHealth <= 0)
 	{
 		m_bIsValid = false;
-		CGraphic::GetInstance()->AddLog("적이 처치되었습니다.");
+		//string str = m_sName + "이(가) 처치되었습니다!";
+		CGraphic::GetInstance()->AddLog(m_sName + "이(가) 처치되었습니다!");
 		Die();
 	}
 }

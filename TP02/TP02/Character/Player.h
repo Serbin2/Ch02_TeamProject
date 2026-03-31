@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "../Projectile/Projectile.h"
+#include "../Standard.h"
 #include <memory>
 
 class CEnemy;
@@ -53,10 +54,5 @@ public:
 	
 
 	//레벨 EXP
-	void AddExp(float exp);
-
-private: // 레벨 exp
-	double m_dLevel;
-	double m_dExp;
-
+	void AddExp(int exp);
 };
