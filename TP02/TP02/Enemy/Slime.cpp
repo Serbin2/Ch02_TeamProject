@@ -1,5 +1,6 @@
 #include "Slime.h"
-
+#include "../Resource/Sound/Sound.h"
+#include "../Manager/ResourceManager/ResourceManager.h"
 
 CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGROUND_GREEN_INT)
 {
@@ -16,9 +17,12 @@ CSlime::CSlime() : CEnemy(Pixel::circle, TEXT_FOREGROUND_BLUE_INT | TEXT_BACKGRO
 	m_bShape = true;
 
 	//	기본 정보를 설정합니다.
-	m_sName = "슬라임";
+	m_sName = "[슬라임]";
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 	m_pShape = m_iShapeA;
+
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Slime");
+	pSound->Play(false);
 }
 
 

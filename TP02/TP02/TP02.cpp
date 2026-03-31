@@ -25,6 +25,8 @@ int Loop();
 
 int main()
 {
+	//_CrtSetBreakAlloc(160);	//	메모리 누수 위치 확인용
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	SetConsoleOutputCP(CP_UTF8);
 
 	///////////////////////////////////////////////
@@ -44,6 +46,8 @@ int main()
 	GET_SINGLE(CResourceManager)->LoadSound(L"BGM4", L"BGM01.wav", ESoundType::BGM);
 	GET_SINGLE(CResourceManager)->LoadSound(L"Select", L"Select.wav", ESoundType::SFX);
 	GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
+	GET_SINGLE(CResourceManager)->LoadSound(L"Slime", L"Slime.wav", ESoundType::SFX);
+	GET_SINGLE(CResourceManager)->LoadSound(L"Golem", L"Golem.wav", ESoundType::SFX);
 	{
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
@@ -94,6 +98,8 @@ int main()
 	CInput::Release();
 	CInterface::Release();
 	CGameWorld::Release();
+
+	_CrtDumpMemoryLeaks();	//	메모리 누수 감지
 	return 0;
 }
 

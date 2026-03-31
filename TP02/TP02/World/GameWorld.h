@@ -82,6 +82,8 @@ private:
 	//	플레이어 액터는 특별 관리
 	shared_ptr<CActor> m_pPlayer;
 
+	shared_ptr<CActor> m_pSemiBoss;
+
 	//	전체 액터 관리용 마스터 컨테이너
 	unordered_map<shared_ptr<CActor>, int> m_aActors;
 
