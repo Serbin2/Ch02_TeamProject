@@ -1,6 +1,9 @@
 #include "Golem.h"
 #include "../../Graphics/Effect.h"
 
+#include "../../Resource/Sound/Sound.h"
+#include "../../Manager/ResourceManager/ResourceManager.h"
+
 #define GOLEM_MOVE	5.0
 
 CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_GRAY)
@@ -11,6 +14,9 @@ CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
 
 	//	체력 설정 해야함
+	m_fAttackPower = 10.0f;
+	m_fDefense = 3.0f;
+	m_fHealth = 250.0f;
 
 	m_aMaterial.push_back(make_pair(Pixel::cross, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
 	m_aMaterial.push_back(make_pair(Pixel::dust, TEXT_FOREGROUND_YELLOW_INT | TEXT_BACKGROUND_YELLOW));
@@ -18,6 +24,10 @@ CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_
 	m_aDuration.push_back(0.1);
 	m_aDuration.push_back(0.3);
 	m_aDuration.push_back(0.6);
+	m_sName = "[골렘]";
+
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Golem");
+	pSound->Play(false);
 }
 
 CGolem::~CGolem()

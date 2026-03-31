@@ -35,6 +35,10 @@ void CMainMenu::vCredit() {
 	std::cout << cCredits;
 }
 void CMainMenu::vScene() {
+	while (_kbhit()) 
+	{ // 버퍼에 입력이 있는 동안
+		in =_getch();      // 문자를 가져와 버퍼에서 제거
+	}
 	in = _getch();
 
 	if (scene == MENU) { // start 일때 화살표 키로 iCount 

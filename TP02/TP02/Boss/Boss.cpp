@@ -10,6 +10,7 @@ CBoss::CBoss(int Shape, int Color, FGridSize BossSize)
 	m_cPosition = { 15, 15 };
 
 	m_BossSize = BossSize;
+	m_sName = "[빅 풋]";
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
 }
 
@@ -47,14 +48,6 @@ void CBoss::Tick(double DeltaTime)
 			break;
 		}
 	}
-
-	for (auto Projectile : m_vProjectiles)
-	{
-		Projectile->Tick(DeltaTime);
-		//Projectile->Render();
-	}
-
-	Render();
 }
 
 void CBoss::Render()
@@ -104,6 +97,8 @@ COORD CBoss::FindCanTelportPosition(/*CPlayer* Player*/)
 void CBoss::Teleport()
 {
 	SetPosition(FindCanTelportPosition());
+	//	텔레포트 이후 공격
+
 }
 
 void CBoss::FireProjectileToOutline()
@@ -111,7 +106,7 @@ void CBoss::FireProjectileToOutline()
 	// 공격 종료후 5초 후 이동 
 	static int sTestRange = 1;
 	std::vector<FAttackPos> AttackPos = GetBossOutlineAttackRange(sTestRange++);
-	std::string DebugMsg;
+	//std::string DebugMsg;
 	for (const auto& Pos : AttackPos)
 	{
 		// 범위 체크
@@ -151,15 +146,16 @@ void CBoss::FireProjectileToOutline()
 		}
 
 		//auto pProjectile = make_shared<CBossProjectile>(Pixel::circle, TEXT_BACKGROUND_RED, Dir, 2.f);
-		auto pProjectile = make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
+		auto pProjectile = make_shared<CProjectile>(Pixel::cross, TEXT_FOREGROUND_RED_INT);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(Pos.Pos);
 		pProjectile->SetMoveDirection(Dir);
 		pProjectile->SetSpeed(3.f);
-		m_vProjectiles.push_back(pProjectile);
+		pProjectile->SetLifeTime(3.0);
+		CGameWorld::GetInstance()->AddActor(pProjectile);
 
-		DebugMsg += "(" + std::to_string(Pos.Pos.X) + ", " + std::to_string(Pos.Pos.Y) + "), ";
+		//DebugMsg += "(" + std::to_string(Pos.Pos.X) + ", " + std::to_string(Pos.Pos.Y) + "), ";
 	}
 
 	CGraphic* pGraphic = CGraphic::GetInstance();
@@ -226,13 +222,15 @@ void CBoss::WaveAttack()
 			continue;
 		}
 
-		auto pProjectile = std::make_shared<CProjectile>(Pixel::circle, TEXT_BACKGROUND_RED);
+		auto pProjectile = std::make_shared<CProjectile>(Pixel::cross, TEXT_FOREGROUND_RED_INT);
 		auto sharedOwner = std::static_pointer_cast<CCharacter>(shared_from_this());
 		pProjectile->SetOwner(sharedOwner);
 		pProjectile->SetPosition(AP.Pos);
 		pProjectile->SetMoveDirection({ 0,0 });
 		pProjectile->SetSpeed(0.f);
-		m_vProjectiles.push_back(pProjectile);
+		pProjectile->SetLifeTime(3.0);
+		CGameWorld::GetInstance()->AddActor(pProjectile);
+
 	}
 }
 

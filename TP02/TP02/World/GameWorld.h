@@ -24,7 +24,7 @@ public:
 	void Initialize();
 
 	//	업데이트
-	void Update(double daltaTime);	
+	int Update(double daltaTime);	
 
 	void Render();
 
@@ -65,7 +65,7 @@ private:
 
 	//	월드 자체의 업데이트 입니다.
 	//	각종 이벤트는 여기서 실행하세요.
-	void Tick(double deltaTime);
+	bool Tick(double deltaTime);	//	사망시 false 반환
 	double m_dWorldTime;	//	월드 진행 시간입니다.
 	int m_iWorldLevel;
 
@@ -81,6 +81,8 @@ private:
 
 	//	플레이어 액터는 특별 관리
 	shared_ptr<CActor> m_pPlayer;
+
+	shared_ptr<CActor> m_pSemiBoss;
 
 	//	전체 액터 관리용 마스터 컨테이너
 	unordered_map<shared_ptr<CActor>, int> m_aActors;

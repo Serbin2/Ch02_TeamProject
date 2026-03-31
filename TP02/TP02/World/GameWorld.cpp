@@ -22,6 +22,8 @@ CGameWorld::CGameWorld()
 	m_iSpawnSlime = 0;
 	m_iSpawnSkeleton = 0;
 	m_iSpawnGolem = 0;
+	m_pSemiBoss = nullptr;
+	m_pPlayer = nullptr;
 }
 
 CGameWorld::~CGameWorld()
@@ -55,6 +57,9 @@ void CGameWorld::Release()
 		it = m_pInstance->m_aActors.erase(it);
 	}
 
+	m_pInstance->m_pPlayer = nullptr;
+	m_pInstance->m_pSemiBoss = nullptr;
+
 	delete m_pInstance;
 	m_pInstance = nullptr;
 }
@@ -68,16 +73,35 @@ void CGameWorld::Initialize()
 	m_iSpawnSlime = 0;
 	m_iSpawnSkeleton = 0;
 	m_iSpawnGolem = 0;
+	m_pSemiBoss = nullptr;
+	m_pPlayer = nullptr;
 
 	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::Gunman, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	m_pPlayer = pPlayer;
 	AddActor(pPlayer);
 }
 
-void CGameWorld::Update(double deltaTime)
+int CGameWorld::Update(double deltaTime)
 {
 	//	월드 이벤트 업데이트
-	this->Tick(deltaTime);
+	if (!this->Tick(deltaTime))
+	{	//	플레이어 사망
+		return MAIN_MENU;
+	}
+
+	if (m_pSemiBoss != nullptr)
+	{
+		if (!m_pSemiBoss.get()->IsValid())
+		{
+			//	사망함
+			//	보상지급
+			CTimer::GetInstance()->Pause();
+			CReward rew;
+			int reward = rew.GetReward();
+			CGraphic::GetInstance()->ReDraw();
+			CTimer::GetInstance()->Resume();
+		}
+	}
 
 	//	액터 풀 업데이트
 	for (auto it = m_aActors.begin(); it != m_aActors.end();)
@@ -100,6 +124,7 @@ void CGameWorld::Update(double deltaTime)
 			it++;
 		}
 	}
+	return GOTO_GAME;
 }
 
 void CGameWorld::Render()
@@ -113,26 +138,31 @@ void CGameWorld::Render()
 	}
 }
 
-void CGameWorld::Tick(double deltaTime)
+bool CGameWorld::Tick(double deltaTime)
 {
 	m_dWorldTime += deltaTime;
 
+	if (m_pPlayer != nullptr)
+	{	//	플레이어 사망확인
+		if (dynamic_pointer_cast<CPlayer>(m_pPlayer).get()->GetHealth() <= 0.0)
+		{	//	사망했습니다!
+			CDead dead;
+			dead.Dead();
+			return false;
+		}
+	}
+
 	static bool bossCreated = false;
 	static bool SemiBossCreated = false;
-	if (m_dWorldTime > 5.0 && !SemiBossCreated)				////////////////////////////	중간보스 생성
+	if (m_dWorldTime > 300.0 && !SemiBossCreated)				////////////////////////////	중간보스 생성
 	{	//	시간으로 보스 생성
 		SemiBossCreated = true;
 		shared_ptr<CSemiBoss> sboss = make_shared<CSemiBoss>();
 		AddActor(sboss);
-		
-		//CTimer::GetInstance()->Pause();
-		//CReward rew;
-		//rew.GetReward();
-		//CGraphic::GetInstance()->ReDraw();
-		//CTimer::GetInstance()->Resume();
+		m_pSemiBoss = sboss;
 	}
 
-	if (m_dWorldTime > 10.0 && !bossCreated)				////////////////////////////	최종보스 생성
+	if (m_dWorldTime > 5.0 && !bossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
 		bossCreated = true;
 		shared_ptr<CBoss> boss = make_shared<CBoss>(Pixel::square, TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED, FGridSize(2,2) );
@@ -143,11 +173,12 @@ void CGameWorld::Tick(double deltaTime)
 	{	//	적이 하나도 없으면
 		m_iWorldLevel++;
 		//	월드 레벨에 맞춰 몬스터 생성
-		m_iSpawnSlime = min(5, m_iWorldLevel);	//	최대 5마리
-		m_iSpawnSkeleton = min(4, m_iWorldLevel / 5);	//	5레벨부터 5레벨마다 추가
-		m_iSpawnGolem = min(4, m_iWorldLevel / 10);	//	10레벨부터 10레벨마다 추가
+		m_iSpawnSlime = min(6, m_iWorldLevel);	//	최대 6마리
+		m_iSpawnSkeleton = min(4, m_iWorldLevel / 3);	//	3레벨부터 3레벨마다 추가 최대 4마리
+		m_iSpawnGolem = min(3, m_iWorldLevel / 7);	//	7레벨부터 7레벨마다 추가 최대 3마리
 		MonsterSpawnEvent();
 	}
+	return true;
 }
 
 void CGameWorld::MonsterSpawnEvent()
@@ -189,18 +220,78 @@ void CGameWorld::MonsterSpawnEvent()
 		AddActor(enemy);
 	}
 
-	if (m_iSpawnSkeleton > 0)
+	for (int i = 0; i < m_iSpawnSkeleton; i++)
 	{
+		//	몬스터 생성
 		shared_ptr<CActor> enemy = make_shared<CSkeleton>();
-		enemy->SetPosition(COORD(10, 10));
+		COORD spawnPos = { 10, 10 };	//	근거리 생성
+
+		// 0: 위, 1: 아래, 2: 왼쪽, 3: 오른쪽
+		switch (rand() % 4)
+		{
+		case 0: // 위쪽 테두리 (Y는 0 고정, X는 무작위)
+			spawnPos.X = rand() % 10 + 10;
+			spawnPos.Y = 10;
+			break;
+
+		case 1: // 아래쪽 테두리 (Y는 29 고정, X는 무작위)
+			spawnPos.X = rand() % 10 + 10;
+			spawnPos.Y = 19;
+			break;
+
+		case 2: // 왼쪽 테두리 (X는 0 고정, Y는 무작위)
+			spawnPos.X = 10;
+			spawnPos.Y = rand() % 10 + 10;
+			break;
+
+		case 3: // 오른쪽 테두리 (X는 29 고정, Y는 무작위)
+			spawnPos.X = 19;
+			spawnPos.Y = rand() % 10 + 10;
+			break;
+		}
+
+		// 몬스터 생성 위치 설정
+		enemy->SetPosition(spawnPos);
+
+		//	몬스터 액터 풀에 넣기
 		AddActor(enemy);
 	}
 
-	if (m_iSpawnGolem > 0)
+	for (int i = 0; i < m_iSpawnGolem; i++)
 	{
-		shared_ptr<CActor> Golem = make_shared<CGolem>();
-		Golem->SetPosition(COORD(20, 20));
-		AddActor(Golem);
+		//	몬스터 생성
+		shared_ptr<CActor> enemy = make_shared<CGolem>();
+		COORD spawnPos = { 5, 5 };	//	중거리 생성
+
+		// 0: 위, 1: 아래, 2: 왼쪽, 3: 오른쪽
+		switch (rand() % 4)
+		{
+		case 0: // 위쪽 테두리 (Y는 0 고정, X는 무작위)
+			spawnPos.X = rand() % 20 + 5;
+			spawnPos.Y = 5;
+			break;
+
+		case 1: // 아래쪽 테두리 (Y는 29 고정, X는 무작위)
+			spawnPos.X = rand() % 20 + 5;
+			spawnPos.Y = 24;
+			break;
+
+		case 2: // 왼쪽 테두리 (X는 0 고정, Y는 무작위)
+			spawnPos.X = 5;
+			spawnPos.Y = rand() % 20 + 5;
+			break;
+
+		case 3: // 오른쪽 테두리 (X는 29 고정, Y는 무작위)
+			spawnPos.X = 24;
+			spawnPos.Y = rand() % 20 + 5;
+			break;
+		}
+
+		// 몬스터 생성 위치 설정
+		enemy->SetPosition(spawnPos);
+
+		//	몬스터 액터 풀에 넣기
+		AddActor(enemy);
 	}
 }
 

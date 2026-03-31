@@ -25,6 +25,10 @@ int Loop();
 
 int main()
 {
+#ifdef _DEBUG
+	//_CrtSetBreakAlloc(177);	//	메모리 누수 위치 확인용
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
 	SetConsoleOutputCP(CP_UTF8);
 
 	///////////////////////////////////////////////
@@ -44,6 +48,8 @@ int main()
 	GET_SINGLE(CResourceManager)->LoadSound(L"BGM4", L"BGM01.wav", ESoundType::BGM);
 	GET_SINGLE(CResourceManager)->LoadSound(L"Select", L"Select.wav", ESoundType::SFX);
 	GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
+	GET_SINGLE(CResourceManager)->LoadSound(L"Slime", L"Slime.wav", ESoundType::SFX);
+	GET_SINGLE(CResourceManager)->LoadSound(L"Golem", L"Golem.wav", ESoundType::SFX);
 	{
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
@@ -79,6 +85,7 @@ int main()
 				CInput::Release();
 				CInterface::Release();
 				CGameWorld::Release();
+				CTimer::Release();
 				bInitialized = false;
 			}
 			break;
@@ -94,6 +101,13 @@ int main()
 	CInput::Release();
 	CInterface::Release();
 	CGameWorld::Release();
+	CTimer::Release();
+	GET_SINGLE(CResourceManager)->Clear();
+	pSound = nullptr;
+
+#ifdef _DEBUG
+	_CrtDumpMemoryLeaks();	//	메모리 누수 감지
+#endif
 	return 0;
 }
 
@@ -108,6 +122,7 @@ int Loop()
 	CGameWorld* World = CGameWorld::GetInstance();
 	while (1)
 	{
+		int result = GOTO_GAME;
 		double DeltaTime = Timer->Update();
 		pInput->Update();
 
@@ -163,8 +178,11 @@ int Loop()
 			Timer->Resume();
 		}
 
-		World->Update(DeltaTime);
-
+		result = World->Update(DeltaTime);
+		if (result == MAIN_MENU)
+		{
+			return MAIN_MENU;
+		}
 		//	그리기 시작
 		//	각 액터의 Render를 이 함수 이후에 실행하세요
 		pGraphic->StartDraw();
