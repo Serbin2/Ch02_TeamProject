@@ -56,6 +56,7 @@
 #define GOTO_GAME	2
 #define PAUSE_MENU	3
 #define STORE_MENU	4
+#define GAME_CLEARED 5
 
 enum ETag
 {

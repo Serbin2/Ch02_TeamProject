@@ -14,3 +14,9 @@ public :
 
 	int Dead();
 };
+
+class CWarning
+{
+public:
+	int Warning();
+};

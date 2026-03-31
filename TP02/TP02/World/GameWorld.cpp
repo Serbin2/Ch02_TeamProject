@@ -11,6 +11,7 @@
 #include "../Enemy/Golem/Golem.h"
 #include "../Time/Timer.h"
 #include "../InGameMenu/Reward.h"
+#include "../Input/Input.h"
 
 CGameWorld::CGameWorld()
 {
@@ -24,6 +25,9 @@ CGameWorld::CGameWorld()
 	m_iSpawnGolem = 0;
 	m_pSemiBoss = nullptr;
 	m_pPlayer = nullptr;
+	m_pBoss = nullptr;
+	m_bSemibossCreated = false;
+	m_bBossCreated = false;
 }
 
 CGameWorld::~CGameWorld()
@@ -59,6 +63,7 @@ void CGameWorld::Release()
 
 	m_pInstance->m_pPlayer = nullptr;
 	m_pInstance->m_pSemiBoss = nullptr;
+	m_pInstance->m_pBoss = nullptr;
 
 	delete m_pInstance;
 	m_pInstance = nullptr;
@@ -74,6 +79,10 @@ void CGameWorld::Initialize()
 	m_iSpawnSkeleton = 0;
 	m_iSpawnGolem = 0;
 	m_pSemiBoss = nullptr;
+	m_pBoss = nullptr;
+	m_pPlayer = nullptr;
+	m_bSemibossCreated = false;
+	m_bBossCreated = false;
 
 	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::Gunman, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	m_pPlayer = pPlayer;
@@ -89,7 +98,7 @@ int CGameWorld::Update(double deltaTime)
 	}
 
 	if (m_pSemiBoss != nullptr)
-	{
+	{	//	보스 사망 처리
 		if (!m_pSemiBoss.get()->IsValid())
 		{
 			//	사망함
@@ -99,6 +108,19 @@ int CGameWorld::Update(double deltaTime)
 			int reward = rew.GetReward();
 			CGraphic::GetInstance()->ReDraw();
 			CTimer::GetInstance()->Resume();
+			CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
+			m_pSemiBoss = nullptr;
+		}
+	}
+
+	if (m_pBoss != nullptr)
+	{	//	보스 사망 처리
+		if (!m_pSemiBoss.get()->IsValid())
+		{
+			//	사망함
+			//	게임 종료(CLEAR)
+			m_pSemiBoss = nullptr;
+			return GAME_CLEARED;
 		}
 	}
 
@@ -151,21 +173,20 @@ bool CGameWorld::Tick(double deltaTime)
 		}
 	}
 
-	static bool bossCreated = false;
-	static bool SemiBossCreated = false;
-	if (m_dWorldTime > 300.0 && !SemiBossCreated)				////////////////////////////	중간보스 생성
+	if (m_dWorldTime > 300.0 && !m_bSemibossCreated)				////////////////////////////	중간보스 생성
 	{	//	시간으로 보스 생성
-		SemiBossCreated = true;
+		m_bSemibossCreated = true;
 		shared_ptr<CSemiBoss> sboss = make_shared<CSemiBoss>();
 		AddActor(sboss);
 		m_pSemiBoss = sboss;
 	}
 
-	if (m_dWorldTime > 5.0 && !bossCreated)				////////////////////////////	최종보스 생성
+	if (m_dWorldTime > 600.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
-		bossCreated = true;
+		m_bBossCreated = true;
 		shared_ptr<CBoss> boss = make_shared<CBoss>(Pixel::square, TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED, FGridSize(2,2) );
 		AddActor(boss);
+		m_pBoss = boss;
 	}
 
 	if (FindActorsByTag(ETag::monster).size() == 0)

@@ -6,7 +6,7 @@
 #define ATTACK_DELAY	5.0
 #define SHOT_DELAY 1.0
 
-#define BOSS_HEALTH_UI	19
+#define BOSS_HEALTH_UI	25
 
 CSemiBoss::CSemiBoss() : CEnemy(0,0)
 {
@@ -32,18 +32,21 @@ CSemiBoss::CSemiBoss() : CEnemy(0,0)
 	m_bPatternOn = false;
 	m_dAccel = 0.0;
 
-	m_sName = "[빅헤드]";
+	m_sName = "[분쇄기]";
 
 	m_fHealth = 1000;
-	CInterface::GetInstance()->AddUI(BOSS_HEALTH_UI, "Boss Health ");
-	CInterface::GetInstance()->SetValue(BOSS_HEALTH_UI, m_fHealth);
+	CInterface::GetInstance()->AddUI(24, m_sName);
+	CInterface::GetInstance()->AddUI(25, "HP : ");
+	CInterface::GetInstance()->SetValue(24, " ");
+	CInterface::GetInstance()->SetValue(25, m_fHealth);
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
 }
 
 
 CSemiBoss::~CSemiBoss()
 {
-
+	CInterface::GetInstance()->RemoveUI(24);
+	CInterface::GetInstance()->RemoveUI(25);
 }
 
 void CSemiBoss::Tick(double DeltaTime)
@@ -114,7 +117,7 @@ void CSemiBoss::OnHit(float damage)
 {
 	m_fHealth -= damage;
 
-	CInterface::GetInstance()->SetValue(BOSS_HEALTH_UI, m_fHealth);
+	CInterface::GetInstance()->SetValue(25, m_fHealth);
 	if (m_fHealth <= 0) OnDeath();
 }
 

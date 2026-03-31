@@ -53,10 +53,6 @@ void CProjectile::CheckCollision()
 	if (pOwner && pOwner.get() != pCharacter.get())
 	{
 		pCharacter->OnHit(pOwner->GetAttackPower());
-#ifdef _DEBUG
-		string str = pOwner.get()->GetName() + "의 투사체가 " + pCharacter.get()->GetName() + "에게 충돌했습니다.";
-		CGraphic::GetInstance()->AddLog(str);
-#endif
 		m_bIsValid = false;
 	}
 }
