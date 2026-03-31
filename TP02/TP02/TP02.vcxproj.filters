@@ -34,6 +34,10 @@
     <ClCompile Include="Projectile\TripleProjectile.cpp" />
     <ClCompile Include="Enemy\Golem\Golem.cpp" />
     <ClCompile Include="InGameMenu\Reward.cpp" />
+    <ClCompile Include="Projectile\ExplosiveProjectile.cpp" />
+    <ClCompile Include="Projectile\HomingProjectile.cpp" />
+    <ClCompile Include="Projectile\SplitProjectile.cpp" />
+    <ClCompile Include="FrontMenu\TextMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss\Boss.h" />
@@ -73,6 +77,10 @@
     <ClInclude Include="Projectile\TripleProjectile.h" />
     <ClInclude Include="Enemy\Golem\Golem.h" />
     <ClInclude Include="InGameMenu\Reward.h" />
+    <ClInclude Include="Projectile\ExplosiveProjectile.h" />
+    <ClInclude Include="Projectile\HomingProjectile.h" />
+    <ClInclude Include="Projectile\SplitProjectile.h" />
+    <ClInclude Include="FrontMenu\TextMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TP02.rc" />

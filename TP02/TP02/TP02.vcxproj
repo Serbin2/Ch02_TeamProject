@@ -134,6 +134,7 @@
     <ClCompile Include="Enemy\Skeleton\Skeleton.cpp" />
     <ClCompile Include="Enemy\Slime.cpp" />
     <ClCompile Include="FrontMenu\MainMenu.cpp" />
+    <ClCompile Include="FrontMenu\TextMenu.cpp" />
     <ClCompile Include="Graphics\ConsoleGraphic.cpp" />
     <ClCompile Include="Graphics\Effect.cpp" />
     <ClCompile Include="Graphics\Interface.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Enemy\Skeleton\Skeleton.h" />
     <ClInclude Include="Enemy\Slime.h" />
     <ClInclude Include="FrontMenu\MainMenu.h" />
+    <ClInclude Include="FrontMenu\TextMenu.h" />
     <ClInclude Include="Graphics\ConsoleGraphic.h" />
     <ClInclude Include="Graphics\Effect.h" />
     <ClInclude Include="InGameMenu\Menu.h" />
