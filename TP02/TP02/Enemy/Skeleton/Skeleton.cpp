@@ -2,6 +2,10 @@
 #include "Skeleton.h"
 #include "../../Projectile/Projectile.h"
 
+
+#include "../../Resource/Sound/Sound.h"
+#include "../../Manager/ResourceManager/ResourceManager.h"
+
 #define MOVING_TIME 5.0		//	5초동안 움직이기
 #define SHOT_DELAY 2.0		//	2초 후에 발사하기
 #define MOVE_DELAY 2.0		//	2초 후에 움직이기
@@ -57,6 +61,9 @@ void CSkeleton::Move()
 			m_dStateTime = 0;
 		}
 	}
+
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Skeleton");
+	pSound->Play(false);
 }
 
 void CSkeleton::Shot()

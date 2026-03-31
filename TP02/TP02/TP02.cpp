@@ -38,15 +38,20 @@ int main()
 	GET_SINGLE(CSoundManager)->Init(hHwnd);
 
 	// 로드 
-	GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav");
-	GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav");
-	GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav");
+	GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav", ESoundType::BGM);
+	GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav", ESoundType::BGM);
+	GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav", ESoundType::BGM);
+	GET_SINGLE(CResourceManager)->LoadSound(L"BGM4", L"BGM01.wav", ESoundType::BGM);
+	GET_SINGLE(CResourceManager)->LoadSound(L"Select", L"Select.wav", ESoundType::SFX);
+	GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
 	{
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
 	}
 	//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM3");
 	//pSound->Play(true);
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM4");
+	pSound->Play(true);
 
 	bool bInitialized = false;
 	int result = MAIN_MENU;
