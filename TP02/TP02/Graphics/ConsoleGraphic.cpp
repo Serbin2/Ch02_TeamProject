@@ -206,6 +206,7 @@ void CGraphic::PrintLog()
 //	게임 틀을 그립니다.
 void CGraphic::DrawShape()
 {
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 	system("cls");
 
 	string line;
