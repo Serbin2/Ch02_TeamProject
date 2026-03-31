@@ -115,7 +115,7 @@ int CGameWorld::Update(double deltaTime)
 
 	if (m_pBoss != nullptr)
 	{	//	보스 사망 처리
-		if (!m_pSemiBoss.get()->IsValid())
+		if (!m_pBoss.get()->IsValid())
 		{
 			//	사망함
 			//	게임 종료(CLEAR)
@@ -175,6 +175,13 @@ bool CGameWorld::Tick(double deltaTime)
 
 	if (m_dWorldTime > 300.0 && !m_bSemibossCreated)				////////////////////////////	중간보스 생성
 	{	//	시간으로 보스 생성
+		CTimer::GetInstance()->Pause();
+		CWarning warn;
+		int reward = warn.Warning();
+		CGraphic::GetInstance()->ReDraw();
+		CTimer::GetInstance()->Resume();
+		CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
+
 		m_bSemibossCreated = true;
 		shared_ptr<CSemiBoss> sboss = make_shared<CSemiBoss>();
 		AddActor(sboss);
@@ -183,6 +190,13 @@ bool CGameWorld::Tick(double deltaTime)
 
 	if (m_dWorldTime > 600.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
+		CTimer::GetInstance()->Pause();
+		CWarning warn;
+		int reward = warn.Warning();
+		CGraphic::GetInstance()->ReDraw();
+		CTimer::GetInstance()->Resume();
+		CInput::GetInstance()->Update();	//	입력 업데이트 돌려서 입력버퍼 비우기
+
 		m_bBossCreated = true;
 		shared_ptr<CBoss> boss = make_shared<CBoss>(Pixel::square, TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED, FGridSize(2,2) );
 		AddActor(boss);
