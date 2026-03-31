@@ -37,6 +37,11 @@ public:
 
 public:
 	virtual void UseItem(std::weak_ptr<CPlayer> pPlayer) override;
+
+	virtual std::shared_ptr<CItem> Clone() const override
+	{
+		return std::make_shared<CBombItem>(*this);
+	}
 };
 
 
