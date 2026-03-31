@@ -42,6 +42,7 @@ CSemiBoss::CSemiBoss() : CEnemy(0,0)
 	CInterface::GetInstance()->SetValue(24, " ");
 	CInterface::GetInstance()->SetValue(25, m_fHealth);
 	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Boss");
 }
 
 
@@ -49,6 +50,7 @@ CSemiBoss::~CSemiBoss()
 {
 	CInterface::GetInstance()->RemoveUI(24);
 	CInterface::GetInstance()->RemoveUI(25);
+	GET_SINGLE(CSoundManager)->PlaySFX(L"FBossDead");
 }
 
 void CSemiBoss::Tick(double DeltaTime)
