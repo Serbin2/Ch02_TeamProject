@@ -57,7 +57,7 @@ struct FGridSize
 class CBoss : public CEnemy
 {
 public:
-	CBoss(int Shape, int Color, FGridSize BossSize);
+	CBoss();
 
 	virtual ~CBoss();
 
@@ -91,14 +91,20 @@ protected:
 	// 사각형 형태의 보스의 Range  오프세만큼의 아웃라인 구하기
 	std::vector<FAttackPos> GetBossOutlineAttackRange(int Range);
 
+	void GetBossOutlineAttackRange(int Range, std::vector<COORD>& vUP, std::vector<COORD>& vDown, std::vector<COORD>& vLeft, std::vector<COORD>& vRight);
+
 	// 플레이어 위치기준 한방향 최대 5번 단계저 공격 
 	// ㅁ 모양이 커지는 식으로 공격
 	// AttackInRagne의 범위를 여러번 호출해서 파도타기 같은 느낌으로 구현 
 	// virtual void GetBossOutlineAttackRange();
-
-
+	
 	void WaveAttack();
 
+	void LineAttack();
+
+
+	// 보스 기준으로 플레이어 방향으 줄을 한칸씩 증가하면서 월드끝까지 공격
+	void FindLineByPlayer();
 
 protected:
 	virtual void ChangeState(EBossState NewState, float Delay = 1.f);
@@ -106,6 +112,9 @@ protected:
 	virtual void GroggyAction();
 	virtual void AttackAction();
 	virtual void MoveAction();
+
+private:
+	void ApplyDamage(const COORD& Pos, float Damage);
 
 public:
 	// 체력 유틸
@@ -136,17 +145,31 @@ protected:
 	double m_fAccStateActionDelay = 0;
 	double m_fStateActionDelay = 0;
 
-	FGridSize m_BossSize = {2, 2};		// 보스가 월드에서 차지하는 크기 
+	FGridSize m_BossSize = {3, 3};		// 보스가 월드에서 차지하는 크기 
 
 
 	// 웨이브 스킬 쿨타임 
-	bool bActive;
 	//int m_iWaveAt0tackTriggerCooldown = 1.5f;
 	//int m_iAccWaveAttackTriggerCooldown = 0.2f;
-	double m_iWaveAttackTriggerCooldown = 1.5f;
-	double m_iAccWaveAttackTriggerCooldown = 0.2f;
+	double m_iWaveAttackTriggerCooldown = 0.5;
+	double m_iAccWaveAttackTriggerCooldown = 0.0;
 	int m_iCurrntWaveCount = 1;
-	int m_iMaxWaveCount = 5;
+	int m_iMaxWaveCount = 10;
 	bool m_bIsActiveWaveAttack = false;
+	float m_fWaveAttackDamage = 30.f;
+
+
+	// 라인어택 관리 
+	//int m_iWaveAt0tackTriggerCooldown = 1.5f;
+	//int m_iAccWaveAttackTriggerCooldown = 0.2f;
+	double m_iLineAttackTriggerCooldown = 0.3;
+	double m_iAccLineAttack = 0.0f;
+	bool m_bIsActiveLineAttack = false;
+	float m_fLineAttackDamage = 30.f;
+
+
+	// 방향 
+	COORD m_cLineDir;
+	COORD m_cLineStart;
 };
 

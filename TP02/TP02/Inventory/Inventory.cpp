@@ -18,13 +18,11 @@ CInventory::CInventory()
 
 	//UpdateUI();
 
-#ifdef _DEBUG
 	AddItem(std::make_shared<Potion>(), 3);
-		AddItem(std::make_shared<Potion>(), 1);
-		AddItem(std::make_shared<CElixir>(), 1);
-		AddItem(std::make_shared<CBombItem>(), 10);
-		AddItem(std::make_shared<CInvinciblePotion>(), 1);
-#endif
+	AddItem(std::make_shared<Potion>(), 1);
+	AddItem(std::make_shared<CElixir>(), 1);
+	AddItem(std::make_shared<CBombItem>(), 10);
+	AddItem(std::make_shared<CInvinciblePotion>(), 1);
 }
 
 CInventory::CInventory(int iMaxSlot)
