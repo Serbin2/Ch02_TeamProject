@@ -10,7 +10,6 @@
 #include "FrontMenu/MainMenu.h"
 #include "World/GameWorld.h"
 #include "Item/Item.h"
-#include "Graphics/Effect.h"
 #include "Shop/Shop.h"
 #include "Character/Player.h"
 

@@ -146,6 +146,9 @@
     <ClCompile Include="Manager\SoundManager\SoundManager.cpp" />
     <ClCompile Include="Projectile\BossProjectile.cpp" />
     <ClCompile Include="Projectile\BouncingProjectile.cpp" />
+    <ClCompile Include="Projectile\ExplosiveProjectile.cpp" />
+    <ClCompile Include="Projectile\HomingProjectile.cpp" />
+    <ClCompile Include="Projectile\SplitProjectile.cpp" />
     <ClCompile Include="Projectile\TripleProjectile.cpp" />
     <ClCompile Include="Resource\ResourceBase.cpp" />
     <ClCompile Include="Resource\Sound\Sound.cpp" />
@@ -186,7 +189,10 @@
     <ClInclude Include="Manager\SoundManager\SoundManager.h" />
     <ClInclude Include="Projectile\BossProjectile.h" />
     <ClInclude Include="Projectile\BouncingProjectile.h" />
+    <ClInclude Include="Projectile\ExplosiveProjectile.h" />
+    <ClInclude Include="Projectile\HomingProjectile.h" />
     <ClInclude Include="Projectile\Projectile.h" />
+    <ClInclude Include="Projectile\SplitProjectile.h" />
     <ClInclude Include="Projectile\TripleProjectile.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\ResourceBase.h" />
