@@ -33,6 +33,11 @@ int CReward::GetReward()
 	std::cout << "   >>>> 1. 세갈래 총알   2. 튕기는 총알 <<<<";
 	SetConsoleCursorPosition(m_hOP, COORD(15, 17));
 	std::cout << "   >>>> 3. 유도탄  4. 폭발탄  5. 분할탄 <<<<";
+	std::cout << ">>>>>>>>>> 무기 업그레이드 시스템 <<<<<<<<<<";
+	SetConsoleCursorPosition(m_hOP, COORD(15, 14));
+	std::cout << ">>> 1. 트리플 샷            2. 바운스 샷 <<<";
+	SetConsoleCursorPosition(m_hOP, COORD(15, 15));
+	std::cout << ">>> 3. 유도 미사일  4. 폭발탄  5. 파편탄 <<<";
 
 	auto pPlayerActor = CGameWorld::GetInstance()->GetPlayerActor();
 	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pPlayerActor);
@@ -49,23 +54,23 @@ int CReward::GetReward()
 		{
 		case 1:
 			if (pPlayer != nullptr)
-				pPlayer->SetProjectile(std::make_shared<CTripleProjectile>());
+				pPlayer->SetProjectile(std::make_shared<CTripleProjectile>());    // 트리플 샷
 			return 1;
 		case 2:
 			if (pPlayer != nullptr)
-				pPlayer->SetProjectile(std::make_shared<CBouncingProjectile>());
+				pPlayer->SetProjectile(std::make_shared<CBouncingProjectile>());  // 바운스 샷
 			return 2;
 		case 3:
 			if (pPlayer != nullptr)
-				pPlayer->SetProjectile(std::make_shared<CHomingProjectile>());
+				pPlayer->SetProjectile(std::make_shared<CHomingProjectile>());    // 유도 미사일
 			return 2;
 		case 4:
 			if (pPlayer != nullptr)
-				pPlayer->SetProjectile(std::make_shared<CExplosiveProjectile>());
+				pPlayer->SetProjectile(std::make_shared<CExplosiveProjectile>()); // 폭발탄
 			return 2;
 		case 5:
 			if (pPlayer != nullptr)
-				pPlayer->SetProjectile(std::make_shared<CSplitProjectile>());
+				pPlayer->SetProjectile(std::make_shared<CSplitProjectile>());     // 파편탄
 			return 2;
 		}
 	}
