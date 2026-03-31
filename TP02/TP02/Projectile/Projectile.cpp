@@ -3,6 +3,7 @@
 CProjectile::CProjectile(int Shape, int Color) : CActor(Shape, Color)
 {
 	m_fSpeed = 5.0f;
+	m_dLifeTime = 20.0f;	//	모든 투사체는 20초 후에 강제 제거
 	m_eTag = ETag::actor | ETag::projectile;
 }
 
@@ -12,6 +13,9 @@ void CProjectile::Tick(double DeltaTime)
 		return;
 
 	if (m_dMoveTimer > 0.0) m_dMoveTimer -= DeltaTime;
+	m_dLifeTime -= DeltaTime;
+
+	if (m_dLifeTime < 0)	m_bIsValid = false;
 
 	Move();
 	CheckCollision();

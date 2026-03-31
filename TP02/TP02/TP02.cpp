@@ -25,8 +25,10 @@ int Loop();
 
 int main()
 {
-	//_CrtSetBreakAlloc(383);	//	메모리 누수 위치 확인용
+#ifdef _DEBUG
+	//_CrtSetBreakAlloc(177);	//	메모리 누수 위치 확인용
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
 	SetConsoleOutputCP(CP_UTF8);
 
 	///////////////////////////////////////////////
@@ -100,8 +102,12 @@ int main()
 	CInterface::Release();
 	CGameWorld::Release();
 	CTimer::Release();
+	GET_SINGLE(CResourceManager)->Clear();
+	pSound = nullptr;
 
+#ifdef _DEBUG
 	_CrtDumpMemoryLeaks();	//	메모리 누수 감지
+#endif
 	return 0;
 }
 
