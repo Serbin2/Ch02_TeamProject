@@ -16,7 +16,6 @@ public:
 	virtual void Die();
 	virtual void DropItem();
 
-	void Die();
 	bool IsDead() const { return m_bIsDead; };
 
 protected:

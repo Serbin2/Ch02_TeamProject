@@ -17,7 +17,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_dInvincibleTimer = 0.0;
 	m_fHealth = 100.0f;
 	m_fMaxHealth = 100;
-	m_fAttackPower = 115.0f;
+	m_fAttackPower = 15.0f;
 	m_fDefense = 5.0f;
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 0.5;
@@ -165,8 +165,8 @@ void CPlayer::AddExp(int exp)
 		m_iExp -= m_iLevel * 50;
 		m_iLevel++;
 
-		//m_fAttackPower += 5.0f;
-		//m_fDefense += 2.0f;
+		m_fAttackPower += 5.0f;
+		m_fDefense += 0.1f;
 		CGraphic::GetInstance()->AddLog("레벨 업!");
 		GET_SINGLE(CSoundManager)->PlaySFX(L"LevelUp");
 	}
