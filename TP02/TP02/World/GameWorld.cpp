@@ -26,6 +26,7 @@ CGameWorld::CGameWorld()
 	m_iSpawnSkeleton = 0;
 	m_iSpawnGolem = 0;
 	m_pSemiBoss = nullptr;
+	m_pPlayer = nullptr;
 }
 
 CGameWorld::~CGameWorld()
@@ -59,6 +60,9 @@ void CGameWorld::Release()
 		it = m_pInstance->m_aActors.erase(it);
 	}
 
+	m_pInstance->m_pPlayer = nullptr;
+	m_pInstance->m_pSemiBoss = nullptr;
+
 	delete m_pInstance;
 	m_pInstance = nullptr;
 }
@@ -73,6 +77,7 @@ void CGameWorld::Initialize()
 	m_iSpawnSkeleton = 0;
 	m_iSpawnGolem = 0;
 	m_pSemiBoss = nullptr;
+	m_pPlayer = nullptr;
 
 	std::shared_ptr<CPlayer> pPlayer = make_shared<CPlayer>(Pixel::Gunman, TEXT_BACKGROUND_MAGENTA | TEXT_FOREGROUND_CYAN);
 	//pPlayer->SetProjectile(make_shared<CBouncingProjectile>());
@@ -81,10 +86,13 @@ void CGameWorld::Initialize()
 	AddActor(pPlayer);
 }
 
-void CGameWorld::Update(double deltaTime)
+int CGameWorld::Update(double deltaTime)
 {
 	//	월드 이벤트 업데이트
-	this->Tick(deltaTime);
+	if (!this->Tick(deltaTime))
+	{	//	플레이어 사망
+		return MAIN_MENU;
+	}
 
 	if (m_pSemiBoss != nullptr)
 	{
@@ -121,6 +129,7 @@ void CGameWorld::Update(double deltaTime)
 			it++;
 		}
 	}
+	return GOTO_GAME;
 }
 
 void CGameWorld::Render()
@@ -134,9 +143,19 @@ void CGameWorld::Render()
 	}
 }
 
-void CGameWorld::Tick(double deltaTime)
+bool CGameWorld::Tick(double deltaTime)
 {
 	m_dWorldTime += deltaTime;
+
+	if (m_pPlayer != nullptr)
+	{	//	플레이어 사망확인
+		if (dynamic_pointer_cast<CPlayer>(m_pPlayer).get()->GetHealth() <= 0.0)
+		{	//	사망했습니다!
+			CDead dead;
+			dead.Dead();
+			return false;
+		}
+	}
 
 	static bool bossCreated = false;
 	static bool SemiBossCreated = false;
@@ -164,6 +183,7 @@ void CGameWorld::Tick(double deltaTime)
 		m_iSpawnGolem = min(3, m_iWorldLevel / 7);	//	7레벨부터 7레벨마다 추가 최대 3마리
 		MonsterSpawnEvent();
 	}
+	return true;
 }
 
 void CGameWorld::MonsterSpawnEvent()
