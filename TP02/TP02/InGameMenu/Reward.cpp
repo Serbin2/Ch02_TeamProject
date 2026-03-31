@@ -1,5 +1,8 @@
 #include "Reward.h"
-
+#include "../World/GameWorld.h"
+#include "../Character/Player.h"
+#include "../Projectile/TripleProjectile.h"
+#include "../Projectile/BouncingProjectile.h"
 
 int CReward::GetReward()
 {	//	임시 보상선택 창
@@ -19,6 +22,10 @@ int CReward::GetReward()
 	std::cout << ">>>>>>>>   보상을 선택하시오 <<<<<<<<<<<<";
 	SetConsoleCursorPosition(m_hOP, COORD(15, 14));
 	std::cout << ">>>> 1. 세갈래 총알   2. 튕기는 총알 <<<<";
+
+	auto pPlayerActor = CGameWorld::GetInstance()->GetPlayerActor();
+	auto pPlayer = std::dynamic_pointer_cast<CPlayer>(pPlayerActor);
+
 	while (1)
 	{
 		int in;
@@ -31,8 +38,12 @@ int CReward::GetReward()
 		switch (in)
 		{
 		case 1:
+			if (pPlayer != nullptr)
+				pPlayer->SetProjectile(std::make_shared<CTripleProjectile>());
 			return 1;
 		case 2:
+			if (pPlayer != nullptr)
+				pPlayer->SetProjectile(std::make_shared<CBouncingProjectile>());
 			return 2;
 		}
 	}
