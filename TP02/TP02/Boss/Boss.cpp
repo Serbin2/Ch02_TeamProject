@@ -5,11 +5,12 @@
 #include "../Projectile/BossProjectile.h"
 
 CBoss::CBoss(int Shape, int Color, FGridSize BossSize)
-	: CCharacter(Shape, Color)
+	: CEnemy(Shape, Color)
 {
 	m_cPosition = { 15, 15 };
 
 	m_BossSize = BossSize;
+	m_eTag = ETag::actor | ETag::character | ETag::monster | ETag::boss;
 }
 
 CBoss::~CBoss()
@@ -268,4 +269,14 @@ void CBoss::MoveAction()
 	// 텔포 -> 공격 스테이 후 
 	Teleport();
 	ChangeState(EBossState::Attack, 2);
+}
+
+bool CBoss::ActorCustomCollisionTest(COORD pos)
+{
+	if (m_cPosition.X <= pos.X && pos.X <= m_cPosition.X + m_BossSize.m_iX &&
+		m_cPosition.Y <= pos.Y && pos.Y <= m_cPosition.Y + m_BossSize.m_iY)
+	{
+		return true;
+	}
+	return false;
 }

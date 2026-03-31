@@ -6,6 +6,7 @@
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
 #include "../Character/Character.h"
+#include "../Enemy/Enemy.h"
 #include <functional>
 
 constexpr int TEMP_MAP_SIZE = 30;
@@ -53,7 +54,7 @@ struct FGridSize
 	uint8_t m_iY; // Y칸
 };
 
-class CBoss : public CCharacter
+class CBoss : public CEnemy
 {
 public:
 	CBoss(int Shape, int Color, FGridSize BossSize);
@@ -72,7 +73,7 @@ public:
 	}
 
 	virtual void OnHit(float Damage) override;
-
+	virtual bool ActorCustomCollisionTest(COORD pos) override;
 
 protected:
 	// 랜덤 공격 패턴 선택 함수 / 어택해서 호출 
