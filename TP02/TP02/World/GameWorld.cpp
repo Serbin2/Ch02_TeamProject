@@ -370,7 +370,7 @@ bool CGameWorld::AddActor(shared_ptr<CActor> actor)
 	}
 
 	//CGraphic::GetInstance()->AddLog("Actor Successfuly Added");
-	CInterface::GetInstance()->SetValue(29, (int)m_aActors.size());
+	//CInterface::GetInstance()->SetValue(29, (int)m_aActors.size());
 	return true;
 }
 

@@ -29,9 +29,9 @@ int CReward::GetReward()
 	SetConsoleCursorPosition(m_hOP, COORD(15, 12));
 	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_CYAN | TEXT_BACKGROUND_BLACK);
 	std::cout << "   >>>>>>>>   보상을 선택하시오 <<<<<<<<<<<<";
-	SetConsoleCursorPosition(m_hOP, COORD(15, 14));
+	SetConsoleCursorPosition(m_hOP, COORD(15, 15));
 	std::cout << "   >>>> 1. 세갈래 총알   2. 튕기는 총알 <<<<";
-	SetConsoleCursorPosition(m_hOP, COORD(15, 14));
+	SetConsoleCursorPosition(m_hOP, COORD(15, 17));
 	std::cout << "   >>>> 3. 유도탄  4. 폭발탄  5. 분할탄 <<<<";
 
 	auto pPlayerActor = CGameWorld::GetInstance()->GetPlayerActor();

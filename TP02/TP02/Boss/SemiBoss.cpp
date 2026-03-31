@@ -2,6 +2,7 @@
 #include "../Graphics/Interface.h"
 #include "../Projectile/Projectile.h"
 #include "../Character/Player.h"
+#include "../Time/Timer.h"
 
 #define ATTACK_DELAY	5.0
 #define SHOT_DELAY 1.0
@@ -57,6 +58,7 @@ void CSemiBoss::Tick(double DeltaTime)
 	m_dShotDelay -= DeltaTime;
 	Attack();
 
+	if (m_dInvincibleTimer > 0.0) m_dInvincibleTimer -= DeltaTime;
 	m_dMoveTimer -= DeltaTime;
 	m_dAccel += DeltaTime / 4.0;
 	if (m_dAccel > 0.95)	m_dAccel = 0.95;
@@ -115,10 +117,8 @@ void CSemiBoss::Render()
 
 void CSemiBoss::OnHit(float damage)
 {
-	m_fHealth -= damage;
-
+	CEnemy::OnHit(damage);
 	CInterface::GetInstance()->SetValue(25, m_fHealth);
-	if (m_fHealth <= 0) OnDeath();
 }
 
 bool CSemiBoss::ActorCustomCollisionTest(COORD pos)
@@ -203,12 +203,11 @@ void CSemiBoss::Gatling()
 	}
 }
 
-void CSemiBoss::OnDeath()
+void CSemiBoss::Die()
 {
-	//	공격 강화권 지급하기
-
-	dynamic_pointer_cast<CPlayer>(CGameWorld::GetInstance()->GetPlayerActor())->AddExp(200);
-
-	m_bIsValid = false;
+	CEnemy::Die();
+	CTimer::GetInstance()->Pause();
+	Sleep(1000);
+	CTimer::GetInstance()->Resume();
 	CInterface::GetInstance()->RemoveUI(BOSS_HEALTH_UI);
 }

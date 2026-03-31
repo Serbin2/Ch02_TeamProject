@@ -17,7 +17,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_dInvincibleTimer = 0.0;
 	m_fHealth = 100.0f;
 	m_fMaxHealth = 100;
-	m_fAttackPower = 15.0f;
+	m_fAttackPower = 115.0f;
 	m_fDefense = 5.0f;
 	m_iAttackRange = 1;
 	m_dAttackCooldown = 0.5;
@@ -26,7 +26,7 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iExp = 0;
 	m_iGold = 500;
 	m_eTag = ETag::player | ETag::character | ETag::actor;
-	m_sName = "[아이작]";
+	m_sName = "[잭]";
 
 	// PJH - 인벤토리 추가
 	m_pInventory = std::make_shared<CInventory>();

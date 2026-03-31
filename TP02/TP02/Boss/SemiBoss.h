@@ -15,6 +15,8 @@ public:
 	virtual void OnHit(float daamge) override;
 	virtual bool ActorCustomCollisionTest(COORD pos) override;
 
+	virtual void Die() override;
+
 protected:
 	enum State
 	{	//	보스의 상태
@@ -36,17 +38,12 @@ protected:
 	void VerticalLaser();
 	void Gatling();
 
-	void OnDeath();
-
 	int m_ePattern;
 	double m_dAttackDelay;	//	공격 패턴 전환 딜레이
 	double m_dShotDelay;	//	공격 발사 딜레이
 	double m_dAccel;		//	가속
 	int m_iAttackCount;
 	bool m_bPatternOn;
-
-
-	float m_fHealth;
 
 	//	거대한 사각형 형태의 보스
 	COORD m_cRect;

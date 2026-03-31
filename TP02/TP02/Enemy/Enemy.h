@@ -13,7 +13,7 @@ public:
 	virtual void CheckCollision() override;
 	virtual void OnHit(float Damage) override;
 
-	void Die();
+	virtual void Die();
 	bool IsDead() const { return m_bIsDead; };
 
 protected:
