@@ -9,7 +9,10 @@ CSound::CSound()
 CSound::~CSound()
 {
 	if (m_SoundBuffer)
+	{
 		m_SoundBuffer->Release();
+		m_SoundBuffer = nullptr;
+	}
 }
 
 bool CSound::LoadWave(fs::path fullPath)

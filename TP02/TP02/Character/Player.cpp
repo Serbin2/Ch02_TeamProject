@@ -5,6 +5,8 @@
 #include "../Graphics/Interface.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Enemy/Enemy.h"
+#include <format>
+
 
 CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 {
@@ -23,8 +25,6 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_iLevel = 1;
 	m_iExp = 0;
 	m_iGold = 500;
-	m_dLevel = 1.0;
-	m_dExp = 0.0;
 	m_eTag = ETag::player | ETag::character | ETag::actor;
 	m_sName = "[아이작]";
 
@@ -33,11 +33,14 @@ CPlayer::CPlayer(int Shape, int Color) : CCharacter(Shape, Color)
 	m_pProjectile = std::make_shared<CProjectile>();
 
 	CInterface::GetInstance()->AddUI(2, "HP : ");
-	CInterface::GetInstance()->SetValue(2, m_fHealth);
-	CInterface::GetInstance()->AddUI(4, "x ");
-	CInterface::GetInstance()->AddUI(5, "y ");
+	string sHP = format("{:.1f}",m_fHealth) + " / " + format("{:.1f}", m_fMaxHealth);
+	CInterface::GetInstance()->SetValue(2, sHP);
 	CInterface::GetInstance()->AddUI(3, "Lv : ");
-	CInterface::GetInstance()->SetValue(3, (float)m_dLevel);
+	CInterface::GetInstance()->SetValue(3, m_iLevel);
+	CInterface::GetInstance()->AddUI(4, "ATF : ");
+	CInterface::GetInstance()->AddUI(5, "DEF : ");
+	CInterface::GetInstance()->SetValue(4, m_fAttackPower);
+	CInterface::GetInstance()->SetValue(5, m_fDefense);
 }
 
 void CPlayer::Tick(double DeltaTime)
@@ -113,7 +116,8 @@ void CPlayer::OnHit(float Damage)
 		SetHealth(GetHealth() - finalDamage);
 	
 	m_dInvincibleTimer = m_fInvincibleDuration;
-	CInterface::GetInstance()->SetValue(2, m_fHealth);
+	string sHP = format("{:.1f}", m_fHealth) + " / " + format("{:.1f}", m_fMaxHealth);
+	CInterface::GetInstance()->SetValue(2, sHP);
 }
 
 void CPlayer::SetInvincibleStateByItem(double InvincibleTime)
@@ -155,19 +159,24 @@ void CPlayer::Input()
 	}
 }
 
-void CPlayer::AddExp(float exp)
+void CPlayer::AddExp(int exp)
 {
-	m_dExp += exp;
+	m_iExp += exp;
 
-	while (m_dExp >= m_dLevel * 20)
+	while (m_iExp >= m_iLevel * 20)
 	{
-		m_dExp -= m_dLevel * 20;
-		m_dLevel++;
+		m_iExp -= m_iLevel * 20;
+		m_iLevel++;
 
 		m_fHealth += 20.0f;
 		m_fAttackPower += 5.0f;
 		m_fDefense += 2.0f;
+		CGraphic::GetInstance()->AddLog("레벨 업!");
 	}
 
-	CInterface::GetInstance()->SetValue(3, (float)m_dLevel);
+	CInterface::GetInstance()->SetValue(4, m_fAttackPower);
+	CInterface::GetInstance()->SetValue(5, m_fDefense);
+	string sHP = format("{:.1f}", m_fHealth) + " / " + format("{:.1f}", m_fMaxHealth);
+	CInterface::GetInstance()->SetValue(2, sHP);
+	CInterface::GetInstance()->SetValue(3, (float)m_iLevel);
 }

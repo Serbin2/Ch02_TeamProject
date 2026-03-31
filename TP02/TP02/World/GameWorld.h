@@ -82,7 +82,12 @@ private:
 	//	플레이어 액터는 특별 관리
 	shared_ptr<CActor> m_pPlayer;
 
+	bool m_bSemibossWarned;
 	shared_ptr<CActor> m_pSemiBoss;
+	bool m_bSemibossCreated;
+	bool m_bBossWarned;
+	shared_ptr<CActor> m_pBoss;
+	bool m_bBossCreated;
 
 	//	전체 액터 관리용 마스터 컨테이너
 	unordered_map<shared_ptr<CActor>, int> m_aActors;

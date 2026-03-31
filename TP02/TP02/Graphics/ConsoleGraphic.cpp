@@ -21,7 +21,7 @@ CGraphic::CGraphic()
 	m_iMaxLog = LOG_HEIGHT;
 	m_DefaultBackgroundColor = TEXT_BACKGROUND_BLACK;
 	m_bOnDraw = false;
-	m_sBlank = "                                                           ";
+	m_sBlank = "                                                           \0";
 
 }
 
@@ -182,7 +182,7 @@ void CGraphic::AddLog(string str)
 
 	string newString = str + m_sBlank;
 	//	새 로그를 큐에 넣습니다
-	m_aLog.push_back(newString.substr(0, (m_iEndOfScreenX - 2) * WIDTH_MULTIPLY));
+	m_aLog.push_back(newString.substr(0, (m_iEndOfScreenX - 3) * WIDTH_MULTIPLY));
 	while (m_aLog.size() > m_iMaxLog)
 	{	//	큐가 넘치면 오래된 로그를 제거합니다.
 		m_aLog.pop_front();
@@ -206,6 +206,7 @@ void CGraphic::PrintLog()
 //	게임 틀을 그립니다.
 void CGraphic::DrawShape()
 {
+	SetConsoleTextAttribute(m_hOP, TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 	system("cls");
 
 	string line;

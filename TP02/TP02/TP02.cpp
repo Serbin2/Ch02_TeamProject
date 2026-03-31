@@ -28,6 +28,7 @@ int main(){
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 	SetConsoleOutputCP(CP_UTF8);
+	srand((unsigned int)time(NULL));
 
 	///////////////////////////////////////////////
 	//	여기서부터 게임 로직을 작성합니다
@@ -40,14 +41,16 @@ int main(){
 	GET_SINGLE(CSoundManager)->Init(hHwnd);
 
 	// 로드 
-	GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav", ESoundType::BGM);
-	GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav", ESoundType::BGM);
-	GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav", ESoundType::BGM);
-	GET_SINGLE(CResourceManager)->LoadSound(L"BGM4", L"BGM01.wav", ESoundType::BGM);
-	GET_SINGLE(CResourceManager)->LoadSound(L"Select", L"Select.wav", ESoundType::SFX);
-	GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
-	GET_SINGLE(CResourceManager)->LoadSound(L"Slime", L"Slime.wav", ESoundType::SFX);
-	GET_SINGLE(CResourceManager)->LoadSound(L"Golem", L"Golem.wav", ESoundType::SFX);
+	{
+		GET_SINGLE(CResourceManager)->LoadSound(L"BGM1", L"DJ-Okawari-Flower-Dance-2010.wav", ESoundType::BGM);
+		GET_SINGLE(CResourceManager)->LoadSound(L"BGM2", L"OST-Second-Run.wav", ESoundType::BGM);
+		GET_SINGLE(CResourceManager)->LoadSound(L"BGM3", L"Pixel_Velocity.wav", ESoundType::BGM);
+		GET_SINGLE(CResourceManager)->LoadSound(L"BGM4", L"BGM01.wav", ESoundType::BGM);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Select", L"Select.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Skeleton", L"Skeleton.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Slime", L"Slime.wav", ESoundType::SFX);
+		GET_SINGLE(CResourceManager)->LoadSound(L"Golem", L"Golem.wav", ESoundType::SFX);
+	}
 	{
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM1");
 		//std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM2");
@@ -56,6 +59,8 @@ int main(){
 	//pSound->Play(true);
 	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"BGM4");
 	pSound->Play(true);
+
+
 
 	bool bInitialized = false;
 	int result = MAIN_MENU;
@@ -87,6 +92,11 @@ int main(){
 				bInitialized = false;
 			}
 			break;
+		case GAME_CLEARED:
+			//	게임 종료 화면 추가해야함
+
+			result = MAIN_MENU;
+			break;
 		}
 
 		if (result == EXIT_GAME)
@@ -103,6 +113,7 @@ int main(){
 	GET_SINGLE(CResourceManager)->Clear();
 	pSound = nullptr;
 
+	GET_SINGLE(CResourceManager)->Clear();
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();	//	메모리 누수 감지
 #endif
