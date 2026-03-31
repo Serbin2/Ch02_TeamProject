@@ -15,8 +15,10 @@ CSkeleton::CSkeleton() : CEnemy(Pixel::Skeleton, TEXT_FOREGROUND_BLACK | TEXT_BA
 {
 	m_iState = WaitForMove;
 	m_dStateTime = 0;
-	m_sName = "스켈레톤";
+	m_sName = "[스켈레톤]";
 	m_eTag = ETag::actor | ETag::character | ETag::monster;
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Skeleton");
+	pSound->Play(false);
 	//	체력 설정 해야함
 	//	경험치 설정 해야함
 	//	공격력 설정 해야함
@@ -63,8 +65,7 @@ void CSkeleton::Move()
 		}
 	}
 
-	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Skeleton");
-	pSound->Play(false);
+	
 }
 
 void CSkeleton::Shot()

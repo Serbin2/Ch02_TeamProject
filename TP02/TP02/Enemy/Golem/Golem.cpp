@@ -1,6 +1,9 @@
 #include "Golem.h"
 #include "../../Graphics/Effect.h"
 
+#include "../../Resource/Sound/Sound.h"
+#include "../../Manager/ResourceManager/ResourceManager.h"
+
 #define GOLEM_MOVE	5.0
 
 CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_GRAY)
@@ -18,6 +21,10 @@ CGolem::CGolem() : CEnemy(Pixel::Golem, TEXT_FOREGROUND_BLACK | TEXT_BACKGROUND_
 	m_aDuration.push_back(0.1);
 	m_aDuration.push_back(0.3);
 	m_aDuration.push_back(0.6);
+	m_sName = "[골렘]";
+
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Golem");
+	pSound->Play(false);
 }
 
 CGolem::~CGolem()
