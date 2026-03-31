@@ -171,8 +171,8 @@ void CPlayer::AddExp(int exp)
 		GET_SINGLE(CSoundManager)->PlaySFX(L"LevelUp");
 	}
 
-	//CInterface::GetInstance()->SetValue(4, m_fAttackPower);
-	//CInterface::GetInstance()->SetValue(5, m_fDefense);
+	CInterface::GetInstance()->SetValue(4, m_fAttackPower);
+	CInterface::GetInstance()->SetValue(5, m_fDefense);
 	//string sHP = format("{:.1f}", m_fHealth) + " / " + format("{:.1f}", m_fMaxHealth);
 	//CInterface::GetInstance()->SetValue(2, sHP);
 	CInterface::GetInstance()->SetValue(3, (float)m_iLevel);

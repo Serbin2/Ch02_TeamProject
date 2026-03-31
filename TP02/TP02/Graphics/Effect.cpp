@@ -29,9 +29,6 @@ void CEffect::CreateStaticEffect(int shape,	int color, COORD LT, COORD RB, doubl
 	m_cRectRB.X = min(29, max(LT.X, RB.X));
 	m_cRectRB.Y = min(29, max(LT.Y, RB.Y));
 	m_dDuration = duration;
-#ifdef _DEBUG
-	CGraphic::GetInstance()->AddLog("이펙트를 생성했습니다");
-#endif
 	m_isFired = true;
 }
 
@@ -61,9 +58,6 @@ void CEffect::CreateDynamicEffect(int level, vector<pair<int, int>> shape, vecto
 	m_bDynamic = true;
 	m_iDynamicCurLevel = -1;
 	m_dDuration = 0;
-#ifdef _DEBUG
-	CGraphic::GetInstance()->AddLog("이펙트를 생성했습니다");
-#endif
 	m_isFired = true;
 }
 
@@ -80,9 +74,6 @@ void CEffect::Tick(double deltaTime)
 
 	//	이펙트 지속시간이 끝났습니다.
 	m_bIsValid = false;
-#ifdef _DEBUG
-	CGraphic::GetInstance()->AddLog("이펙트가 삭제되었습니다");
-#endif
 }
 
 void CEffect::Move()

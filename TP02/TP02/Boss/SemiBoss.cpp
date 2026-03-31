@@ -210,7 +210,7 @@ void CSemiBoss::Die()
 {
 	CEnemy::Die();
 	CTimer::GetInstance()->Pause();
-	Sleep(1000);
+	Sleep(2000);
 	CTimer::GetInstance()->Resume();
 	CInterface::GetInstance()->RemoveUI(BOSS_HEALTH_UI);
 }
