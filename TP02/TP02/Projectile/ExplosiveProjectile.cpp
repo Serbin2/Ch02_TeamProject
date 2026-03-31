@@ -30,7 +30,7 @@ void CExplosiveProjectile::CheckCollision()
 				if (x == 0 && y == 0)
 					continue;
 
-				COORD splashPos = { m_cPosition.X + x, m_cPosition.Y + y };
+				COORD splashPos(m_cPosition.X + x, m_cPosition.Y + y);
 
 				if (splashPos.X >= 0 && splashPos.X < 30 && splashPos.Y >= 0 && splashPos.Y < 30)
 				{

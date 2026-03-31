@@ -1,9 +1,9 @@
+
 #include "Boss.h"
 #include "../Graphics/ConsoleGraphic.h"
 #include "../Utils/Utils.h"
 #include "../Graphics/Interface.h"
 #include "../Projectile/BossProjectile.h"
-#include "../Utils/Utils.h"
 #include "../Graphics/Effect.h"
 #include "../Manager/SoundManager/SoundManager.h"
 #include "../Time/Timer.h"
