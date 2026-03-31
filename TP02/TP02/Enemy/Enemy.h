@@ -14,9 +14,13 @@ public:
 	virtual void OnHit(float Damage) override;
 
 	virtual void Die();
+	virtual void DropItem();
+
+	void Die();
 	bool IsDead() const { return m_bIsDead; };
 
 protected:
 	bool m_bIsDead;
+	bool m_bItemDropped;
 	int m_iExpReward;
 };

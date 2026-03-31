@@ -12,6 +12,7 @@ public:
 	virtual void Move() override;
 
 
+
 protected:
 
 	enum State

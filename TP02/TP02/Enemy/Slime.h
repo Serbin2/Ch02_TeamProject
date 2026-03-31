@@ -1,6 +1,8 @@
 #pragma once
 #include "Enemy.h"
 
+class CPlayer;
+
 //	몬스터 예시 및 테스트용 슬라임 클래스입니다.
 class CSlime : public CEnemy
 {

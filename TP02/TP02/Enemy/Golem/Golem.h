@@ -11,7 +11,6 @@ public:
 	virtual void Tick(double deltaTime) override;
 
 
-
 protected:
 	void Attack();
 

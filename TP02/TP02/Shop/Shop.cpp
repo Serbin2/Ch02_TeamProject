@@ -8,6 +8,7 @@
 #include "../Inventory/Inventory.h"
 #include "../Graphics/Interface.h"
 #include "../Graphics/ConsoleGraphic.h"
+#include "../Manager/SoundManager/SoundManager.h"
 
 
 //  콘솔 색상 
@@ -282,6 +283,7 @@ static void PrintDialogue(const std::string& text)
 			std::cout << text[i] << std::flush;
 			i += 1;
 		}
+		GET_SINGLE(CSoundManager)->PlaySFX(L"String");
 		Sleep(80);
 	}
 
@@ -363,6 +365,7 @@ void CShop::Enter(CPlayer* pPlayer)
 
 		char key = _getch(); // 엔터 없이 즉시 입력 받기 (conio.h)
 		if (key != '1' && key != '2' && key != '0') continue; // 유효하지 않은 키 무시
+		GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 
 		std::cout << key << "\n";
 		Sleep(1500); // 키 에코 후 잠깐 대기 (UI 전환 전 기다림)
@@ -450,6 +453,7 @@ void CShop::BuyMenu(CPlayer* pPlayer)
 	std::cout << pad << "  선택 : ";
 
 	char key = _getch();
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 	std::cout << key << "\n";
 	Sleep(1500);
 
@@ -539,6 +543,7 @@ void CShop::SellMenu(CPlayer* pPlayer)
 	std::cout << pad << "  선택 : ";
 
 	char key = _getch();
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 	std::cout << key << "\n";
 	Sleep(1500);
 

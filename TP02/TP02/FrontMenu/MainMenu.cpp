@@ -4,6 +4,8 @@
 #include <conio.h>
 #include <cstdlib>
 
+#include "../Manager/SoundManager/SoundManager.h"
+
 CMainMenu::CMainMenu() : cTitle(R"(██╗   ██╗███╗   ██╗████████╗██╗████████╗██╗     ███████╗██████╗  
 ██║   ██║████╗  ██║╚══██╔══╝██║╚══██╔══╝██║     ██╔════╝██╔══██╗
 ██║   ██║██╔██╗ ██║   ██║   ██║   ██║   ██║     █████╗  ██║  ██║
@@ -40,6 +42,7 @@ void CMainMenu::vScene() {
 		in =_getch();      // 문자를 가져와 버퍼에서 제거
 	}
 	in = _getch();
+	GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 
 	if (scene == MENU) { // start 일때 화살표 키로 iCount 
 		if (in == 13) {
