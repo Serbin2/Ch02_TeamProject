@@ -363,6 +363,10 @@ void CShop::Enter(CPlayer* pPlayer)
 		std::cout << "\n";
 		std::cout << pad << "  선택 : ";
 
+		while (_kbhit())
+		{
+			_getch();	//	버퍼 비우기
+		}
 		char key = _getch(); // 엔터 없이 즉시 입력 받기 (conio.h)
 		if (key != '1' && key != '2' && key != '0') continue; // 유효하지 않은 키 무시
 		GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
@@ -452,6 +456,10 @@ void CShop::BuyMenu(CPlayer* pPlayer)
 	std::cout << "\n";
 	std::cout << pad << "  선택 : ";
 
+	while (_kbhit())
+	{
+		_getch();	//	버퍼 비우기
+	}
 	char key = _getch();
 	GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 	std::cout << key << "\n";
@@ -505,7 +513,7 @@ void CShop::SellMenu(CPlayer* pPlayer)
 			"", TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 		HLine(pad);
 		Sleep(300);
-		PrintDialogue("팔 물건이 없으신 것 같은데요?");
+		PrintDialogue("뭘 팔겠다는거야? 공기라도 팔 셈이냐");
 		return;
 	}
 
@@ -542,6 +550,10 @@ void CShop::SellMenu(CPlayer* pPlayer)
 	std::cout << "\n";
 	std::cout << pad << "  선택 : ";
 
+	while (_kbhit())
+	{
+		_getch();	//	버퍼 비우기
+	}
 	char key = _getch();
 	GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 	std::cout << key << "\n";
@@ -567,8 +579,8 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 
 	if (!pPlayer->SpendGold(price))
 	{
-		PrintDialogue("골드가 부족하시네요! 필요한 금액은 "
-			+ std::to_string(price) + "G 입니다.");
+		PrintDialogue("이봐 골드가 부족한데... "
+			+ std::to_string(price) + "G 정도는 가지고 와야지.");
 		return;
 	}
 
@@ -596,7 +608,7 @@ void CShop::SellItem(CPlayer* pPlayer, int index)
 
 	if (index < 0 || index >= (int)inv->GetSize() || !inv->GetItem(index))
 	{
-		PrintDialogue("그런 물건은 없는데요..?");
+		PrintDialogue("그런 물건은 없다.");
 		return;
 	}
 
