@@ -13,7 +13,7 @@ public:
 	void SetHealth(float NewHealth);
 
 	float GetMaxHealth() const { return m_fMaxHealth; }
-	void SetMaxHealth(float NewMaxHealth) { m_fMaxHealth = NewMaxHealth; }
+	void SetMaxHealth(float NewMaxHealth);
 
 	virtual void Attack(COORD Direction) { return; }
 

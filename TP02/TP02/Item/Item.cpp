@@ -57,6 +57,52 @@ void CInvinciblePotion::UseItem(std::weak_ptr<CPlayer> pPlayer)
 	Player->SetInvincibleStateByItem(m_dInvinsibleTime);
 }
 
+CSpeedPotion::CSpeedPotion()
+{
+	m_sName = "스피드 포션";
+	m_sDesc = "스피드가 0.1 증가한다.";
+	m_iPrice = 200;
+	m_iMaxAmount = 3;
+	m_fSpeedAmount = 0.1f;
+}
+
+void CSpeedPotion::UseItem(std::weak_ptr<CPlayer> pPlayer)
+{
+	// 유효성 확인
+	std::shared_ptr<CPlayer> Player = pPlayer.lock();
+	if (!Player)
+	{
+		return;
+	}
+
+	CGraphic::GetInstance()->AddLog("사용! 3초 동안 무적.");
+	float NewSpeed = Player->GetSpeed() + m_fSpeedAmount;
+	Player->SetSpeed(NewSpeed);
+}
+
+CMaxHealthPotion::CMaxHealthPotion()
+{
+	m_sName = "최체 포션";
+	m_sDesc = "최대체력이 20 증가한다";
+	m_iPrice = 200;
+	m_iMaxAmount = 3;
+	m_fMaxHealthAmount = 20.f;
+}
+
+void CMaxHealthPotion::UseItem(std::weak_ptr<CPlayer> pPlayer)
+{
+	// 유효성 확인
+	std::shared_ptr<CPlayer> Player = pPlayer.lock();
+	if (!Player)
+	{
+		return;
+	}
+
+	CGraphic::GetInstance()->AddLog("사용! 최대 체력 20 증가.");
+	float NewMaxHealth = Player->GetMaxHealth() + m_fMaxHealthAmount;
+	Player->SetMaxHealth(NewMaxHealth);
+}
+
 /// 아이템 드롭
 CScrap::CScrap()
 {

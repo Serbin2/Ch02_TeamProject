@@ -325,6 +325,8 @@ void CShop::InitShopItems()
 	m_ShopItems.push_back(std::make_shared<Potion>("체력 포션 (소)", ":체력을 30 hp 회복한다.", 50, 1, 30));
 	m_ShopItems.push_back(std::make_shared<CElixir>());
 	m_ShopItems.push_back(std::make_shared<CInvinciblePotion>());
+	m_ShopItems.push_back(std::make_shared<CSpeedPotion>());
+	m_ShopItems.push_back(std::make_shared<CMaxHealthPotion>());
 }
 
 
@@ -585,12 +587,16 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 	}
 
 	// Potion 계열이면 복사 생성자로 새 인스턴스를 만들어 인벤토리에 추가
-	Potion* original = dynamic_cast<Potion*>(m_ShopItems[index].get());
-	if (original)
-	{
-		auto newPotion = std::make_shared<Potion>(*original); // 복사
-		pPlayer->GetInventory()->AddItem(newPotion, 1);
-	}
+
+	auto newItem = m_ShopItems[index]->Clone();
+	pPlayer->GetInventory()->AddItem(newItem, 1);
+
+	//CItem* original = dynamic_cast<CItem*>(m_ShopItems[index].get());
+	//if (original)
+	//{
+	//	auto newPotion = std::make_shared<CItem>(*original); // 복사
+	//	pPlayer->GetInventory()->AddItem(newPotion, 1);
+	//}
 
 	PrintDialogue("[" + m_ShopItems[index]->GetName() + "] 선택 확인... 아직 죽을 운명은 아닌가 보군.");
 }
