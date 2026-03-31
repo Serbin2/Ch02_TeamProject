@@ -115,11 +115,11 @@ int CGameWorld::Update(double deltaTime)
 
 	if (m_pBoss != nullptr)
 	{	//	보스 사망 처리
-		if (!m_pSemiBoss.get()->IsValid())
+		if (!m_pBoss.get()->IsValid())
 		{
 			//	사망함
 			//	게임 종료(CLEAR)
-			m_pSemiBoss = nullptr;
+			m_pBoss = nullptr;
 			return GAME_CLEARED;
 		}
 	}
@@ -184,7 +184,7 @@ bool CGameWorld::Tick(double deltaTime)
 	if (m_dWorldTime > 600.0 && !m_bBossCreated)				////////////////////////////	최종보스 생성
 	{	//	시간으로 보스 생성
 		m_bBossCreated = true;
-		shared_ptr<CBoss> boss = make_shared<CBoss>(Pixel::square, TEXT_BACKGROUND_WHITE | TEXT_FOREGROUND_RED, FGridSize(2,2) );
+		shared_ptr<CBoss> boss = make_shared<CBoss>();
 		AddActor(boss);
 		m_pBoss = boss;
 	}

@@ -9,12 +9,17 @@ void CResourceManager::Init(HWND hHwnd)
 
 void CResourceManager::Clear()
 {
+	m_ResourcePath.clear();
 	m_pSounds.clear();
 }
 
 std::shared_ptr<CSound> CResourceManager::GetSound(const std::wstring& key)
 {
-	return m_pSounds[key]; 
+	auto it = m_pSounds.find(key);
+	if (it != m_pSounds.end())
+		return it->second;
+
+	return nullptr;
 }
 
 std::shared_ptr<CSound>  CResourceManager::LoadSound(const std::wstring& key, const std::wstring& path, ESoundType SoundType)

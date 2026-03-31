@@ -27,7 +27,6 @@ public:
 
 private:
 	HWND m_hHwnd;
-	std::string mRootPath = "GameResource";
 	fs::path m_ResourcePath;
 
 private:
