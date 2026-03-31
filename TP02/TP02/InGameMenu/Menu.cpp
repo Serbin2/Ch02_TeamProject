@@ -3,8 +3,15 @@
 #include <conio.h>
 #include <iostream>
 
+
+#include "../Resource/Sound/Sound.h"
+#include "../Manager/ResourceManager/ResourceManager.h"
+
 int CMenu::ShowMenu()  // void -> int 로 변경
 {
+	std::shared_ptr<CSound> pSound = GET_SINGLE(CResourceManager)->GetSound(L"Select");
+	pSound->Play(false);
+
 	SetConsoleTitle(L"게임 메뉴");
 	while (true)
 	{
