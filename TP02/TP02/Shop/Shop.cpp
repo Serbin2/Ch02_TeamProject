@@ -282,7 +282,7 @@ static void PrintDialogue(const std::string& text)
 			std::cout << text[i] << std::flush;
 			i += 1;
 		}
-		Sleep(80);
+		Sleep(45);
 	}
 
 	// 대사 뒤 남은 공백 채우기 (박스 오른쪽 벽 맞춤)
@@ -297,7 +297,7 @@ static void PrintDialogue(const std::string& text)
 	for (int j = 0; j < innerWidth; j++) std::cout << "-";
 	std::cout << "+\n";
 
-	Sleep(1500); // 플레이어가 대사를 읽을 시간
+	Sleep(900); // 플레이어가 대사를 읽을 시간
 	ResetColor();
 }
 
@@ -365,7 +365,7 @@ void CShop::Enter(CPlayer* pPlayer)
 		if (key != '1' && key != '2' && key != '0') continue; // 유효하지 않은 키 무시
 
 		std::cout << key << "\n";
-		Sleep(1500); // 키 에코 후 잠깐 대기 (UI 전환 전 기다림)
+		Sleep(900); // 키 에코 후 잠깐 대기 (UI 전환 전 기다림)
 
 		if (key == '1') BuyMenu(pPlayer);
 		else if (key == '2') SellMenu(pPlayer);
@@ -451,7 +451,7 @@ void CShop::BuyMenu(CPlayer* pPlayer)
 
 	char key = _getch();
 	std::cout << key << "\n";
-	Sleep(1500);
+	Sleep(900);
 
 	if (key == '0') return; // 취소
 
@@ -500,8 +500,8 @@ void CShop::SellMenu(CPlayer* pPlayer)
 			TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK,
 			"", TEXT_FOREGROUND_WHITE | TEXT_BACKGROUND_BLACK);
 		HLine(pad);
-		Sleep(500);
-		PrintDialogue("뭘 팔려고 한거야? 공기라도 팔 셈이냐");
+		Sleep(300);
+		PrintDialogue("팔 물건이 없으신 것 같은데요?");
 		return;
 	}
 
@@ -540,7 +540,7 @@ void CShop::SellMenu(CPlayer* pPlayer)
 
 	char key = _getch();
 	std::cout << key << "\n";
-	Sleep(1500);
+	Sleep(900);
 
 	if (key == '0') return; // 취소
 
@@ -562,8 +562,8 @@ void CShop::BuyItem(CPlayer* pPlayer, int index)
 
 	if (!pPlayer->SpendGold(price))
 	{
-		PrintDialogue("이봐, 골드가 부족한데... "
-			+ std::to_string(price) + "G 정도는 가져와야지.");
+		PrintDialogue("골드가 부족하시네요! 필요한 금액은 "
+			+ std::to_string(price) + "G 입니다.");
 		return;
 	}
 
@@ -591,7 +591,7 @@ void CShop::SellItem(CPlayer* pPlayer, int index)
 
 	if (index < 0 || index >= (int)inv->GetSize() || !inv->GetItem(index))
 	{
-		PrintDialogue("그런 물건은 없다..");
+		PrintDialogue("그런 물건은 없는데요..?");
 		return;
 	}
 
