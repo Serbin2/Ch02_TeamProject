@@ -92,5 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TP02.APS" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
