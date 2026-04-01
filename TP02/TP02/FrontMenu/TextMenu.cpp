@@ -116,7 +116,7 @@ static void TypeLine(const string& pad, const string& line)
 
 
 
-//  터미널 느낌을 주는 "> ----...---- <" 형태의 가로선
+// "> ----...---- <" 형태의 가로선
 
 static void PrintDivider(const string& pad, int boxW)
 {
@@ -132,11 +132,10 @@ static void PrintDivider(const string& pad, int boxW)
 
 //  ShowCRTScreen — Intro/Outro 공용 화면 출력
 //
-//  tag    : 화면 상단 태그 (예: "> BOOT SEQUENCE COMPLETE_")
-//  lines  : 본문 줄 목록 (타이핑 효과로 출력)
-//  prompt : 화면 하단 프롬프트 (예: "> PRESS ANY KEY TO CONTINUE_")
+//  tag    : 화면 상단 태그 
+//  lines  : 본문 줄 목록
+//  prompt : 화면 하단
 //
-//  레이아웃:
 //
 //    > BOOT SEQUENCE COMPLETE_        ← 태그 (밝은 녹색)
 //    > -------------------------------- <  ← 구분선 (어두운 녹색)
@@ -188,11 +187,9 @@ static void ShowCRTScreen(
 }
 
 
-//  CTextMenu::Intro
-//
+
 //  게임 시작 전 스토리 출력
-//  ShowCRTScreen 에 태그·본문·프롬프트만 넘기면 UI 는 자동으로 완성됨
-//  대사를 추가/수정하려면 lines 배열만 편집하면 됨
+//  대사를 추가/수정하려면 lines 배열만 편집
 
 void CTextMenu::Intro()
 {
@@ -213,10 +210,9 @@ void CTextMenu::Intro()
 }
 
 
-//  CTextMenu::Outro
-//
+
 //  게임 클리어 후 엔딩 메시지 출력
-//  대사를 추가/수정하려면 lines 배열만 편집하면 됨
+//  대사를 추가/수정하려면 lines 배열만 편집
 
 void CTextMenu::Outro()
 {
