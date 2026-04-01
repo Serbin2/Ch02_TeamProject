@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CItem" Collapsed="true">
+    <Position X="18" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAAQAAAgAAABBEAIAAQAAAAAAAAAQBAAAAQAABBA=</HashCode>
+      <FileName>Item\Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Potion" Collapsed="true">
+    <Position X="11.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQIAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Item\Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CElixir" Collapsed="true">
+    <Position X="15.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAABA=</HashCode>
+      <FileName>Item\Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CInvinciblePotion" Collapsed="true">
+    <Position X="18" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAFA=</HashCode>
+      <FileName>Item\Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSpeedPotion" Collapsed="true">
+    <Position X="20.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAACAAAAAQAAAAAAAABA=</HashCode>
+      <FileName>Item\Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMaxHealthPotion" Collapsed="true">
+    <Position X="22.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQEAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Item\Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CScrap" Collapsed="true">
+    <Position X="24.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Item\Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBoss" Collapsed="true">
+    <Position X="22" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AsIECIhgAoAARQDAIIQAFCAgAMQIAIBAgBggFBAQQSA=</HashCode>
+      <FileName>Boss\Boss.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSemiBoss" Collapsed="true">
+    <Position X="20.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAgAAQAAIAAAAAgIAEAIAAGAIAIAABAwRDAAAAAQEA=</HashCode>
+      <FileName>Boss\SemiBoss.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CActor" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAACAKCAAAEAIAgEEBgEACGAAgDCgBCACAIARFA=</HashCode>
+      <FileName>Character\Actor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CCharacter" Collapsed="true">
+    <Position X="19.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgAAEQAgAIAIAAAAAAAgAAIGAAAAAAACAAiAIAAA=</HashCode>
+      <FileName>Character\Character.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CPlayer" Collapsed="true">
+    <Position X="20.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIAIgAEgCIAAAAAAABcAAgQAEIAgAAJAAAAAAAACQAA=</HashCode>
+      <FileName>Character\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEnemy" Collapsed="true">
+    <Position X="18" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAQAAAAAIAAAAAgAAAAGAAAABCAAADAACAAAAAAQAA=</HashCode>
+      <FileName>Enemy\Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CGolem" Collapsed="true">
+    <Position X="18.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAQAAAAAAAIIAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Enemy\Golem\Golem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSkeleton" Collapsed="true">
+    <Position X="17" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAIAAAAAAAAAAABEAAAAIAAAAQAAAAAAAQAA=</HashCode>
+      <FileName>Enemy\Skeleton\Skeleton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSlime" Collapsed="true">
+    <Position X="15.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAABAAAAAAAAAAAAAAgAABAAAAAAAAAQGA=</HashCode>
+      <FileName>Enemy\Slime.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMainMenu" Collapsed="true">
+    <Position X="26.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQIAAAAQAIAAAAEEAAAIBAAAAAAAAAABAAgAAAAAA=</HashCode>
+      <FileName>FrontMenu\MainMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CGraphic" Collapsed="true">
+    <Position X="26.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAIAIAAICAAZAAAAQBQACABACAAAAAIABMQBAEaAU=</HashCode>
+      <FileName>Graphics\ConsoleGraphic.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEffect" Collapsed="true">
+    <Position X="10.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAIQAAAIAAAIABAAAYQEEABAAABAAQgAASAg=</HashCode>
+      <FileName>Graphics\Effect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CMenu" Collapsed="true">
+    <Position X="24.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>InGameMenu\Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CInventory" Collapsed="true">
+    <Position X="24.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABQgAQAAASABECAAAEAAAAAgAQAAAAEAAAAAAAAAAg=</HashCode>
+      <FileName>Inventory\Inventory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBomb" Collapsed="true">
+    <Position X="8.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIIAAAAAAAAAAAAAIAEAAAAAAABAABQAQAA=</HashCode>
+      <FileName>Item\Bomb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBombItem" Collapsed="true">
+    <Position X="13.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJA=</HashCode>
+      <FileName>Item\Bomb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CInterface" Collapsed="true">
+    <Position X="29.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>lAQAAAAAAAIAAgAAAAIAAgAABASAAAAAIAFAABAAIAQ=</HashCode>
+      <FileName>Graphics\Interface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CResourceManager" Collapsed="true">
+    <Position X="26.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgBAAAAAAAAAAIAAAAAAAAAAQCAABBAAA=</HashCode>
+      <FileName>Manager\ResourceManager\ResourceManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSoundManager" Collapsed="true">
+    <Position X="24.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAggAAAAAQAAUAAAAAQAQAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Manager\SoundManager\SoundManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBouncingProjectile" Collapsed="true">
+    <Position X="12.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAEABA=</HashCode>
+      <FileName>Projectile\BouncingProjectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CExplosiveProjectile" Collapsed="true">
+    <Position X="8.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAACAEAAAAAAAABA=</HashCode>
+      <FileName>Projectile\ExplosiveProjectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CHomingProjectile" Collapsed="true">
+    <Position X="9.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAABAAAAAAIAAAAAABA=</HashCode>
+      <FileName>Projectile\HomingProjectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CProjectile" Collapsed="true">
+    <Position X="13.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAIAIAIAAAAAAAAAAAAACAAAACAAABAAAAAQBA=</HashCode>
+      <FileName>Projectile\Projectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSplitProjectile" Collapsed="true">
+    <Position X="10.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAEAAAAAAAAAAAAAACAAAAAAAAAABA=</HashCode>
+      <FileName>Projectile\SplitProjectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CTripleProjectile" Collapsed="true">
+    <Position X="11.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAEAAAIAAAQBA=</HashCode>
+      <FileName>Projectile\TripleProjectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CInput" Collapsed="true">
+    <Position X="28" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAABAAAEAAAAAAAAAABAAQAAgAACAAQBAAAAQ=</HashCode>
+      <FileName>Input\Input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CShop" Collapsed="true">
+    <Position X="26.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAiAEAAAAAAAAAAAAAAAAAEAAAAAAAQAQAACgA=</HashCode>
+      <FileName>Shop\Shop.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CTimer" Collapsed="true">
+    <Position X="31.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASYgIAABACABAEAAABACBAIABAAAEAAAgBAAABgAAAQ=</HashCode>
+      <FileName>Time\Timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CGameWorld" Collapsed="true">
+    <Position X="24.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQABEoCAQEBISABAAAAoAAAJAAgAABACRRAgBgBQCY=</HashCode>
+      <FileName>World\GameWorld.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ETag" Collapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAoCAAAAAAAAgAAAIAAAEAAAAAAAAABAAAAAAKAAAA=</HashCode>
+      <FileName>Standard.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
