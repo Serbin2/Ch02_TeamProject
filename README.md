@@ -1,144 +1,71 @@
-# \# 🎮 UNTITLED RPG
+# 🎮 UNTITLED RPG
+불시착한 행성에 기묘한 인기척이 느껴진다...
 
-# 불시착한 행성에 기묘한 인기척이 느껴진다...
+무슨 일이 일어날지 몰라 방심할 수 없다.  
+과연 당신은 살아남을 수 있는가?
 
-# 
+---
 
-# 무슨 일이 일어날지 몰라 방심할 수 없다.  
+## 📚 목차
+- [게임 소개](#intro)
+- [조작법](#controls)
+- [개발 환경 및 개발 기간](#dev-env)
+- [개발자](#developer)
 
-# 과연 당신은 살아남을 수 있는가?
+---
 
-# 
+## <a id="intro"></a>🎯 게임 소개
+- 장르 : 콘솔 RPG
+- 플랫폼 : Windows
+- 핵심 특징 :
+  - 긴장감 있는 전투 시스템
+  - 보스 중심의 전투 설계
+  - 다양한 상호작용 시스템 (인벤토리, 상점)
 
-# \---
+![Honeycam_2026-04-01_02-53-15](https://github.com/user-attachments/assets/489b6965-5276-4a79-a9fd-41b7cc0f852d)
+ 
+![Honeycam_2026-04-01_02-50-32](https://github.com/user-attachments/assets/aa8a6e28-3941-4741-959a-bbaeab335f75)
 
-# 
+![Honeycam_2026-04-01_02-51-11](https://github.com/user-attachments/assets/025caa49-bafb-4d75-b848-d9fc3fb6fd5a)
 
-# \## 📚 목차
+![Honeycam_2026-04-01_10-27-47](https://github.com/user-attachments/assets/6d89733e-e310-46fe-a2c4-bb5339e8b891)
 
-# \- \[게임 소개](#intro)
+---
 
-# \- \[조작법](#controls)
+## <a id="controls"></a>🎮 조작법
+| 키 | 설명 |
+|----|------|
+| W / A / S / D | 이동 |
+| → / ↓ / ← / ↑ | 공격 |
+| 1~5 | 아이템 사용 |
+| Esc | 게임 메뉴 |
+| Tab | 상점 이동 |
+| Enter | 확정 |
 
-# \- \[개발 환경 및 개발 기간](#dev-env)
+---
 
-# \- \[개발자](#developer)
+## <a id="dev-env"></a>⚙️ 개발 환경 및 개발 기간
 
-# 
+### 🛠 개발 환경
+- Language : C / C++ (20 이상)
+- API : Windows API
+- IDE : Visual Studio
 
-# \---
+### ⏱ 개발 기간
+- 2026.03.26 ~ 2026.04.01
 
-# 
+<img width="2139" height="1234" alt="image" src="https://github.com/user-attachments/assets/e3364754-b571-41b3-b7a7-2a679f60d0ab" /><img width="2085" height="1201" alt="image2" src="https://github.com/user-attachments/assets/7dc01fed-170d-41db-bb45-6b4c5d31a5a9" />
 
-# \## <a id="intro"></a>🎯 게임 소개
+---
 
-# \- 장르 : 콘솔 RPG
+## <a id="developer"></a>👨‍💻 개발자
 
-# \- 플랫폼 : Windows
+| 이름 | 역할 |
+|------|------|
+| 나지호 | 팀장, 게임 플로우 / 렌더링 / Log / UI 시스템 |
+| 박재현 | PM, 리소스 및 사운드 시스템 / 보스 / 인벤토리 / 팀원 작업물 연계 |
+| 이선재 | 게임 기본 오브젝트(액터) / 플레이어 / 몬스터 / 투사체 |
+| 강민서 | 게임메뉴 / 상점 / 타이핑 시스템 / QA |
+| 박다현 | 메인화면 / 아이템 경험치 보상 / 레벨업 |
 
-# \- 핵심 특징 :
-
-# &#x20; - 긴장감 있는 전투 시스템
-
-# &#x20; - 보스 중심의 전투 설계
-
-# &#x20; - 다양한 상호작용 시스템 (인벤토리, 상점)
-
-# 
-
-# !\[Honeycam\_2026-04-01\_02-53-15](https://github.com/user-attachments/assets/489b6965-5276-4a79-a9fd-41b7cc0f852d)
-
-# &#x20;
-
-# !\[Honeycam\_2026-04-01\_02-50-32](https://github.com/user-attachments/assets/aa8a6e28-3941-4741-959a-bbaeab335f75)
-
-# 
-
-# !\[Honeycam\_2026-04-01\_02-51-11](https://github.com/user-attachments/assets/025caa49-bafb-4d75-b848-d9fc3fb6fd5a)
-
-# 
-
-# !\[Honeycam\_2026-04-01\_10-27-47](https://github.com/user-attachments/assets/6d89733e-e310-46fe-a2c4-bb5339e8b891)
-
-# 
-
-# \---
-
-# 
-
-# \## <a id="controls"></a>🎮 조작법
-
-# | 키 | 설명 |
-
-# |----|------|
-
-# | W / A / S / D | 이동 |
-
-# | → / ↓ / ← / ↑ | 공격 |
-
-# | 1\~5 | 아이템 사용 |
-
-# | Esc | 게임 메뉴 |
-
-# | Tab | 상점 이동 |
-
-# | Enter | 확정 |
-
-# 
-
-# \---
-
-# 
-
-# \## <a id="dev-env"></a>⚙️ 개발 환경 및 개발 기간
-
-# 
-
-# \### 🛠 개발 환경
-
-# \- Language : C / C++ (20 이상)
-
-# \- API : Windows API
-
-# \- IDE : Visual Studio
-
-# 
-
-# \### ⏱ 개발 기간
-
-# \- 2026.03.26 \~ 2026.04.01
-
-# 
-
-# <img width="2139" height="1234" alt="image" src="https://github.com/user-attachments/assets/e3364754-b571-41b3-b7a7-2a679f60d0ab" /><img width="2085" height="1201" alt="image2" src="https://github.com/user-attachments/assets/7dc01fed-170d-41db-bb45-6b4c5d31a5a9" />
-
-# 
-
-# \---
-
-# 
-
-# \## <a id="developer"></a>👨‍💻 개발자
-
-# 
-
-# | 이름 | 역할 |
-
-# |------|------|
-
-# | 나지호 | 팀장, 게임 플로우 / 렌더링 / Log / UI 시스템 |
-
-# | 박재현 | PM, 리소스 및 사운드 시스템 / 보스 / 인벤토리 / 팀원 작업물 연계 |
-
-# | 이선재 | 게임 기본 오브젝트(액터) / 플레이어 / 몬스터 / 투사체 |
-
-# | 강민서 | 게임메뉴 / 상점 / 타이핑 시스템 / QA |
-
-# | 박다현 | 메인화면 / 아이템 경험치 보상 / 레벨업 |
-
-# 
-
-# 팀노션 : https://www.notion.so/teamsparta/32e2dc3ef51481faa65cce70e481ef60
-
-
-
+팀노션 : https://www.notion.so/teamsparta/32e2dc3ef51481faa65cce70e481ef60
