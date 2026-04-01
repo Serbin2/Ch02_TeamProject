@@ -161,8 +161,8 @@ int CMainMenu::vRun()
 
 	while (scene != START)
 	{
-		system("cls");
-
+		//system("cls");
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), COORD(0, 0));
 		if (scene == MENU)
 		{
 			fLightAngle += 0.08f;
