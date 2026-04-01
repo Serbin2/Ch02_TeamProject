@@ -15,7 +15,7 @@
 ---
 
 ## 🎯 게임 소개
-- 장르 : 콘손 RPG
+- 장르 : 콘솔 RPG
 - 플랫폼 : Windows
 - 핵심 특징 :
   - 긴장감 있는 전투 시스템
@@ -56,6 +56,8 @@
 ### ⏱ 개발 기간
 - 2026.03.26 ~ 2026.04.01
 
+<img width="2139" height="1234" alt="image" src="https://github.com/user-attachments/assets/e3364754-b571-41b3-b7a7-2a679f60d0ab" /><img width="2085" height="1201" alt="image2" src="https://github.com/user-attachments/assets/7dc01fed-170d-41db-bb45-6b4c5d31a5a9" />
+
 ---
 
 ## 👨‍💻 개발자
@@ -65,7 +67,9 @@
 | 나지호 | 팀장, 게임 플로우 / 렌더링 / Log / UI 시스템 |
 | 박재현 | PM, 리소스 및 사운드 시스템 / 보스 / 인벤토리 / 팀원 작업물 연계 |
 | 이선재 | 게임 기본 오브젝트(액터) / 플레이어 / 몬스터 / 투사체 |
-| 강민서 | 일시정지 / 상점 / 타이핑 시스템 / QA |
+| 강민서 | 게임메뉴 / 상점 / 타이핑 시스템 / QA |
 | 박다현 | 메인화면 / 아이템 경험치 보상 / 레벨업 |
+
+팀노션 : https://www.notion.so/teamsparta/32e2dc3ef51481faa65cce70e481ef60
 
 ---
