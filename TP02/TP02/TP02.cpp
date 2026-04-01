@@ -121,7 +121,7 @@ int Loop()
 		if ((pInput->IsKeyDown(VK_ESCAPE)) || pInput->IsKeyDown('G'))
 		{	//	게임 일시 정지
 			Timer->Pause();
-			GET_SINGLE(CSoundManager)->StopBGM();
+			//GET_SINGLE(CSoundManager)->StopBGM();
 			GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 
 
@@ -148,7 +148,7 @@ int Loop()
 				{
 					shop.Enter(player);
 				}
-				GET_SINGLE(CSoundManager)->RePlayBGM();
+				//GET_SINGLE(CSoundManager)->RePlayBGM();
 				pGraphic->ReDraw();
 				Timer->Resume();
 			}
@@ -161,7 +161,7 @@ int Loop()
 		if (pInput->IsKeyDown(VK_TAB))
 		{
 			Timer->Pause();
-			GET_SINGLE(CSoundManager)->StopBGM();
+			//GET_SINGLE(CSoundManager)->StopBGM();
 			GET_SINGLE(CSoundManager)->PlaySFX(L"Select");
 			CShop shop;
 			shared_ptr<CActor> actor = CGameWorld::GetInstance()->GetPlayerActor();
@@ -170,7 +170,7 @@ int Loop()
 			{
 				shop.Enter(player);
 			}
-			GET_SINGLE(CSoundManager)->RePlayBGM();
+			//GET_SINGLE(CSoundManager)->RePlayBGM();
 			pGraphic->ReDraw();
 			Timer->Resume();
 		}
